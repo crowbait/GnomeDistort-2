@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist>
+  <dict>
+    <key>CFBundleExecutable</key>
+    <string>${EXECUTABLE_NAME}</string>
+    <key>CFBundleIconFile</key>
+    <string></string>
+    <key>CFBundleIdentifier</key>
+    <string>com.Crowbait.GnomeDistort2</string>
+    <key>CFBundleName</key>
+    <string>GnomeDistort 2</string>
+    <key>CFBundleDisplayName</key>
+    <string>GnomeDistort 2</string>
+    <key>CFBundlePackageType</key>
+    <string>BNDL</string>
+    <key>CFBundleSignature</key>
+    <string>????</string>
+    <key>CFBundleShortVersionString</key>
+    <string>0.0.1</string>
+    <key>CFBundleVersion</key>
+    <string>0.0.1</string>
+    <key>NSHumanReadableCopyright</key>
+    <string>&#169; 2023 Crowbait</string>
+    <key>NSHighResolutionCapable</key>
+    <true/>
+    <key>AudioComponents</key>
+    <array>
+      <dict>
+        <key>name</key>
+        <string>Crowbait: GnomeDistort 2</string>
+        <key>description</key>
+        <string>GnomeDistort 2</string>
+        <key>factoryFunction</key>
+        <string>GnomeDistort2AUFactory</string>
+        <key>manufacturer</key>
+        <string>CrBt</string>
+        <key>type</key>
+        <string>aufx</string>
+        <key>subtype</key>
+        <string>GDs2</string>
+        <key>version</key>
+        <integer>1</integer>
+        <key>resourceUsage</key>
+        <dict>
+          <key>network.client</key>
+          <true/>
+          <key>temporary-exception.files.all.read-write</key>
+          <true/>
+        </dict>
+      </dict>
+    </array>
+  </dict>
+</plist>
