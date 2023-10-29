@@ -38,10 +38,8 @@ public:
     bool isBusesLayoutSupported(const BusesLayout& layouts) const override;
 #endif
     void processBlock(juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
-
     juce::AudioProcessorEditor* createEditor() override;
     bool hasEditor() const override { return true; };
-
     const juce::String getName() const override;
 
     bool acceptsMidi() const override { return false; };
@@ -60,6 +58,7 @@ public:
 
     //==============================================================================
 
+    GnomeDistort2Parameters::ChainSettings ChainSettings;
     juce::AudioProcessorValueTreeState apvts{ *this, nullptr, "Parameters", GnomeDistort2Parameters::createParameterLayout() };
 
 private:

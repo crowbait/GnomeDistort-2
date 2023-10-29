@@ -98,13 +98,15 @@ juce::AudioProcessorEditor* GnomeDistort2AudioProcessor::createEditor() {
     return new GnomeDistort2AudioProcessorEditor(*this);
 }
 void GnomeDistort2AudioProcessor::getStateInformation(juce::MemoryBlock& destData) {
-    // You should use this method to store your parameters in the memory block.
-    // You could do that either as raw data, or use the XML or ValueTree classes
-    // as intermediaries to make it easy to save and load complex data.
+    juce::MemoryOutputStream mos(destData, true);
+    apvts.state.writeToStream(mos);
 }
 void GnomeDistort2AudioProcessor::setStateInformation(const void* data, int sizeInBytes) {
-    // You should use this method to restore your parameters from this memory block,
-    // whose contents will have been created by the getStateInformation() call.
+    auto state = juce::ValueTree::readFromData(data, sizeInBytes);
+    if (state.isValid()) {
+        apvts.replaceState(state);
+        //updateSettings(getChainSettings(apvts), getSampleRate(), leftChain, rightChain);
+    }
 }
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter() {
     return new GnomeDistort2AudioProcessor();

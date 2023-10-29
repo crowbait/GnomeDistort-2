@@ -23,6 +23,18 @@ struct GnomeDistort2Parameters {
         DisplayON, DisplayHQ
     };
 
+    struct ChainSettings {
+        float LoCutFreq{ 0 }, BandFreqLoMid{ 0 }, BandFreqMidHi{ 0 }, HiCutFreq{ 0 },
+            PeakFreqLo{ 0 }, PeakGainLo{ 0 }, PeakQLo{ 0 }, PeakFreqMid{ 0 }, PeakGainMid, PeakQMid{ 0 }, PeakFreqHi{ 0 }, PeakGainHi{ 0 }, PeakQHi{ 0 }, PreGainLo{ 0 },
+            FdbckAmountLo{ 0 }, FdbckLengthLo{ 0 }, WaveShapeAmountLo{ 0 }, PostGainLo{ 0 },
+            PreGainMid{ 0 }, FdbckAmountMid{ 0 }, FdbckLengthMid{ 0 }, WaveShapeAmountMid{ 0 }, PostGainMid{ 0 },
+            PreGainHi{ 0 }, FdbckAmountHi{ 0 }, FdbckLengthHi{ 0 }, WaveShapeAmountHi{ 0 }, PostGainHi{ 0 },
+            WaveShapeAmountGlobal{ 0 }, PostGainGlobal{ 0 }, DryWet{ 0 };
+        FilterSlope LoCutSlope{ FilterSlope::Slope12 }, HiCutSlope{ FilterSlope::Slope12 };
+        WaveShaperFunction WaveShapeFunctionLo{ WaveShaperFunction::HardClip }, WaveShapeFunctionMid{ WaveShaperFunction::HardClip },
+            WaveShapeFunctionHi{ WaveShaperFunction::HardClip }, WaveShapeFunctionGlobal{ WaveShaperFunction::HardClip };
+    };
+
     static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout() {
         juce::AudioProcessorValueTreeState::ParameterLayout layout;
 
