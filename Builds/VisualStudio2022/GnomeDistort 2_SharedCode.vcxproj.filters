@@ -3027,6 +3027,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\Parameters.h">
+      <Filter>GnomeDistort 2\Source</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\ConstOptions.h">
       <Filter>GnomeDistort 2\Source</Filter>
     </ClInclude>

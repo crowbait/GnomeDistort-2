@@ -125,6 +125,7 @@
 		BC20DF81B6D0B33B8648ACFF /* juce_gui_basics */ /* juce_gui_basics */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_gui_basics; path = "~/JUCE/modules/juce_gui_basics"; sourceTree = "<absolute>"; };
 		C11FADAB076D7AC0AFAA4223 /* include_juce_audio_utils.mm */ /* include_juce_audio_utils.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_audio_utils.mm; path = ../../JuceLibraryCode/include_juce_audio_utils.mm; sourceTree = SOURCE_ROOT; };
 		C4AAF3BA24DE86DE452AD2E8 /* CoreAudioKit.framework */ /* CoreAudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudioKit.framework; path = System/Library/Frameworks/CoreAudioKit.framework; sourceTree = SDKROOT; };
+		C513105980799876F6FA577C /* Parameters.h */ /* Parameters.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Parameters.h; path = ../../Source/Parameters.h; sourceTree = SOURCE_ROOT; };
 		CE594B435B3682C6F73FAED9 /* ConstOptions.h */ /* ConstOptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ConstOptions.h; path = ../../Source/ConstOptions.h; sourceTree = SOURCE_ROOT; };
 		CFE9B251217AD3DA5FEF05EE /* QuartzCore.framework */ /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		D9A583B48414BD3854D1FC91 /* include_juce_gui_extra.mm */ /* include_juce_gui_extra.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_gui_extra.mm; path = ../../JuceLibraryCode/include_juce_gui_extra.mm; sourceTree = SOURCE_ROOT; };
@@ -287,6 +288,7 @@
 		94242D047A1E491E0575E1EE /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				C513105980799876F6FA577C,
 				CE594B435B3682C6F73FAED9,
 				ACF06736169925512259CD01,
 				65E87CCF269FB2AA9F6D1E4A,

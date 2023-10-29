@@ -7,9 +7,8 @@
 */
 
 #pragma once
-
 #include <JuceHeader.h>
-#include "ConstOptions.h"
+#include "Parameters.h"
 
 enum TreeParameter {
 
@@ -61,8 +60,7 @@ public:
 
     //==============================================================================
 
-    static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
-    juce::AudioProcessorValueTreeState apvts{ *this, nullptr, "Parameters", createParameterLayout() };
+    juce::AudioProcessorValueTreeState apvts{ *this, nullptr, "Parameters", GnomeDistort2Parameters::createParameterLayout() };
 
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(GnomeDistort2AudioProcessor);
