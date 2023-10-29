@@ -58,7 +58,7 @@ public:
 
     //==============================================================================
 
-    GnomeDistort2Parameters::ChainSettings ChainSettings;
+    GnomeDistort2Parameters::ChainSettings chainSettings;
     juce::AudioProcessorValueTreeState apvts{ *this, nullptr, "Parameters", GnomeDistort2Parameters::createParameterLayout() };
 
 private:

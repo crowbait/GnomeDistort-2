@@ -24,15 +24,55 @@ struct GnomeDistort2Parameters {
     };
 
     struct ChainSettings {
-        float LoCutFreq{ 0 }, BandFreqLoMid{ 0 }, BandFreqMidHi{ 0 }, HiCutFreq{ 0 },
-            PeakFreqLo{ 0 }, PeakGainLo{ 0 }, PeakQLo{ 0 }, PeakFreqMid{ 0 }, PeakGainMid, PeakQMid{ 0 }, PeakFreqHi{ 0 }, PeakGainHi{ 0 }, PeakQHi{ 0 }, PreGainLo{ 0 },
-            FdbckAmountLo{ 0 }, FdbckLengthLo{ 0 }, WaveShapeAmountLo{ 0 }, PostGainLo{ 0 },
-            PreGainMid{ 0 }, FdbckAmountMid{ 0 }, FdbckLengthMid{ 0 }, WaveShapeAmountMid{ 0 }, PostGainMid{ 0 },
-            PreGainHi{ 0 }, FdbckAmountHi{ 0 }, FdbckLengthHi{ 0 }, WaveShapeAmountHi{ 0 }, PostGainHi{ 0 },
-            WaveShapeAmountGlobal{ 0 }, PostGainGlobal{ 0 }, DryWet{ 0 };
-        FilterSlope LoCutSlope{ FilterSlope::Slope12 }, HiCutSlope{ FilterSlope::Slope12 };
-        WaveShaperFunction WaveShapeFunctionLo{ WaveShaperFunction::HardClip }, WaveShapeFunctionMid{ WaveShaperFunction::HardClip },
-            WaveShapeFunctionHi{ WaveShaperFunction::HardClip }, WaveShapeFunctionGlobal{ WaveShaperFunction::HardClip };
+        float LoCutFreq = 0, BandFreqLoMid = 0, BandFreqMidHi = 0, HiCutFreq = 0,
+            PeakFreqLo = 0, PeakGainLo = 0, PeakQLo = 0, PeakFreqMid = 0, PeakGainMid, PeakQMid = 0, PeakFreqHi = 0, PeakGainHi = 0, PeakQHi = 0, PreGainLo = 0,
+            FdbckAmountLo = 0, FdbckLengthLo = 0, WaveShapeAmountLo = 0, PostGainLo = 0,
+            PreGainMid = 0, FdbckAmountMid = 0, FdbckLengthMid = 0, WaveShapeAmountMid = 0, PostGainMid = 0,
+            PreGainHi = 0, FdbckAmountHi = 0, FdbckLengthHi = 0, WaveShapeAmountHi = 0, PostGainHi = 0,
+            WaveShapeAmountGlobal = 0, PostGainGlobal = 0, DryWet = 0;
+        FilterSlope LoCutSlope = FilterSlope::Slope12, HiCutSlope = FilterSlope::Slope12;
+        WaveShaperFunction WaveShapeFunctionLo = WaveShaperFunction::HardClip, WaveShapeFunctionMid = WaveShaperFunction::HardClip,
+            WaveShapeFunctionHi = WaveShaperFunction::HardClip, WaveShapeFunctionGlobal = WaveShaperFunction::HardClip;
+
+        void UpdateFromAPVTS(juce::AudioProcessorValueTreeState& apvts) {
+            LoCutFreq = apvts.getRawParameterValue("LoCutFreq")->load();
+            LoCutSlope = static_cast<FilterSlope>(apvts.getRawParameterValue("LoCutSlope")->load());
+            BandFreqLoMid = apvts.getRawParameterValue("BandFreqLoMid")->load();
+            BandFreqMidHi = apvts.getRawParameterValue("BandFreqMidHi")->load();
+            HiCutFreq = apvts.getRawParameterValue("HiCutFreq")->load();
+            HiCutSlope = static_cast<FilterSlope>(apvts.getRawParameterValue("HiCutSlope")->load());
+            PeakFreqLo = apvts.getRawParameterValue("PeakFreqLo")->load();
+            PeakGainLo = apvts.getRawParameterValue("PeakGainLo")->load();
+            PeakQLo = apvts.getRawParameterValue("PeakQLo")->load();
+            PeakFreqMid = apvts.getRawParameterValue("PeakFreqMid")->load();
+            PeakGainMid = apvts.getRawParameterValue("PeakGainMid")->load();
+            PeakQMid = apvts.getRawParameterValue("PeakQMid")->load();
+            PeakFreqHi = apvts.getRawParameterValue("PeakFreqHi")->load();
+            PeakGainHi = apvts.getRawParameterValue("PeakGainHi")->load();
+            PeakQHi = apvts.getRawParameterValue("PeakQHi")->load();
+            PreGainLo = apvts.getRawParameterValue("PreGainLo")->load();
+            FdbckAmountLo = apvts.getRawParameterValue("FdbckAmountLo")->load();
+            FdbckLengthLo = apvts.getRawParameterValue("FdbckLengthLo")->load();
+            WaveShapeAmountLo = apvts.getRawParameterValue("WaveShapeAmountLo")->load();
+            WaveShapeFunctionLo = static_cast<WaveShaperFunction>(apvts.getRawParameterValue("WaveShapeFunctionLo")->load());
+            PostGainLo = apvts.getRawParameterValue("PostGainLo")->load();
+            PreGainMid = apvts.getRawParameterValue("PreGainMid")->load();
+            FdbckAmountMid = apvts.getRawParameterValue("FdbckAmountMid")->load();
+            FdbckLengthMid = apvts.getRawParameterValue("FdbckLengthMid")->load();
+            WaveShapeAmountMid = apvts.getRawParameterValue("WaveShapeAmountMid")->load();
+            WaveShapeFunctionMid = static_cast<WaveShaperFunction>(apvts.getRawParameterValue("WaveShapeFunctionMid")->load());
+            PostGainMid = apvts.getRawParameterValue("PostGainMid")->load();
+            PreGainHi = apvts.getRawParameterValue("PreGainHi")->load();
+            FdbckAmountHi = apvts.getRawParameterValue("FdbckAmountHi")->load();
+            FdbckLengthHi = apvts.getRawParameterValue("FdbckLengthHi")->load();
+            WaveShapeAmountHi = apvts.getRawParameterValue("WaveShapeAmountHi")->load();
+            WaveShapeFunctionHi = static_cast<WaveShaperFunction>(apvts.getRawParameterValue("WaveShapeFunctionHi")->load());
+            PostGainHi = apvts.getRawParameterValue("PostGainHi")->load();
+            WaveShapeAmountGlobal = apvts.getRawParameterValue("WaveShapeAmountGlobal")->load();
+            WaveShapeFunctionGlobal = static_cast<WaveShaperFunction>(apvts.getRawParameterValue("WaveShapeFunctionGlobal")->load());
+            PostGainGlobal = apvts.getRawParameterValue("PostGainGlobal")->load();
+            DryWet = apvts.getRawParameterValue("DryWet")->load();
+        };
     };
 
     static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout() {

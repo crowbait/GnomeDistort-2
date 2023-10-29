@@ -105,6 +105,7 @@ void GnomeDistort2AudioProcessor::setStateInformation(const void* data, int size
     auto state = juce::ValueTree::readFromData(data, sizeInBytes);
     if (state.isValid()) {
         apvts.replaceState(state);
+        chainSettings.UpdateFromAPVTS(apvts);
         //updateSettings(getChainSettings(apvts), getSampleRate(), leftChain, rightChain);
     }
 }
