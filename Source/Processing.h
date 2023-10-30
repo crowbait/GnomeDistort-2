@@ -107,6 +107,7 @@ struct GnomeDistort2Processing {
             BandHi.updateSettings(chainSettings.HiBandSettings, sampleRate);
             BandHi.LowerFreqBound = chainSettings.BandFreqMidHi;
             BandHi.UpperFreqBound = chainSettings.HiCutFreq;
+
             // post-bands settings
 
         }
