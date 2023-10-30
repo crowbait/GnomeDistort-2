@@ -2510,6 +2510,8 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_gui_extra.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\WaveshaperFunctions.h"/>
+    <ClInclude Include="..\..\Source\Processing.h"/>
     <ClInclude Include="..\..\Source\Parameters.h"/>
     <ClInclude Include="..\..\Source\ConstOptions.h"/>
     <ClInclude Include="..\..\Source\PluginProcessor.h"/>

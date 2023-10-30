@@ -93,6 +93,7 @@
 		36320D41D90FED4D85E55552 /* juce_audio_devices */ /* juce_audio_devices */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_audio_devices; path = "~/JUCE/modules/juce_audio_devices"; sourceTree = "<absolute>"; };
 		3825A804A93369671C57E432 /* JuceHeader.h */ /* JuceHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = JuceHeader.h; path = ../../JuceLibraryCode/JuceHeader.h; sourceTree = SOURCE_ROOT; };
 		3951AF50ACC2B4B648F0E694 /* VST3 */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "GnomeDistort 2.vst3"; sourceTree = BUILT_PRODUCTS_DIR; };
+		423906A392FB7F7D649AD8C9 /* WaveshaperFunctions.h */ /* WaveshaperFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WaveshaperFunctions.h; path = ../../Source/WaveshaperFunctions.h; sourceTree = SOURCE_ROOT; };
 		43353F41D869706B5C290588 /* include_juce_audio_plugin_client_ARA.cpp */ /* include_juce_audio_plugin_client_ARA.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_audio_plugin_client_ARA.cpp; path = ../../JuceLibraryCode/include_juce_audio_plugin_client_ARA.cpp; sourceTree = SOURCE_ROOT; };
 		45748A83BC24775C70E158AB /* include_juce_gui_basics.mm */ /* include_juce_gui_basics.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_gui_basics.mm; path = ../../JuceLibraryCode/include_juce_gui_basics.mm; sourceTree = SOURCE_ROOT; };
 		567D595DC9C700909E820060 /* PluginEditor.cpp */ /* PluginEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PluginEditor.cpp; path = ../../Source/PluginEditor.cpp; sourceTree = SOURCE_ROOT; };
@@ -112,6 +113,7 @@
 		7C78A44606430E9444791C3F /* include_juce_audio_processors_lv2_libs.cpp */ /* include_juce_audio_processors_lv2_libs.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_audio_processors_lv2_libs.cpp; path = ../../JuceLibraryCode/include_juce_audio_processors_lv2_libs.cpp; sourceTree = SOURCE_ROOT; };
 		825610C7AC6940CE3C2B5098 /* WebKit.framework */ /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		849C81D5641F41D22E7C24BD /* include_juce_audio_plugin_client_VST3.mm */ /* include_juce_audio_plugin_client_VST3.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_audio_plugin_client_VST3.mm; path = ../../JuceLibraryCode/include_juce_audio_plugin_client_VST3.mm; sourceTree = SOURCE_ROOT; };
+		8C775DA933889D33D19CF86B /* Processing.h */ /* Processing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Processing.h; path = ../../Source/Processing.h; sourceTree = SOURCE_ROOT; };
 		8C93E76D48774A5EB3F6F94E /* VST3 Manifest Helper */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = juce_vst3_helper; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E6E002EF9EECA4CD5F17DDD /* juce_audio_formats */ /* juce_audio_formats */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_audio_formats; path = "~/JUCE/modules/juce_audio_formats"; sourceTree = "<absolute>"; };
 		94DD80ED332DA33603D06D68 /* juce_VST3ManifestHelper.mm */ /* juce_VST3ManifestHelper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = juce_VST3ManifestHelper.mm; path = "$(HOME)/JUCE/modules/juce_audio_plugin_client/VST3/juce_VST3ManifestHelper.mm"; sourceTree = "<absolute>"; };
@@ -292,6 +294,8 @@
 		94242D047A1E491E0575E1EE /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				423906A392FB7F7D649AD8C9,
+				8C775DA933889D33D19CF86B,
 				C513105980799876F6FA577C,
 				CE594B435B3682C6F73FAED9,
 				ACF06736169925512259CD01,

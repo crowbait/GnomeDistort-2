@@ -3162,6 +3162,12 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\WaveshaperFunctions.h">
+      <Filter>GnomeDistort 2\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Processing.h">
+      <Filter>GnomeDistort 2\Source</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Parameters.h">
       <Filter>GnomeDistort 2\Source</Filter>
     </ClInclude>

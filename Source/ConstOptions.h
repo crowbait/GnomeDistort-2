@@ -1,13 +1,3 @@
-/*
-  ==============================================================================
-
-    Const.h
-    Created: 29 Oct 2023 1:22:59pm
-    Author:  Traxx
-
-  ==============================================================================
-*/
-
 #pragma once
 #include <JuceHeader.h>
 
@@ -24,7 +14,7 @@ const juce::StringArray FilterSlopeOptions = {
     "48 dB"
 };
 
-enum WaveShaperFunction {
+enum WaveshaperFunction {
     HardClip,
     SoftClip,
     Cracked,
@@ -38,7 +28,7 @@ enum WaveShaperFunction {
     Spiked,
     Titruff
 };
-const juce::StringArray WaveShaperFunctionOptions = {
+const juce::StringArray WaveshaperFunctionOptions = {
     "Hard Clip",
     "Soft Clip",
     "Cracked",
