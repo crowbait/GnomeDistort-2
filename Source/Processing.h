@@ -16,7 +16,7 @@ struct GnomeDistort2Processing {
         return juce::dsp::IIR::Coefficients<float>::makePeakFilter(
             sampleRate, freq, Q, juce::Decibels::decibelsToGain(gaindB)
         );
-    };
+    }
     inline auto generateLoCutFilter(const float freq, const FilterSlope slope, double sampleRate) {
         return juce::dsp::FilterDesign<float>::designIIRHighpassHighOrderButterworthMethod(freq, sampleRate, (slope + 1) * 2);
     }
@@ -54,13 +54,15 @@ struct GnomeDistort2Processing {
             PostGain
         };
         BandChain processorChain;
+        float LowerFreqBound = 20, UpperFreqBound = 20000;
+
         void prepare(const juce::dsp::ProcessSpec& spec) { processorChain.prepare(spec); }
         void process(const juce::dsp::ProcessContextReplacing<float>& context) { processorChain.process(context); }
 
         void updateSettings(const GnomeDistort2Parameters::ChainSettings::BandChainSettings& bandChainSettings, double sampleRate) {
             updateCoefficients(
                 processorChain.get<ChainPositions::PeakFilter>().coefficients,
-                generatePeakFilter(bandChainSettings.PeakFreq, bandChainSettings.PeakQ, bandChainSettings.PeakGain, sampleRate)
+                generatePeakFilter(juce::jmap<float>(bandChainSettings.PeakFreq, LowerFreqBound, UpperFreqBound), bandChainSettings.PeakQ, bandChainSettings.PeakGain, sampleRate)
             );
             processorChain.get<ChainPositions::PreGain>().setGainDecibels(bandChainSettings.PreGain);
             juce::dsp::Reverb::Parameters reverbParams;
@@ -73,4 +75,41 @@ struct GnomeDistort2Processing {
             processorChain.get<ChainPositions::PostGain>().setGainDecibels(bandChainSettings.PostGain);
         }
     };
+
+    //==============================================================================
+
+    class ProcessorChain {
+    public:
+        GnomeDistort2Processing::DistBand BandLo, BandMid, BandHi;
+
+        void prepare(const juce::dsp::ProcessSpec& spec) {
+            // pre-bands prepare
+            BandLo.prepare(spec);
+            BandMid.prepare(spec);
+            BandHi.prepare(spec);
+            // post-bands prepare
+        }
+        void process(const juce::dsp::ProcessContextReplacing<float>& context) {
+            // pre-bands processing
+            // bands processing
+            // post-bands processing
+        }
+        void updateSettings(const GnomeDistort2Parameters::ChainSettings& chainSettings, double sampleRate) {
+            // pre-bands settings
+
+            // bands settings
+            BandLo.updateSettings(chainSettings.LoBandSettings, sampleRate);
+            BandLo.LowerFreqBound = chainSettings.LoCutFreq;
+            BandLo.UpperFreqBound = chainSettings.BandFreqLoMid;
+            BandMid.updateSettings(chainSettings.MidBandSettings, sampleRate);
+            BandMid.LowerFreqBound = chainSettings.BandFreqLoMid;
+            BandMid.UpperFreqBound = chainSettings.BandFreqMidHi;
+            BandHi.updateSettings(chainSettings.HiBandSettings, sampleRate);
+            BandHi.LowerFreqBound = chainSettings.BandFreqMidHi;
+            BandHi.UpperFreqBound = chainSettings.HiCutFreq;
+            // post-bands settings
+
+        }
+    };
+
 };

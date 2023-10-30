@@ -23,6 +23,7 @@ struct GnomeDistort2Parameters {
         FilterSlope LoCutSlope = FilterSlope::Slope12, HiCutSlope = FilterSlope::Slope12;
         WaveshaperFunction WaveshapeFunctionGlobal = WaveshaperFunction::HardClip;
         BandChainSettings LoBandSettings, MidBandSettings, HiBandSettings;
+        bool MuteLo = false, SoloLo = false, BypassLo = false, MuteMid = false, SoloMid = false, BypassMid = false, MuteHi = false, SoloHi = false, BypassHi = false;
 
         void UpdateFromAPVTS(juce::AudioProcessorValueTreeState& apvts) {
             LoCutFreq = apvts.getRawParameterValue("LoCutFreq")->load();
@@ -120,6 +121,16 @@ struct GnomeDistort2Parameters {
         layout.add(std::make_unique<juce::AudioParameterChoice>("WaveshapeFunctionGlobal", "Post Waveshaper Function", WaveshaperFunctionOptions, 0));
         layout.add(std::make_unique<juce::AudioParameterFloat>("PostGainGlobal", "Global Post-Gain", PostGainRange, 0));
         layout.add(std::make_unique<juce::AudioParameterFloat>("DryWet", "Dry-Wet Mix", juce::NormalisableRange<float>(0, 1, 0.01f, 1), 1));
+
+        layout.add(std::make_unique<juce::AudioParameterBool>("MuteLo", "Mute Low Band", true));
+        layout.add(std::make_unique<juce::AudioParameterBool>("SoloLo", "Solo Low Band", true));
+        layout.add(std::make_unique<juce::AudioParameterBool>("BypassLo", "Bypass Low Band", true));
+        layout.add(std::make_unique<juce::AudioParameterBool>("MuteMid", "Mute Mid Band", true));
+        layout.add(std::make_unique<juce::AudioParameterBool>("SoloMid", "Solo Mid Band", true));
+        layout.add(std::make_unique<juce::AudioParameterBool>("BypassMid", "Bypass Mid Band", true));
+        layout.add(std::make_unique<juce::AudioParameterBool>("MuteHi", "Mute High Band", true));
+        layout.add(std::make_unique<juce::AudioParameterBool>("SoloHi", "Solo High Band", true));
+        layout.add(std::make_unique<juce::AudioParameterBool>("BypassHi", "Bypass High Band", true));
 
         layout.add(std::make_unique<juce::AudioParameterBool>("DisplayON", "DisplayON", true));
         layout.add(std::make_unique<juce::AudioParameterBool>("DisplayHQ", "DisplayHQ", true));
