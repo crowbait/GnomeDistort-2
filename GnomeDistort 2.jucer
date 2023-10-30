@@ -5,7 +5,7 @@
               projectLineFeed="&#10;" companyName="Crowbait" companyCopyright="&#169; 2023 Crowbait"
               companyWebsite="crowbait.de" companyEmail="contact@crowbait.de"
               pluginManufacturerCode="CrBt" pluginCode="GDs2" aaxIdentifier="de.crowbait.gnomedistort2"
-              pluginVST3Category="Distortion,Fx">
+              pluginVST3Category="Distortion,Fx" pluginChannelConfigs="{2, 2}">
   <MAINGROUP id="jjautv" name="GnomeDistort 2">
     <GROUP id="{37019FB3-77C2-F5BE-8075-A39A7B85E738}" name="Source">
       <FILE id="IPv87m" name="WaveshaperFunctions.h" compile="0" resource="0"

@@ -1,8 +1,7 @@
 #pragma once
-#include <JuceHeader.h>
 #include "ConstOptions.h"
 
-std::function<float(float)> GetWaveshaperFunction(const WaveshaperFunction& func, const float& amount) {
+inline static const std::function<float(float)> GetWaveshaperFunction(const WaveshaperFunction& func, const float& amount) {
     switch (func) {
         case HardClip:
             return [amount](float x) { return juce::jlimit(0.f - (1.f - amount), 1.f - amount, x) + (x < 0 ? -amount : amount); };

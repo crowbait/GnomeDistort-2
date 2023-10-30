@@ -17,10 +17,10 @@ struct GnomeDistort2Processing {
             sampleRate, freq, Q, juce::Decibels::decibelsToGain(gaindB)
         );
     }
-    inline auto generateLoCutFilter(const float freq, const FilterSlope slope, double sampleRate) {
+    static inline auto generateLoCutFilter(const float freq, const FilterSlope slope, double sampleRate) {
         return juce::dsp::FilterDesign<float>::designIIRHighpassHighOrderButterworthMethod(freq, sampleRate, (slope + 1) * 2);
     }
-    inline auto generateLoCutFilter(const float freq, const FilterSlope slope, double sampleRate) {
+    static inline auto generateHiCutFilter(const float freq, const FilterSlope slope, double sampleRate) {
         return juce::dsp::FilterDesign<float>::designIIRLowpassHighOrderButterworthMethod(freq, sampleRate, (slope + 1) * 2);
     }
     template<typename ChainType, typename CoefficientsType> static void updateCutFilter(ChainType& filter, const CoefficientsType& cutCoefficients, const FilterSlope& slope) {
@@ -53,64 +53,133 @@ struct GnomeDistort2Processing {
             Waveshaper,
             PostGain
         };
-        BandChain processorChain;
+        BandChain chain;
         float LowerFreqBound = 20, UpperFreqBound = 20000;
 
-        void prepare(const juce::dsp::ProcessSpec& spec) { processorChain.prepare(spec); }
-        void process(const juce::dsp::ProcessContextReplacing<float>& context) { processorChain.process(context); }
+        void prepare(const juce::dsp::ProcessSpec& spec) { chain.prepare(spec); }
+        void process(const juce::dsp::ProcessContextReplacing<float>& context) { chain.process(context); }
 
         void updateSettings(const GnomeDistort2Parameters::ChainSettings::BandChainSettings& bandChainSettings, double sampleRate) {
             updateCoefficients(
-                processorChain.get<ChainPositions::PeakFilter>().coefficients,
+                chain.get<ChainPositions::PeakFilter>().coefficients,
                 generatePeakFilter(juce::jmap<float>(bandChainSettings.PeakFreq, LowerFreqBound, UpperFreqBound), bandChainSettings.PeakQ, bandChainSettings.PeakGain, sampleRate)
             );
-            processorChain.get<ChainPositions::PreGain>().setGainDecibels(bandChainSettings.PreGain);
+            chain.get<ChainPositions::PreGain>().setGainDecibels(bandChainSettings.PreGain);
             juce::dsp::Reverb::Parameters reverbParams;
             reverbParams.wetLevel = bandChainSettings.FdbckAmount;
             reverbParams.damping = 1.f - bandChainSettings.FdbckAmount;
             reverbParams.roomSize = bandChainSettings.FdbckLength;
             reverbParams.width = bandChainSettings.FdbckLength;
-            processorChain.get<ChainPositions::Reverb>().setParameters(reverbParams);
-            processorChain.get<ChainPositions::Waveshaper>().functionToUse = GetWaveshaperFunction(bandChainSettings.WaveshapeFunction, bandChainSettings.WaveshapeAmount);
-            processorChain.get<ChainPositions::PostGain>().setGainDecibels(bandChainSettings.PostGain);
+            chain.get<ChainPositions::Reverb>().setParameters(reverbParams);
+            chain.get<ChainPositions::Waveshaper>().functionToUse = GetWaveshaperFunction(bandChainSettings.WaveshapeFunction, bandChainSettings.WaveshapeAmount);
+            chain.get<ChainPositions::PostGain>().setGainDecibels(bandChainSettings.PostGain);
         }
     };
 
     //==============================================================================
 
-    class ProcessorChain {
+    class GnomeDSP {
     public:
-        GnomeDistort2Processing::DistBand BandLo, BandMid, BandHi;
-
         void prepare(const juce::dsp::ProcessSpec& spec) {
-            // pre-bands prepare
-            BandLo.prepare(spec);
-            BandMid.prepare(spec);
-            BandHi.prepare(spec);
-            // post-bands prepare
+            LP.prepare(spec);
+            LP.setType(juce::dsp::LinkwitzRileyFilterType::lowpass);
+            HP.prepare(spec);
+            HP.setType(juce::dsp::LinkwitzRileyFilterType::highpass);
+            for (auto& buffer : filterBuffers) buffer.setSize(spec.numChannels, spec.maximumBlockSize);
+            // preBandChain.prepare(spec);
+            juce::dsp::ProcessSpec monoSpec = spec;
+            monoSpec.numChannels = 1;
+            BandLoL.prepare(monoSpec);
+            BandLoR.prepare(monoSpec);
+            BandMidL.prepare(monoSpec);
+            BandMidR.prepare(monoSpec);
+            BandHiL.prepare(monoSpec);
+            BandHiR.prepare(monoSpec);
+            postBandChainL.prepare(monoSpec);
+            postBandChainR.prepare(monoSpec);
+            dryWetMixL.prepare(monoSpec);
+            dryWetMixR.prepare(monoSpec);
+            dryWetMixL.setMixingRule(juce::dsp::DryWetMixingRule::linear);
+            dryWetMixR.setMixingRule(juce::dsp::DryWetMixingRule::linear);
         }
-        void process(const juce::dsp::ProcessContextReplacing<float>& context) {
+        void process(juce::AudioBuffer<float>& buffer) {
+            juce::dsp::AudioBlock<float> block(buffer);
+            dryWetMixL.pushDrySamples(block.getSingleChannelBlock(0));
+            dryWetMixR.pushDrySamples(block.getSingleChannelBlock(1));
+
             // pre-bands processing
+            // preBandChain.process(juce::dsp::ProcessContextReplacing<float>(block));
+            for (auto& fbuffer : filterBuffers) fbuffer = buffer;
+            LP.process(juce::dsp::ProcessContextReplacing<float>(juce::dsp::AudioBlock<float>(filterBuffers[0])));
+            HP.process(juce::dsp::ProcessContextReplacing<float>(juce::dsp::AudioBlock<float>(filterBuffers[1])));
+
+            int numSamples = buffer.getNumSamples();
+            int numChannels = buffer.getNumChannels();
+            buffer.clear();
+            auto addFilterBand = [numChannels, numSamples](juce::AudioBuffer<float>& inputBuffer, const juce::AudioBuffer<float>& source) {
+                for (int i = 0; i < numChannels; ++i) { // ++i is pre-increment: increments BEFORE first loop run
+                    inputBuffer.addFrom(i, 0, source, i, 0, numSamples);
+                }
+            };
+            for (int i = 0; i < filterBuffers.size(); i++) addFilterBand(buffer, filterBuffers[i]);
+
+            block = juce::dsp::AudioBlock<float>(buffer);
+            juce::dsp::AudioBlock<float> blockL = block.getSingleChannelBlock(0);
+            juce::dsp::AudioBlock<float> blockR = block.getSingleChannelBlock(1);
+            juce::dsp::ProcessContextReplacing<float> contextL = (blockL);
+            juce::dsp::ProcessContextReplacing<float> contextR = (blockR);
+
             // bands processing
-            // post-bands processing
+
+            postBandChainL.process(contextL);
+            postBandChainR.process(contextR);
+            dryWetMixL.mixWetSamples(blockL);
+            dryWetMixR.mixWetSamples(blockR);
         }
         void updateSettings(const GnomeDistort2Parameters::ChainSettings& chainSettings, double sampleRate) {
             // pre-bands settings
+            // updateCutFilter(preBandChain.get<0>(), generateLoCutFilter(chainSettings.LoCutFreq, chainSettings.LoCutSlope, sampleRate), chainSettings.LoCutSlope);
+            // updateCutFilter(preBandChain.get<1>(), generateLoCutFilter(chainSettings.HiCutFreq, chainSettings.HiCutSlope, sampleRate), chainSettings.HiCutSlope);
+            LP.setCutoffFrequency(chainSettings.BandFreqLoMid);
+            HP.setCutoffFrequency(chainSettings.BandFreqLoMid);
 
             // bands settings
-            BandLo.updateSettings(chainSettings.LoBandSettings, sampleRate);
-            BandLo.LowerFreqBound = chainSettings.LoCutFreq;
-            BandLo.UpperFreqBound = chainSettings.BandFreqLoMid;
-            BandMid.updateSettings(chainSettings.MidBandSettings, sampleRate);
-            BandMid.LowerFreqBound = chainSettings.BandFreqLoMid;
-            BandMid.UpperFreqBound = chainSettings.BandFreqMidHi;
-            BandHi.updateSettings(chainSettings.HiBandSettings, sampleRate);
-            BandHi.LowerFreqBound = chainSettings.BandFreqMidHi;
-            BandHi.UpperFreqBound = chainSettings.HiCutFreq;
+            BandLoL.updateSettings(chainSettings.LoBandSettings, sampleRate);
+            BandLoR.updateSettings(chainSettings.LoBandSettings, sampleRate);
+            BandLoL.LowerFreqBound = chainSettings.LoCutFreq;
+            BandLoR.LowerFreqBound = chainSettings.LoCutFreq;
+            BandLoL.UpperFreqBound = chainSettings.BandFreqLoMid;
+            BandLoR.UpperFreqBound = chainSettings.BandFreqLoMid;
+            BandMidL.updateSettings(chainSettings.MidBandSettings, sampleRate);
+            BandMidR.updateSettings(chainSettings.MidBandSettings, sampleRate);
+            BandMidL.LowerFreqBound = chainSettings.BandFreqLoMid;
+            BandMidR.LowerFreqBound = chainSettings.BandFreqLoMid;
+            BandMidL.UpperFreqBound = chainSettings.BandFreqMidHi;
+            BandMidR.UpperFreqBound = chainSettings.BandFreqMidHi;
+            BandHiL.updateSettings(chainSettings.HiBandSettings, sampleRate);
+            BandHiR.updateSettings(chainSettings.HiBandSettings, sampleRate);
+            BandHiL.LowerFreqBound = chainSettings.BandFreqMidHi;
+            BandHiR.LowerFreqBound = chainSettings.BandFreqMidHi;
+            BandHiL.UpperFreqBound = chainSettings.HiCutFreq;
+            BandHiR.UpperFreqBound = chainSettings.HiCutFreq;
 
             // post-bands settings
-
+            postBandChainL.get<0>().functionToUse = GetWaveshaperFunction(chainSettings.WaveshapeFunctionGlobal, chainSettings.WaveshapeAmountGlobal);
+            postBandChainR.get<0>().functionToUse = GetWaveshaperFunction(chainSettings.WaveshapeFunctionGlobal, chainSettings.WaveshapeAmountGlobal);
+            postBandChainL.get<1>().setGainDecibels(chainSettings.PostGainGlobal);
+            postBandChainR.get<1>().setGainDecibels(chainSettings.PostGainGlobal);
+            dryWetMixL.setWetMixProportion(chainSettings.DryWet);
+            dryWetMixR.setWetMixProportion(chainSettings.DryWet);
         }
-    };
 
+    private:
+        using LRFilter = juce::dsp::LinkwitzRileyFilter<float>;
+        LRFilter LP, HP;
+        // juce::dsp::ProcessorChain<CutFilter, CutFilter> preBandChain;
+        DistBand BandLoL, BandMidL, BandHiL, BandLoR, BandMidR, BandHiR;
+        juce::dsp::ProcessorChain<Waveshaper, Gain> postBandChainL, postBandChainR;
+        juce::dsp::DryWetMixer<float> dryWetMixL, dryWetMixR;
+
+        std::array<juce::AudioBuffer<float>, 2> filterBuffers;
+    };
 };

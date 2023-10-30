@@ -46,11 +46,6 @@ const juce::String GnomeDistort2AudioProcessor::getProgramName(int index) {
     return {};
 }
 void GnomeDistort2AudioProcessor::changeProgramName(int index, const juce::String& newName) {}
-
-void GnomeDistort2AudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock) {
-    // Use this method as the place to do any pre-playback
-    // initialisation that you need..
-}
 void GnomeDistort2AudioProcessor::releaseResources() {
     // When playback stops, you can use this as an opportunity to free up any
     // spare memory, etc.
@@ -64,17 +59,19 @@ bool GnomeDistort2AudioProcessor::isBusesLayoutSupported(const BusesLayout& layo
 }
 #endif
 
+
+void GnomeDistort2AudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock) {
+    juce::dsp::ProcessSpec spec;
+    spec.maximumBlockSize = samplesPerBlock;
+    spec.numChannels = getTotalNumInputChannels();
+    spec.sampleRate = sampleRate;
+    processorChain.prepare(spec);
+}
+
 void GnomeDistort2AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages) {
     juce::ScopedNoDenormals noDenormals;
     auto totalNumInputChannels = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
-
-    // In case we have more outputs than inputs, this code clears any output
-    // channels that didn't contain input data, (because these aren't
-    // guaranteed to be empty - they may contain garbage).
-    // This is here to avoid people getting screaming feedback
-    // when they first compile a plugin, but obviously you don't need to keep
-    // this code if your algorithm always overwrites all the output channels.
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear(i, 0, buffer.getNumSamples());
 
@@ -84,11 +81,14 @@ void GnomeDistort2AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
     // the samples and the outer loop is handling the channels.
     // Alternatively, you can process the samples with the channels
     // interleaved by keeping the same state.
-    for (int channel = 0; channel < totalNumInputChannels; ++channel) {
-        auto* channelData = buffer.getWritePointer(channel);
-
-        // ..do something to the data...
-    }
+    // for (int channel = 0; channel < totalNumInputChannels; ++channel) {
+    //     auto* channelData = buffer.getWritePointer(channel);
+    // 
+    //     // ..do something to the data...
+    // }
+    chainSettings.UpdateFromAPVTS(apvts);
+    processorChain.updateSettings(chainSettings, getSampleRate());
+    processorChain.process(buffer);
 }
 
 //==============================================================================
@@ -106,7 +106,7 @@ void GnomeDistort2AudioProcessor::setStateInformation(const void* data, int size
     if (state.isValid()) {
         apvts.replaceState(state);
         chainSettings.UpdateFromAPVTS(apvts);
-        //updateSettings(getChainSettings(apvts), getSampleRate(), leftChain, rightChain);
+        processorChain.updateSettings(chainSettings, getSampleRate());
     }
 }
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter() {

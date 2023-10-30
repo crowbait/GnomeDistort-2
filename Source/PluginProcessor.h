@@ -9,16 +9,7 @@
 #pragma once
 #include <JuceHeader.h>
 #include "Parameters.h"
-
-enum TreeParameter {
-
-};
-enum ChainPositions {
-
-};
-struct ChainSettings {
-
-};
+#include "Processing.h"
 
 //==============================================================================
 class GnomeDistort2AudioProcessor : public juce::AudioProcessor
@@ -60,6 +51,7 @@ public:
 
     GnomeDistort2Parameters::ChainSettings chainSettings;
     juce::AudioProcessorValueTreeState apvts{ *this, nullptr, "Parameters", GnomeDistort2Parameters::createParameterLayout() };
+    GnomeDistort2Processing::GnomeDSP processorChain;
 
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(GnomeDistort2AudioProcessor);

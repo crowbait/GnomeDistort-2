@@ -15,7 +15,7 @@ struct GnomeDistort2Parameters {
     };
 
     static const std::map<TreeParameter, juce::String> getTreeParameterNames() {
-        std::map<TreeParameter, juce::String> map = {
+        static const std::map<TreeParameter, juce::String> map = {
             {LoCutFreq, "LoCutFreq"}, {LoCutSlope, "LoCutSlope"}, {BandFreqLoMid, "BandFreqLoMid"}, {BandFreqMidHi, "BandFreqMidHi"}, {HiCutFreq, "HiCutFreq"}, {HiCutSlope, "HiCutSlope"},
             {PeakFreqLo, "PeakFreqLo"}, {PeakGainLo, "PeakGainLo"}, {PeakQLo, "PeakQLo"},
             {PeakFreqMid, "PeakFreqMid"}, {PeakGainMid, "PeakGainMid"}, {PeakQMid, "PeakQMid"},
