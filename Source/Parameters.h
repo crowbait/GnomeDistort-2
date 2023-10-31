@@ -11,7 +11,6 @@ struct GnomeDistort2Parameters {
         PreGainHi, FdbckAmountHi, FdbckLengthHi, WaveshapeAmountHi, WaveshapeFunctionHi, PostGainHi,
         WaveshapeAmountGlobal, WaveshapeFunctionGlobal, PostGainGlobal, DryWet,
         MuteLo, SoloLo, BypassLo, MuteMid, SoloMid, BypassMid, MuteHi, SoloHi, BypassHi,
-        DisplayON, DisplayHQ
     };
 
     static const std::map<TreeParameter, juce::String> getTreeParameterNames() {
@@ -25,8 +24,6 @@ struct GnomeDistort2Parameters {
             {PreGainHi, "PreGainHi"}, {FdbckAmountHi, "FdbckAmountHi"}, {FdbckLengthHi, "FdbckLengthHi"}, {WaveshapeAmountHi, "WaveshapeAmountHi"}, {WaveshapeFunctionHi, "WaveshapeFunctionHi"}, {PostGainHi, "PostGainHi"},
             {WaveshapeAmountGlobal, "WaveshapeAmountGlobal"}, {WaveshapeFunctionGlobal, "WaveshapeFunctionGlobal"}, {PostGainGlobal, "PostGainGlobal"}, {DryWet, "DryWet"},
             {MuteLo, "MuteLo"}, {SoloLo, "SoloLo"}, {BypassLo, "BypassLo"}, {MuteMid, "MuteMid"}, {SoloMid, "SoloMid"}, {BypassMid, "BypassMid"}, {MuteHi, "MuteHi"}, {SoloHi, "SoloHi"}, {BypassHi, "BypassHi"},
-            {DisplayON, "DisplayON"},
-            {DisplayHQ, "DisplayHQ"},
         };
         return map;
     }
@@ -52,6 +49,7 @@ struct GnomeDistort2Parameters {
             BandFreqMidHi = apvts.getRawParameterValue(Names.at(TreeParameter::BandFreqMidHi))->load();
             HiCutFreq = apvts.getRawParameterValue(Names.at(TreeParameter::HiCutFreq))->load();
             HiCutSlope = static_cast<FilterSlope>(apvts.getRawParameterValue(Names.at(TreeParameter::HiCutSlope))->load());
+
             LoBandSettings.PeakFreq = apvts.getRawParameterValue(Names.at(TreeParameter::PeakFreqLo))->load();
             LoBandSettings.PeakGain = apvts.getRawParameterValue(Names.at(TreeParameter::PeakGainLo))->load();
             LoBandSettings.PeakQ = apvts.getRawParameterValue(Names.at(TreeParameter::PeakQLo))->load();
@@ -79,6 +77,17 @@ struct GnomeDistort2Parameters {
             HiBandSettings.WaveshapeAmount = apvts.getRawParameterValue(Names.at(TreeParameter::WaveshapeAmountHi))->load();
             HiBandSettings.WaveshapeFunction = static_cast<WaveshaperFunction>(apvts.getRawParameterValue(Names.at(TreeParameter::WaveshapeFunctionHi))->load());
             HiBandSettings.PostGain = apvts.getRawParameterValue(Names.at(TreeParameter::PostGainHi))->load();
+
+            MuteLo = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter(Names.at(TreeParameter::MuteLo)))->get();
+            SoloLo = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter(Names.at(TreeParameter::SoloLo)))->get();
+            BypassLo = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter(Names.at(TreeParameter::BypassLo)))->get();
+            MuteMid = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter(Names.at(TreeParameter::MuteMid)))->get();
+            SoloMid = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter(Names.at(TreeParameter::SoloMid)))->get();
+            BypassMid = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter(Names.at(TreeParameter::BypassMid)))->get();
+            MuteHi = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter(Names.at(TreeParameter::MuteHi)))->get();
+            SoloHi = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter(Names.at(TreeParameter::SoloHi)))->get();
+            BypassHi = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter(Names.at(TreeParameter::BypassHi)))->get();
+
             WaveshapeAmountGlobal = apvts.getRawParameterValue(Names.at(TreeParameter::WaveshapeAmountGlobal))->load();
             WaveshapeFunctionGlobal = static_cast<WaveshaperFunction>(apvts.getRawParameterValue(Names.at(TreeParameter::WaveshapeFunctionGlobal))->load());
             PostGainGlobal = apvts.getRawParameterValue(Names.at(TreeParameter::PostGainGlobal))->load();
@@ -95,8 +104,8 @@ struct GnomeDistort2Parameters {
                                                                20));                                                     // default value
         layout.add(std::make_unique<juce::AudioParameterChoice>(Names.at(TreeParameter::LoCutSlope), "Low-Cut Slope",                             // Parameter ID, Name
                                                                 FilterSlopeOptions, 1));                                   // Choices StringArray, default index
-        layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::BandFreqLoMid), "Low/Mid-Band Frequency", juce::NormalisableRange<float>(20, 20000, 1, 0.25f), 200));
-        layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::BandFreqMidHi), "Mid/High-Band Frequency", juce::NormalisableRange<float>(20, 20000, 1, 0.25f), 5000));
+        layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::BandFreqLoMid), "Low/Mid-Band Frequency", juce::NormalisableRange<float>(20, 999, 1, 0.25f), 400));
+        layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::BandFreqMidHi), "Mid/High-Band Frequency", juce::NormalisableRange<float>(1000, 20000, 1, 0.25f), 2000));
         layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::HiCutFreq), "High-Cut Frequency", juce::NormalisableRange<float>(20, 20000, 1, 0.25f), 20000));
         layout.add(std::make_unique<juce::AudioParameterChoice>(Names.at(TreeParameter::HiCutSlope), "High-Cut Slope", FilterSlopeOptions, 1));
 
@@ -153,8 +162,6 @@ struct GnomeDistort2Parameters {
         layout.add(std::make_unique<juce::AudioParameterBool>(Names.at(TreeParameter::MuteHi), "Mute High Band", false));
         layout.add(std::make_unique<juce::AudioParameterBool>(Names.at(TreeParameter::BypassHi), "Bypass High Band", false));
 
-        layout.add(std::make_unique<juce::AudioParameterBool>(Names.at(TreeParameter::DisplayON), "DisplayON", true));
-        layout.add(std::make_unique<juce::AudioParameterBool>(Names.at(TreeParameter::DisplayHQ), "DisplayHQ", true));
         return layout;
     }
 };
