@@ -81,6 +81,9 @@ struct GnomeDistort2Processing {
     class GnomeDSP {
     public:
         void prepare(const juce::dsp::ProcessSpec& spec) {
+            preBandChainL.prepare(spec);
+            preBandChainR.prepare(spec);
+
             // LPLo, APLo, HPMidHi, LPMid, HPHi
             LPLo.setType(juce::dsp::LinkwitzRileyFilterType::lowpass);
             LPLo.prepare(spec);
@@ -94,7 +97,6 @@ struct GnomeDistort2Processing {
             HPHi.prepare(spec);
             for (auto& buffer : bandBuffers) buffer.setSize(spec.numChannels, spec.maximumBlockSize);
 
-            // preBandChain.prepare(spec);
             juce::dsp::ProcessSpec monoSpec = spec;
             monoSpec.numChannels = 1;
             BandLoL.prepare(monoSpec);
@@ -112,11 +114,16 @@ struct GnomeDistort2Processing {
         }
         void process(juce::AudioBuffer<float>& buffer) {
             juce::dsp::AudioBlock<float> block(buffer);
-            dryWetMixL.pushDrySamples(block.getSingleChannelBlock(0));
-            dryWetMixR.pushDrySamples(block.getSingleChannelBlock(1));
+            juce::dsp::AudioBlock<float> blockL = block.getSingleChannelBlock(0);
+            juce::dsp::AudioBlock<float> blockR = block.getSingleChannelBlock(1);
+            juce::dsp::ProcessContextReplacing<float> contextL = (blockL);
+            juce::dsp::ProcessContextReplacing<float> contextR = (blockR);
+            dryWetMixL.pushDrySamples(blockL);
+            dryWetMixR.pushDrySamples(blockR);
 
-            // pre-bands processing
-            // preBandChain.process(juce::dsp::ProcessContextReplacing<float>(block));
+            preBandChainL.process(contextL);
+            preBandChainR.process(contextR);
+
             for (auto& fbuffer : bandBuffers) fbuffer = buffer;
             juce::dsp::AudioBlock<float> bandBlockLo(bandBuffers[0]);
             juce::dsp::AudioBlock<float> bandBlockMid(bandBuffers[1]);
@@ -157,21 +164,19 @@ struct GnomeDistort2Processing {
             if ((channelsToAdd & 2) == 2) addFilterBand(buffer, bandBuffers[1]);
             if ((channelsToAdd & 4) == 4) addFilterBand(buffer, bandBuffers[2]);
 
-            block = juce::dsp::AudioBlock<float>(buffer);
-            juce::dsp::AudioBlock<float> blockL = block.getSingleChannelBlock(0);
-            juce::dsp::AudioBlock<float> blockR = block.getSingleChannelBlock(1);
-            juce::dsp::ProcessContextReplacing<float> contextL = (blockL);
-            juce::dsp::ProcessContextReplacing<float> contextR = (blockR);
-
             postBandChainL.process(contextL);
             postBandChainR.process(contextR);
             dryWetMixL.mixWetSamples(blockL);
             dryWetMixR.mixWetSamples(blockR);
         }
         void updateSettings(const GnomeDistort2Parameters::ChainSettings& chainSettings, double sampleRate) {
-            // pre-bands settings
-            // updateCutFilter(preBandChain.get<0>(), generateLoCutFilter(chainSettings.LoCutFreq, chainSettings.LoCutSlope, sampleRate), chainSettings.LoCutSlope);
-            // updateCutFilter(preBandChain.get<1>(), generateLoCutFilter(chainSettings.HiCutFreq, chainSettings.HiCutSlope, sampleRate), chainSettings.HiCutSlope);
+            auto preBandsLoCut = generateLoCutFilter(chainSettings.LoCutFreq, chainSettings.LoCutSlope, sampleRate);
+            auto preBandsHiCut = generateHiCutFilter(chainSettings.HiCutFreq, chainSettings.HiCutSlope, sampleRate);
+            updateCutFilter(preBandChainL.get<0>(), preBandsLoCut, chainSettings.LoCutSlope);
+            updateCutFilter(preBandChainL.get<1>(), preBandsHiCut, chainSettings.HiCutSlope);
+            updateCutFilter(preBandChainR.get<0>(), preBandsLoCut, chainSettings.LoCutSlope);
+            updateCutFilter(preBandChainR.get<1>(), preBandsHiCut, chainSettings.HiCutSlope);
+
             LPLo.setCutoffFrequency(chainSettings.BandFreqLoMid);
             APLo.setCutoffFrequency(chainSettings.BandFreqLoMid);
             HPMidHi.setCutoffFrequency(chainSettings.BandFreqLoMid);
@@ -196,7 +201,6 @@ struct GnomeDistort2Processing {
             channelsToAdd = setFlags(channelsToAdd, chainSettings.SoloMid, chainSettings.MuteMid, 2);
             channelsToAdd = setFlags(channelsToAdd, chainSettings.SoloHi, chainSettings.MuteHi, 4);
 
-            // bands settings
             isBypassedLo = chainSettings.BypassLo;
             if (!isBypassedLo) {
                 BandLoL.updateSettings(chainSettings.LoBandSettings, sampleRate);
@@ -225,7 +229,6 @@ struct GnomeDistort2Processing {
                 BandHiR.UpperFreqBound = chainSettings.HiCutFreq;
             }
 
-            // post-bands settings
             postBandChainL.get<0>().functionToUse = GetWaveshaperFunction(chainSettings.WaveshapeFunctionGlobal, chainSettings.WaveshapeAmountGlobal);
             postBandChainR.get<0>().functionToUse = GetWaveshaperFunction(chainSettings.WaveshapeFunctionGlobal, chainSettings.WaveshapeAmountGlobal);
             postBandChainL.get<1>().setGainDecibels(chainSettings.PostGainGlobal);
@@ -235,9 +238,9 @@ struct GnomeDistort2Processing {
         }
 
     private:
+        juce::dsp::ProcessorChain<CutFilter, CutFilter> preBandChainL, preBandChainR;
         using LRFilter = juce::dsp::LinkwitzRileyFilter<float>;
         LRFilter LPLo, APLo, HPMidHi, LPMid, HPHi;  // the AllPass is needed to align delays, see https://youtu.be/Mo0Oco3Vimo?t=9034
-        // juce::dsp::ProcessorChain<CutFilter, CutFilter> preBandChain;
         DistBand BandLoL, BandMidL, BandHiL, BandLoR, BandMidR, BandHiR;
         bool isBypassedLo = false, isBypassedMid = false, isBypassedHi = false;
         juce::dsp::ProcessorChain<Waveshaper, Gain> postBandChainL, postBandChainR;
