@@ -619,6 +619,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\Processing.cpp">
+      <Filter>GnomeDistort 2\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\PluginProcessor.cpp">
       <Filter>GnomeDistort 2\Source</Filter>
     </ClCompile>
