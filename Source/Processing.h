@@ -140,12 +140,18 @@ struct GnomeDistort2Processing {
                 }
             };
 
-            BandLoL.process(juce::dsp::ProcessContextReplacing<float>(bandBlockLo.getSingleChannelBlock(0)));
-            BandLoR.process(juce::dsp::ProcessContextReplacing<float>(bandBlockLo.getSingleChannelBlock(1)));
-            BandMidL.process(juce::dsp::ProcessContextReplacing<float>(bandBlockMid.getSingleChannelBlock(0)));
-            BandMidR.process(juce::dsp::ProcessContextReplacing<float>(bandBlockMid.getSingleChannelBlock(1)));
-            BandHiL.process(juce::dsp::ProcessContextReplacing<float>(bandBlockHi.getSingleChannelBlock(0)));
-            BandHiR.process(juce::dsp::ProcessContextReplacing<float>(bandBlockHi.getSingleChannelBlock(1)));
+            if (!isBypassedLo && (channelsToAdd & 1) == 1) {
+                BandLoL.process(juce::dsp::ProcessContextReplacing<float>(bandBlockLo.getSingleChannelBlock(0)));
+                BandLoR.process(juce::dsp::ProcessContextReplacing<float>(bandBlockLo.getSingleChannelBlock(1)));
+            }
+            if (!isBypassedMid && (channelsToAdd & 2) == 2) {
+                BandMidL.process(juce::dsp::ProcessContextReplacing<float>(bandBlockMid.getSingleChannelBlock(0)));
+                BandMidR.process(juce::dsp::ProcessContextReplacing<float>(bandBlockMid.getSingleChannelBlock(1)));
+            }
+            if (!isBypassedHi && (channelsToAdd & 4) == 4) {
+                BandHiL.process(juce::dsp::ProcessContextReplacing<float>(bandBlockHi.getSingleChannelBlock(0)));
+                BandHiR.process(juce::dsp::ProcessContextReplacing<float>(bandBlockHi.getSingleChannelBlock(1)));
+            }
 
             if ((channelsToAdd & 1) == 1) addFilterBand(buffer, bandBuffers[0]);
             if ((channelsToAdd & 2) == 2) addFilterBand(buffer, bandBuffers[1]);
@@ -191,24 +197,33 @@ struct GnomeDistort2Processing {
             channelsToAdd = setFlags(channelsToAdd, chainSettings.SoloHi, chainSettings.MuteHi, 4);
 
             // bands settings
-            BandLoL.updateSettings(chainSettings.LoBandSettings, sampleRate);
-            BandLoR.updateSettings(chainSettings.LoBandSettings, sampleRate);
-            BandLoL.LowerFreqBound = chainSettings.LoCutFreq;
-            BandLoR.LowerFreqBound = chainSettings.LoCutFreq;
-            BandLoL.UpperFreqBound = chainSettings.BandFreqLoMid;
-            BandLoR.UpperFreqBound = chainSettings.BandFreqLoMid;
-            BandMidL.updateSettings(chainSettings.MidBandSettings, sampleRate);
-            BandMidR.updateSettings(chainSettings.MidBandSettings, sampleRate);
-            BandMidL.LowerFreqBound = chainSettings.BandFreqLoMid;
-            BandMidR.LowerFreqBound = chainSettings.BandFreqLoMid;
-            BandMidL.UpperFreqBound = chainSettings.BandFreqMidHi;
-            BandMidR.UpperFreqBound = chainSettings.BandFreqMidHi;
-            BandHiL.updateSettings(chainSettings.HiBandSettings, sampleRate);
-            BandHiR.updateSettings(chainSettings.HiBandSettings, sampleRate);
-            BandHiL.LowerFreqBound = chainSettings.BandFreqMidHi;
-            BandHiR.LowerFreqBound = chainSettings.BandFreqMidHi;
-            BandHiL.UpperFreqBound = chainSettings.HiCutFreq;
-            BandHiR.UpperFreqBound = chainSettings.HiCutFreq;
+            isBypassedLo = chainSettings.BypassLo;
+            if (!isBypassedLo) {
+                BandLoL.updateSettings(chainSettings.LoBandSettings, sampleRate);
+                BandLoR.updateSettings(chainSettings.LoBandSettings, sampleRate);
+                BandLoL.LowerFreqBound = chainSettings.LoCutFreq;
+                BandLoR.LowerFreqBound = chainSettings.LoCutFreq;
+                BandLoL.UpperFreqBound = chainSettings.BandFreqLoMid;
+                BandLoR.UpperFreqBound = chainSettings.BandFreqLoMid;
+            }
+            isBypassedMid = chainSettings.BypassMid;
+            if (!isBypassedMid) {
+                BandMidL.updateSettings(chainSettings.MidBandSettings, sampleRate);
+                BandMidR.updateSettings(chainSettings.MidBandSettings, sampleRate);
+                BandMidL.LowerFreqBound = chainSettings.BandFreqLoMid;
+                BandMidR.LowerFreqBound = chainSettings.BandFreqLoMid;
+                BandMidL.UpperFreqBound = chainSettings.BandFreqMidHi;
+                BandMidR.UpperFreqBound = chainSettings.BandFreqMidHi;
+            }
+            isBypassedHi = chainSettings.BypassHi;
+            if (!isBypassedHi) {
+                BandHiL.updateSettings(chainSettings.HiBandSettings, sampleRate);
+                BandHiR.updateSettings(chainSettings.HiBandSettings, sampleRate);
+                BandHiL.LowerFreqBound = chainSettings.BandFreqMidHi;
+                BandHiR.LowerFreqBound = chainSettings.BandFreqMidHi;
+                BandHiL.UpperFreqBound = chainSettings.HiCutFreq;
+                BandHiR.UpperFreqBound = chainSettings.HiCutFreq;
+            }
 
             // post-bands settings
             postBandChainL.get<0>().functionToUse = GetWaveshaperFunction(chainSettings.WaveshapeFunctionGlobal, chainSettings.WaveshapeAmountGlobal);
@@ -224,6 +239,7 @@ struct GnomeDistort2Processing {
         LRFilter LPLo, APLo, HPMidHi, LPMid, HPHi;  // the AllPass is needed to align delays, see https://youtu.be/Mo0Oco3Vimo?t=9034
         // juce::dsp::ProcessorChain<CutFilter, CutFilter> preBandChain;
         DistBand BandLoL, BandMidL, BandHiL, BandLoR, BandMidR, BandHiR;
+        bool isBypassedLo = false, isBypassedMid = false, isBypassedHi = false;
         juce::dsp::ProcessorChain<Waveshaper, Gain> postBandChainL, postBandChainR;
         juce::dsp::DryWetMixer<float> dryWetMixL, dryWetMixR;
 

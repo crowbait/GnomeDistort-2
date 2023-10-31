@@ -56,7 +56,6 @@ inline static const std::function<float(float)> GetWaveshaperFunction(const Wave
         case Spiked: {
             const float pi3p16 = 3 * 3.14159f / 16;
             return [amount, pi3p16](float x) {
-                float ret;
                 if (x < -pi3p16) return juce::jlimit(-1.f, 1.f, amount + (x * (1.f - amount)));
                 if (x < 0) return juce::jlimit(-1.f, 1.f, (sin(8 * x) * amount) + (x * (1.f - amount)));
                 if (x < 0.25f) return juce::jlimit(-1.f, 1.f, ((sin(10 * x) + 0.25f) * amount) + (x * (1.f - amount)));
