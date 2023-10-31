@@ -143,15 +143,15 @@ struct GnomeDistort2Parameters {
         layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::PostGainGlobal), "Global Post-Gain", PostGainRange, 0));
         layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::DryWet), "Dry-Wet Mix", juce::NormalisableRange<float>(0, 1, 0.01f, 1), 1));
 
-        layout.add(std::make_unique<juce::AudioParameterBool>(Names.at(TreeParameter::MuteLo), "Mute Low Band", true));
-        layout.add(std::make_unique<juce::AudioParameterBool>(Names.at(TreeParameter::SoloLo), "Solo Low Band", true));
-        layout.add(std::make_unique<juce::AudioParameterBool>(Names.at(TreeParameter::BypassLo), "Bypass Low Band", true));
-        layout.add(std::make_unique<juce::AudioParameterBool>(Names.at(TreeParameter::MuteMid), "Mute Mid Band", true));
-        layout.add(std::make_unique<juce::AudioParameterBool>(Names.at(TreeParameter::SoloMid), "Solo Mid Band", true));
-        layout.add(std::make_unique<juce::AudioParameterBool>(Names.at(TreeParameter::BypassMid), "Bypass Mid Band", true));
-        layout.add(std::make_unique<juce::AudioParameterBool>(Names.at(TreeParameter::MuteHi), "Mute High Band", true));
-        layout.add(std::make_unique<juce::AudioParameterBool>(Names.at(TreeParameter::SoloHi), "Solo High Band", true));
-        layout.add(std::make_unique<juce::AudioParameterBool>(Names.at(TreeParameter::BypassHi), "Bypass High Band", true));
+        layout.add(std::make_unique<juce::AudioParameterBool>(Names.at(TreeParameter::MuteLo), "Mute Low Band", false));
+        layout.add(std::make_unique<juce::AudioParameterBool>(Names.at(TreeParameter::SoloLo), "Solo Low Band", false));
+        layout.add(std::make_unique<juce::AudioParameterBool>(Names.at(TreeParameter::BypassLo), "Bypass Low Band", false));
+        layout.add(std::make_unique<juce::AudioParameterBool>(Names.at(TreeParameter::MuteMid), "Mute Mid Band", false));
+        layout.add(std::make_unique<juce::AudioParameterBool>(Names.at(TreeParameter::SoloMid), "Solo Mid Band", false));
+        layout.add(std::make_unique<juce::AudioParameterBool>(Names.at(TreeParameter::BypassMid), "Bypass Mid Band", false));
+        layout.add(std::make_unique<juce::AudioParameterBool>(Names.at(TreeParameter::MuteHi), "Mute High Band", false));
+        layout.add(std::make_unique<juce::AudioParameterBool>(Names.at(TreeParameter::SoloHi), "Solo High Band", false));
+        layout.add(std::make_unique<juce::AudioParameterBool>(Names.at(TreeParameter::BypassHi), "Bypass High Band", false));
 
         layout.add(std::make_unique<juce::AudioParameterBool>(Names.at(TreeParameter::DisplayON), "DisplayON", true));
         layout.add(std::make_unique<juce::AudioParameterBool>(Names.at(TreeParameter::DisplayHQ), "DisplayHQ", true));
