@@ -121,6 +121,10 @@ struct GnomeDistort2Processing {
                     inputBuffer.addFrom(i, 0, source, i, 0, numSamples);
                 }
             };
+
+            // if ((channelsToAdd & 1) == 1) addFilterBand(buffer, filterBuffers[0]);
+            // if ((channelsToAdd & 2) == 2) addFilterBand(buffer, filterBuffers[1]);
+            // if ((channelsToAdd & 4) == 4) addFilterBand(buffer, filterBuffers[2]);
             for (int i = 0; i < filterBuffers.size(); i++) addFilterBand(buffer, filterBuffers[i]);
 
             block = juce::dsp::AudioBlock<float>(buffer);
@@ -142,6 +146,24 @@ struct GnomeDistort2Processing {
             // updateCutFilter(preBandChain.get<1>(), generateLoCutFilter(chainSettings.HiCutFreq, chainSettings.HiCutSlope, sampleRate), chainSettings.HiCutSlope);
             LP.setCutoffFrequency(chainSettings.BandFreqLoMid);
             HP.setCutoffFrequency(chainSettings.BandFreqLoMid);
+
+            //                    8421
+            //                    s321
+            channelsToAdd = 0b00000111;   // any solos, bands 3 (Hi), 2 (Mid), 1 (Lo)
+            auto setFlags = [](char flags, const bool bandSolo, const bool bandMute, const char bandFlagValue) {
+                if (bandSolo) {
+                    if ((flags & 8) == 8) {             // if any solos have been set
+                        flags |= bandFlagValue;         // add channel to bitmask
+                    } else {                            // no solos present
+                        flags = 0 | 8 | bandFlagValue;  // set all other to off and set solos flag
+                    }
+                }
+                if (bandMute) flags &= ~bandFlagValue;  // on mute, AND with bitwise NOT of position to remove band from flags
+                return flags;                           // if not mute or solo, return initial value: channelsToAdd is set to "just add all bands" by default
+            };
+            channelsToAdd = setFlags(channelsToAdd, chainSettings.SoloLo, chainSettings.MuteLo, 1);
+            channelsToAdd = setFlags(channelsToAdd, chainSettings.SoloMid, chainSettings.MuteMid, 2);
+            channelsToAdd = setFlags(channelsToAdd, chainSettings.SoloHi, chainSettings.MuteHi, 4);
 
             // bands settings
             BandLoL.updateSettings(chainSettings.LoBandSettings, sampleRate);
@@ -181,5 +203,6 @@ struct GnomeDistort2Processing {
         juce::dsp::DryWetMixer<float> dryWetMixL, dryWetMixR;
 
         std::array<juce::AudioBuffer<float>, 2> filterBuffers;
+        unsigned char channelsToAdd = 0b00000111;
     };
 };
