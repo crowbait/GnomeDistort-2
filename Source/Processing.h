@@ -66,10 +66,10 @@ struct GnomeDistort2Processing {
             );
             chain.get<ChainPositions::PreGain>().setGainDecibels(bandChainSettings.PreGain);
             juce::dsp::Reverb::Parameters reverbParams;
-            reverbParams.wetLevel = bandChainSettings.FdbckAmount;
-            reverbParams.damping = 1.f - bandChainSettings.FdbckAmount;
-            reverbParams.roomSize = bandChainSettings.FdbckLength;
-            reverbParams.width = bandChainSettings.FdbckLength;
+            reverbParams.wetLevel = bandChainSettings.SmearAmount;
+            reverbParams.damping = 1.f - bandChainSettings.SmearAmount;
+            reverbParams.roomSize = bandChainSettings.SmearLength;
+            reverbParams.width = bandChainSettings.SmearLength;
             chain.get<ChainPositions::Reverb>().setParameters(reverbParams);
             chain.get<ChainPositions::Waveshaper>().functionToUse = GetWaveshaperFunction(bandChainSettings.WaveshapeFunction, bandChainSettings.WaveshapeAmount);
             chain.get<ChainPositions::PostGain>().setGainDecibels(bandChainSettings.PostGain);
@@ -140,18 +140,22 @@ struct GnomeDistort2Processing {
                 }
             };
 
+            BandLoL.process(juce::dsp::ProcessContextReplacing<float>(bandBlockLo.getSingleChannelBlock(0)));
+            BandLoR.process(juce::dsp::ProcessContextReplacing<float>(bandBlockLo.getSingleChannelBlock(1)));
+            BandMidL.process(juce::dsp::ProcessContextReplacing<float>(bandBlockMid.getSingleChannelBlock(0)));
+            BandMidR.process(juce::dsp::ProcessContextReplacing<float>(bandBlockMid.getSingleChannelBlock(1)));
+            BandHiL.process(juce::dsp::ProcessContextReplacing<float>(bandBlockHi.getSingleChannelBlock(0)));
+            BandHiR.process(juce::dsp::ProcessContextReplacing<float>(bandBlockHi.getSingleChannelBlock(1)));
+
             if ((channelsToAdd & 1) == 1) addFilterBand(buffer, bandBuffers[0]);
             if ((channelsToAdd & 2) == 2) addFilterBand(buffer, bandBuffers[1]);
             if ((channelsToAdd & 4) == 4) addFilterBand(buffer, bandBuffers[2]);
-            // for (int i = 0; i < bandBuffers.size(); i++) addFilterBand(buffer, bandBuffers[i]);
 
             block = juce::dsp::AudioBlock<float>(buffer);
             juce::dsp::AudioBlock<float> blockL = block.getSingleChannelBlock(0);
             juce::dsp::AudioBlock<float> blockR = block.getSingleChannelBlock(1);
             juce::dsp::ProcessContextReplacing<float> contextL = (blockL);
             juce::dsp::ProcessContextReplacing<float> contextR = (blockR);
-
-            // bands processing
 
             postBandChainL.process(contextL);
             postBandChainR.process(contextR);

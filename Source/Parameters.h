@@ -6,9 +6,9 @@ struct GnomeDistort2Parameters {
     enum TreeParameter {
         LoCutFreq, LoCutSlope, BandFreqLoMid, BandFreqMidHi, HiCutFreq, HiCutSlope,
         PeakFreqLo, PeakGainLo, PeakQLo, PeakFreqMid, PeakGainMid, PeakQMid, PeakFreqHi, PeakGainHi, PeakQHi, PreGainLo,
-        FdbckAmountLo, FdbckLengthLo, WaveshapeAmountLo, WaveshapeFunctionLo, PostGainLo,
-        PreGainMid, FdbckAmountMid, FdbckLengthMid, WaveshapeAmountMid, WaveshapeFunctionMid, PostGainMid,
-        PreGainHi, FdbckAmountHi, FdbckLengthHi, WaveshapeAmountHi, WaveshapeFunctionHi, PostGainHi,
+        SmearAmountLo, SmearLengthLo, WaveshapeAmountLo, WaveshapeFunctionLo, PostGainLo,
+        PreGainMid, SmearAmountMid, SmearLengthMid, WaveshapeAmountMid, WaveshapeFunctionMid, PostGainMid,
+        PreGainHi, SmearAmountHi, SmearLengthHi, WaveshapeAmountHi, WaveshapeFunctionHi, PostGainHi,
         WaveshapeAmountGlobal, WaveshapeFunctionGlobal, PostGainGlobal, DryWet,
         MuteLo, SoloLo, BypassLo, MuteMid, SoloMid, BypassMid, MuteHi, SoloHi, BypassHi,
     };
@@ -19,9 +19,9 @@ struct GnomeDistort2Parameters {
             {PeakFreqLo, "PeakFreqLo"}, {PeakGainLo, "PeakGainLo"}, {PeakQLo, "PeakQLo"},
             {PeakFreqMid, "PeakFreqMid"}, {PeakGainMid, "PeakGainMid"}, {PeakQMid, "PeakQMid"},
             {PeakFreqHi, "PeakFreqHi"}, {PeakGainHi, "PeakGainHi"}, {PeakQHi, "PeakQHi"},
-            {PreGainLo, "PreGainLo"}, {FdbckAmountLo, "FdbckAmountLo"}, {FdbckLengthLo, "FdbckLengthLo"}, {WaveshapeAmountLo, "WaveshapeAmountLo"}, {WaveshapeFunctionLo, "WaveshapeFunctionLo"}, {PostGainLo, "PostGainLo"},
-            {PreGainMid, "PreGainMid"}, {FdbckAmountMid, "FdbckAmountMid"}, {FdbckLengthMid, "FdbckLengthMid"}, {WaveshapeAmountMid, "WaveshapeAmountMid"}, {WaveshapeFunctionMid, "WaveshapeFunctionMid"}, {PostGainMid, "PostGainMid"},
-            {PreGainHi, "PreGainHi"}, {FdbckAmountHi, "FdbckAmountHi"}, {FdbckLengthHi, "FdbckLengthHi"}, {WaveshapeAmountHi, "WaveshapeAmountHi"}, {WaveshapeFunctionHi, "WaveshapeFunctionHi"}, {PostGainHi, "PostGainHi"},
+            {PreGainLo, "PreGainLo"}, {SmearAmountLo, "SmearAmountLo"}, {SmearLengthLo, "SmearLengthLo"}, {WaveshapeAmountLo, "WaveshapeAmountLo"}, {WaveshapeFunctionLo, "WaveshapeFunctionLo"}, {PostGainLo, "PostGainLo"},
+            {PreGainMid, "PreGainMid"}, {SmearAmountMid, "SmearAmountMid"}, {SmearLengthMid, "SmearLengthMid"}, {WaveshapeAmountMid, "WaveshapeAmountMid"}, {WaveshapeFunctionMid, "WaveshapeFunctionMid"}, {PostGainMid, "PostGainMid"},
+            {PreGainHi, "PreGainHi"}, {SmearAmountHi, "SmearAmountHi"}, {SmearLengthHi, "SmearLengthHi"}, {WaveshapeAmountHi, "WaveshapeAmountHi"}, {WaveshapeFunctionHi, "WaveshapeFunctionHi"}, {PostGainHi, "PostGainHi"},
             {WaveshapeAmountGlobal, "WaveshapeAmountGlobal"}, {WaveshapeFunctionGlobal, "WaveshapeFunctionGlobal"}, {PostGainGlobal, "PostGainGlobal"}, {DryWet, "DryWet"},
             {MuteLo, "MuteLo"}, {SoloLo, "SoloLo"}, {BypassLo, "BypassLo"}, {MuteMid, "MuteMid"}, {SoloMid, "SoloMid"}, {BypassMid, "BypassMid"}, {MuteHi, "MuteHi"}, {SoloHi, "SoloHi"}, {BypassHi, "BypassHi"},
         };
@@ -30,7 +30,7 @@ struct GnomeDistort2Parameters {
 
     struct ChainSettings {
         struct BandChainSettings {
-            float PeakFreq = 0, PeakGain = 0, PeakQ = 0, PreGain = 0, FdbckAmount = 0, FdbckLength = 0, WaveshapeAmount = 0, PostGain = 0;
+            float PeakFreq = 0, PeakGain = 0, PeakQ = 0, PreGain = 0, SmearAmount = 0, SmearLength = 0, WaveshapeAmount = 0, PostGain = 0;
             WaveshaperFunction WaveshapeFunction = WaveshaperFunction::HardClip;
         };
 
@@ -60,20 +60,20 @@ struct GnomeDistort2Parameters {
             HiBandSettings.PeakGain = apvts.getRawParameterValue(Names.at(TreeParameter::PeakGainHi))->load();
             HiBandSettings.PeakQ = apvts.getRawParameterValue(Names.at(TreeParameter::PeakQHi))->load();
             LoBandSettings.PreGain = apvts.getRawParameterValue(Names.at(TreeParameter::PreGainLo))->load();
-            LoBandSettings.FdbckAmount = apvts.getRawParameterValue(Names.at(TreeParameter::FdbckAmountLo))->load();
-            LoBandSettings.FdbckLength = apvts.getRawParameterValue(Names.at(TreeParameter::FdbckLengthLo))->load();
+            LoBandSettings.SmearAmount = apvts.getRawParameterValue(Names.at(TreeParameter::SmearAmountLo))->load();
+            LoBandSettings.SmearLength = apvts.getRawParameterValue(Names.at(TreeParameter::SmearLengthLo))->load();
             LoBandSettings.WaveshapeAmount = apvts.getRawParameterValue(Names.at(TreeParameter::WaveshapeAmountLo))->load();
             LoBandSettings.WaveshapeFunction = static_cast<WaveshaperFunction>(apvts.getRawParameterValue(Names.at(TreeParameter::WaveshapeFunctionLo))->load());
             LoBandSettings.PostGain = apvts.getRawParameterValue(Names.at(TreeParameter::PostGainLo))->load();
             MidBandSettings.PreGain = apvts.getRawParameterValue(Names.at(TreeParameter::PreGainMid))->load();
-            MidBandSettings.FdbckAmount = apvts.getRawParameterValue(Names.at(TreeParameter::FdbckAmountMid))->load();
-            MidBandSettings.FdbckLength = apvts.getRawParameterValue(Names.at(TreeParameter::FdbckLengthMid))->load();
+            MidBandSettings.SmearAmount = apvts.getRawParameterValue(Names.at(TreeParameter::SmearAmountMid))->load();
+            MidBandSettings.SmearLength = apvts.getRawParameterValue(Names.at(TreeParameter::SmearLengthMid))->load();
             MidBandSettings.WaveshapeAmount = apvts.getRawParameterValue(Names.at(TreeParameter::WaveshapeAmountMid))->load();
             MidBandSettings.WaveshapeFunction = static_cast<WaveshaperFunction>(apvts.getRawParameterValue(Names.at(TreeParameter::WaveshapeFunctionMid))->load());
             MidBandSettings.PostGain = apvts.getRawParameterValue(Names.at(TreeParameter::PostGainMid))->load();
             HiBandSettings.PreGain = apvts.getRawParameterValue(Names.at(TreeParameter::PreGainHi))->load();
-            HiBandSettings.FdbckAmount = apvts.getRawParameterValue(Names.at(TreeParameter::FdbckAmountHi))->load();
-            HiBandSettings.FdbckLength = apvts.getRawParameterValue(Names.at(TreeParameter::FdbckLengthHi))->load();
+            HiBandSettings.SmearAmount = apvts.getRawParameterValue(Names.at(TreeParameter::SmearAmountHi))->load();
+            HiBandSettings.SmearLength = apvts.getRawParameterValue(Names.at(TreeParameter::SmearLengthHi))->load();
             HiBandSettings.WaveshapeAmount = apvts.getRawParameterValue(Names.at(TreeParameter::WaveshapeAmountHi))->load();
             HiBandSettings.WaveshapeFunction = static_cast<WaveshaperFunction>(apvts.getRawParameterValue(Names.at(TreeParameter::WaveshapeFunctionHi))->load());
             HiBandSettings.PostGain = apvts.getRawParameterValue(Names.at(TreeParameter::PostGainHi))->load();
@@ -124,25 +124,25 @@ struct GnomeDistort2Parameters {
         layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::PeakQHi), "High Band Peak Q", PeakQRange, 1));
         // Dist
         juce::NormalisableRange<float> PreGainRange = juce::NormalisableRange<float>(-8, 32, 0.5f, 1);
-        juce::NormalisableRange<float> FdbckAmountRange = juce::NormalisableRange<float>(0, 1, 0.01f, 0.5f);
-        juce::NormalisableRange<float> FdbckLengthRange = juce::NormalisableRange<float>(0, 1, 0.01f, 0.5f);
+        juce::NormalisableRange<float> SmearAmountRange = juce::NormalisableRange<float>(0, 1, 0.01f, 0.5f);
+        juce::NormalisableRange<float> SmearLengthRange = juce::NormalisableRange<float>(0, 1, 0.01f, 0.5f);
         juce::NormalisableRange<float> WaveshapeAmountRange = juce::NormalisableRange<float>(0, 0.990f, 0.01f, 0.75f);
         juce::NormalisableRange<float> PostGainRange = juce::NormalisableRange<float>(-32, 8, 0.5f, 1);
         layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::PreGainLo), "Low Band Pre-Gain", PreGainRange, 0));
-        layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::FdbckAmountLo), "Low Band Feedback Amount", FdbckAmountRange, 0));
-        layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::FdbckLengthLo), "Low Band Feedback Length", FdbckLengthRange, 0));
+        layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::SmearAmountLo), "Low Band Smear Amount", SmearAmountRange, 0));
+        layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::SmearLengthLo), "Low Band Smear Length", SmearLengthRange, 0));
         layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::WaveshapeAmountLo), "Low Band Distortion Amount", WaveshapeAmountRange, 0));
         layout.add(std::make_unique<juce::AudioParameterChoice>(Names.at(TreeParameter::WaveshapeFunctionLo), "Low Band Waveshaper Function", WaveshaperFunctionOptions, 0));
         layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::PostGainLo), "Low Band Post-Gain", PostGainRange, 0));
         layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::PreGainMid), "Mid Band Pre-Gain", PreGainRange, 0));
-        layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::FdbckAmountMid), "Mid Band Feedback Amount", FdbckAmountRange, 0));
-        layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::FdbckLengthMid), "Mid Band Feedback Length", FdbckLengthRange, 0));
+        layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::SmearAmountMid), "Mid Band Smear Amount", SmearAmountRange, 0));
+        layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::SmearLengthMid), "Mid Band Smear Length", SmearLengthRange, 0));
         layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::WaveshapeAmountMid), "Mid Band Distortion Amount", WaveshapeAmountRange, 0));
         layout.add(std::make_unique<juce::AudioParameterChoice>(Names.at(TreeParameter::WaveshapeFunctionMid), "Mid Band Waveshaper Function", WaveshaperFunctionOptions, 0));
         layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::PostGainMid), "Mid Band Post-Gain", PostGainRange, 0));
         layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::PreGainHi), "High Band Pre-Gain", PreGainRange, 0));
-        layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::FdbckAmountHi), "High Band Feedback Amount", FdbckAmountRange, 0));
-        layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::FdbckLengthHi), "High Band Feedback Length", FdbckLengthRange, 0));
+        layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::SmearAmountHi), "High Band Smear Amount", SmearAmountRange, 0));
+        layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::SmearLengthHi), "High Band Smear Length", SmearLengthRange, 0));
         layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::WaveshapeAmountHi), "High Band Distortion Amount", WaveshapeAmountRange, 0));
         layout.add(std::make_unique<juce::AudioParameterChoice>(Names.at(TreeParameter::WaveshapeFunctionHi), "High Band Waveshaper Function", WaveshaperFunctionOptions, 0));
         layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::PostGainHi), "High Band Post-Gain", PostGainRange, 0));
