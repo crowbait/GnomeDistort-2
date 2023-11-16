@@ -2,6 +2,9 @@
 
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="GnomeDistort 2\Source\UI">
+      <UniqueIdentifier>{29E5DA35-DC13-9C17-EAEC-1A3D0DF9B03D}</UniqueIdentifier>
+    </Filter>
     <Filter Include="GnomeDistort 2\Source">
       <UniqueIdentifier>{AD28E458-56D5-1050-518D-1BD606868C49}</UniqueIdentifier>
     </Filter>
@@ -3165,6 +3168,18 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\UI\BandControls.h">
+      <Filter>GnomeDistort 2\Source\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\UI\Display.h">
+      <Filter>GnomeDistort 2\Source\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\UI\PostBandControls.h">
+      <Filter>GnomeDistort 2\Source\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\UI\PreBandControls.h">
+      <Filter>GnomeDistort 2\Source\UI</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\WaveshaperFunctions.h">
       <Filter>GnomeDistort 2\Source</Filter>
     </ClInclude>

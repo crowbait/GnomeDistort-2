@@ -2511,6 +2511,10 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_gui_extra.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\UI\BandControls.h"/>
+    <ClInclude Include="..\..\Source\UI\Display.h"/>
+    <ClInclude Include="..\..\Source\UI\PostBandControls.h"/>
+    <ClInclude Include="..\..\Source\UI\PreBandControls.h"/>
     <ClInclude Include="..\..\Source\WaveshaperFunctions.h"/>
     <ClInclude Include="..\..\Source\Processing.h"/>
     <ClInclude Include="..\..\Source\Parameters.h"/>
