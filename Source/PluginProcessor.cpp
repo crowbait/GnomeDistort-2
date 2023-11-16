@@ -94,7 +94,7 @@ void GnomeDistort2AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
 //==============================================================================
 juce::AudioProcessorEditor* GnomeDistort2AudioProcessor::createEditor() {
     // generic interface
-    return new juce::GenericAudioProcessorEditor(*this);
+    // return new juce::GenericAudioProcessorEditor(*this);
     return new GnomeDistort2AudioProcessorEditor(*this);
 }
 void GnomeDistort2AudioProcessor::getStateInformation(juce::MemoryBlock& destData) {
