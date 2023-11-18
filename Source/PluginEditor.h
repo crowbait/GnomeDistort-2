@@ -10,6 +10,7 @@
 
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
+#include "Parameters.h"
 #include "UI/Display.h"
 #include "UI/PreBandControls.h"
 #include "UI/BandControls.h"
@@ -17,7 +18,7 @@
 
 class GnomeDistort2AudioProcessorEditor : public juce::AudioProcessorEditor {
 public:
-    GnomeDistort2AudioProcessorEditor(GnomeDistort2AudioProcessor&);
+    GnomeDistort2AudioProcessorEditor(GnomeDistort2AudioProcessor&, const std::map<TreeParameter, juce::String>);
     ~GnomeDistort2AudioProcessorEditor() override;
 
     enum componentIndex {
@@ -35,6 +36,7 @@ public:
 
 private:
     GnomeDistort2AudioProcessor& audioProcessor;
+
     DisplayComp Display;
     PreBandControls PreBandControl;
     BandControls BandControlsLo, BandControlsMid, BandControlsHi;
@@ -52,6 +54,9 @@ private:
             &PostBandControl
         };
     }
+
+    juce::Image background;
+    juce::Image knobOverlay;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(GnomeDistort2AudioProcessorEditor)
 };

@@ -2,6 +2,12 @@
 
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="GnomeDistort 2\Resources">
+      <UniqueIdentifier>{813E4FDA-6793-9817-E2C7-400E1FC74DD5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GnomeDistort 2\Source\UI\Controls">
+      <UniqueIdentifier>{A0C0333D-ADE8-253C-27B5-C7B62AB4DCC0}</UniqueIdentifier>
+    </Filter>
     <Filter Include="GnomeDistort 2\Source\UI">
       <UniqueIdentifier>{29E5DA35-DC13-9C17-EAEC-1A3D0DF9B03D}</UniqueIdentifier>
     </Filter>
@@ -622,6 +628,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\UI\Controls\SliderLabeledValue.cpp">
+      <Filter>GnomeDistort 2\Source\UI\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\UI\BandControls.cpp">
+      <Filter>GnomeDistort 2\Source\UI</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Processing.cpp">
       <Filter>GnomeDistort 2\Source</Filter>
     </ClCompile>
@@ -3121,6 +3133,9 @@
     <ClCompile Include="..\..\..\.JUCE\modules\juce_gui_extra\juce_gui_extra.mm">
       <Filter>JUCE Modules\juce_gui_extra</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\BinaryData.cpp">
+      <Filter>JUCE Library Code</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_audio_basics.cpp">
       <Filter>JUCE Library Code</Filter>
     </ClCompile>
@@ -3168,6 +3183,12 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\UI\Controls\ComboBox.h">
+      <Filter>GnomeDistort 2\Source\UI\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\UI\Controls\SliderLabeledValue.h">
+      <Filter>GnomeDistort 2\Source\UI\Controls</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\UI\BandControls.h">
       <Filter>GnomeDistort 2\Source\UI</Filter>
     </ClInclude>
@@ -3178,6 +3199,9 @@
       <Filter>GnomeDistort 2\Source\UI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\UI\PreBandControls.h">
+      <Filter>GnomeDistort 2\Source\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\UI\UIConsts.h">
       <Filter>GnomeDistort 2\Source\UI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\WaveshaperFunctions.h">
@@ -6177,6 +6201,9 @@
     <ClInclude Include="..\..\..\.JUCE\modules\juce_gui_extra\juce_gui_extra.h">
       <Filter>JUCE Modules\juce_gui_extra</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\JuceLibraryCode\BinaryData.h">
+      <Filter>JUCE Library Code</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\JuceLibraryCode\JuceHeader.h">
       <Filter>JUCE Library Code</Filter>
     </ClInclude>
@@ -6185,6 +6212,9 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Assets\knob_overlay_128.png">
+      <Filter>GnomeDistort 2\Resources</Filter>
+    </None>
     <None Include="..\..\..\.JUCE\modules\juce_audio_devices\native\oboe\CMakeLists.txt">
       <Filter>JUCE Modules\juce_audio_devices\native\oboe</Filter>
     </None>

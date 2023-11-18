@@ -2,17 +2,17 @@
 #include <JuceHeader.h>
 #include "ConstOptions.h"
 
-struct GnomeDistort2Parameters {
-    enum TreeParameter {
-        LoCutFreq, LoCutSlope, BandFreqLoMid, BandFreqMidHi, HiCutFreq, HiCutSlope,
-        PeakFreqLo, PeakGainLo, PeakQLo, PeakFreqMid, PeakGainMid, PeakQMid, PeakFreqHi, PeakGainHi, PeakQHi, PreGainLo,
-        SmearAmountLo, SmearLengthLo, WaveshapeAmountLo, WaveshapeFunctionLo, PostGainLo,
-        PreGainMid, SmearAmountMid, SmearLengthMid, WaveshapeAmountMid, WaveshapeFunctionMid, PostGainMid,
-        PreGainHi, SmearAmountHi, SmearLengthHi, WaveshapeAmountHi, WaveshapeFunctionHi, PostGainHi,
-        WaveshapeAmountGlobal, WaveshapeFunctionGlobal, PostGainGlobal, DryWet,
-        MuteLo, SoloLo, BypassLo, MuteMid, SoloMid, BypassMid, MuteHi, SoloHi, BypassHi,
-    };
+enum TreeParameter {
+    LoCutFreq, LoCutSlope, BandFreqLoMid, BandFreqMidHi, HiCutFreq, HiCutSlope,
+    PeakFreqLo, PeakGainLo, PeakQLo, PeakFreqMid, PeakGainMid, PeakQMid, PeakFreqHi, PeakGainHi, PeakQHi,
+    PreGainLo, SmearAmountLo, SmearLengthLo, WaveshapeAmountLo, WaveshapeFunctionLo, PostGainLo,
+    PreGainMid, SmearAmountMid, SmearLengthMid, WaveshapeAmountMid, WaveshapeFunctionMid, PostGainMid,
+    PreGainHi, SmearAmountHi, SmearLengthHi, WaveshapeAmountHi, WaveshapeFunctionHi, PostGainHi,
+    WaveshapeAmountGlobal, WaveshapeFunctionGlobal, PostGainGlobal, DryWet,
+    MuteLo, SoloLo, BypassLo, MuteMid, SoloMid, BypassMid, MuteHi, SoloHi, BypassHi,
+};
 
+struct GnomeDistort2Parameters {
     static const std::map<TreeParameter, juce::String> getTreeParameterNames() {
         static const std::map<TreeParameter, juce::String> map = {
             {LoCutFreq, "LoCutFreq"}, {LoCutSlope, "LoCutSlope"}, {BandFreqLoMid, "BandFreqLoMid"}, {BandFreqMidHi, "BandFreqMidHi"}, {HiCutFreq, "HiCutFreq"}, {HiCutSlope, "HiCutSlope"},

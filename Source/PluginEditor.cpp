@@ -10,25 +10,28 @@
 #include "PluginEditor.h"
 
 //==============================================================================
-GnomeDistort2AudioProcessorEditor::GnomeDistort2AudioProcessorEditor(GnomeDistort2AudioProcessor& p)
+GnomeDistort2AudioProcessorEditor::GnomeDistort2AudioProcessorEditor(GnomeDistort2AudioProcessor& p, const std::map<TreeParameter, juce::String> pm)
     : AudioProcessorEditor(&p), audioProcessor(p),
-    BandControlsLo(),
-    BandControlsMid(),
-    BandControlsHi() {
+    BandControlsLo(Band::Lo, p.apvts, pm, knobOverlay),
+    BandControlsMid(Band::Mid, p.apvts, pm, knobOverlay),
+    BandControlsHi(Band::Hi, p.apvts, pm, knobOverlay) {
 
     for (auto* comp : getComponents()) {
         addAndMakeVisible(comp);
     }
 
+    knobOverlay = juce::ImageCache::getFromMemory(BinaryData::knob_overlay_128_png, BinaryData::knob_overlay_128_pngSize);
+
     setSize(960, 720);
-    //checkForUpdates();
+    checkForUpdates();
 }
 
 GnomeDistort2AudioProcessorEditor::~GnomeDistort2AudioProcessorEditor() {}
 
 //==============================================================================
+
 void GnomeDistort2AudioProcessorEditor::paint(juce::Graphics& g) {
-    // (Our component is opaque, so we must completely fill the background with a solid colour)
+
 }
 
 void GnomeDistort2AudioProcessorEditor::resized() {
