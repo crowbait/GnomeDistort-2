@@ -35,25 +35,25 @@ void GnomeDistort2AudioProcessorEditor::paint(juce::Graphics& g) {
 }
 
 void GnomeDistort2AudioProcessorEditor::resized() {
-    const int padding = 16; // (windowWidth - (padding * 1.5)) % 4 MUST be 0
+    const int padding = 32; // (windowWidth - (padding * 1.5)) % 4 MUST be 0
 
     auto bounds = getLocalBounds();
-    bounds.removeFromLeft(padding);
-    bounds.removeFromRight(padding);
-    bounds.removeFromBottom(padding * 2);
+    bounds.removeFromLeft(padding / 2);
+    bounds.removeFromRight(padding / 2);
+    bounds.removeFromBottom(padding);
 
     int bandWidth = (bounds.getWidth() - (padding * 1.5f)) * 0.25f; // padding * 1.5 = 3 times half padding -> space between control columns
 
-    auto switchesArea = bounds.removeFromTop(padding * 2);
+    auto switchesArea = bounds.removeFromTop(padding);
     bounds.removeFromTop(padding);
 
     PostBandControl.setBounds(bounds.removeFromRight(bandWidth));
     bounds.removeFromRight(padding * 0.5f);
 
     auto displayArea = bounds.removeFromTop(bounds.getHeight() / 5);
-    displayArea.removeFromLeft(padding);
-    displayArea.removeFromRight(padding);
-    displayArea.removeFromBottom(padding * 2);
+    displayArea.removeFromLeft(padding / 2);
+    displayArea.removeFromRight(padding / 2);
+    displayArea.removeFromBottom(padding);
     Display.setBounds(displayArea);
     PreBandControl.setBounds(bounds.removeFromTop(bounds.getHeight() / 5));
 

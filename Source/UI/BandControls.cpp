@@ -89,7 +89,7 @@ void BandControls::resized() {
 
     auto preDistArea = bounds.removeFromTop(fifthHeight);
     PreGainSlider.setBounds(preDistArea.removeFromLeft(thirdsWidth));
-    auto smearArea = preDistArea.removeFromRight(preDistArea.getWidth() / 3 * 2);
+    auto smearArea = preDistArea.removeFromRight(preDistArea.getWidth() / 1.5f);
     auto smearLength = juce::Rectangle<int>(smearArea.getX(), smearArea.getY(), smearArea.getWidth(), smearArea.getHeight());
     smearArea.removeFromRight(smearArea.getWidth() / 3 + (padding / 3));
     smearArea.removeFromBottom(smearArea.getHeight() / 3);
@@ -99,14 +99,19 @@ void BandControls::resized() {
     SmearLengthSlider.setBounds(smearLength);
 
     auto distArea = bounds.removeFromTop(fifthHeight * 2);
-    WaveshapeFuncSelect.setBounds(distArea.removeFromBottom(GnomeDistort2UIConst::SELECT_HEIGHT));
+    auto funcSelect = distArea.removeFromBottom(GnomeDistort2UIConst::SELECT_HEIGHT + padding);
     auto display = distArea.removeFromRight(distArea.getHeight() - padding * 2);
     WaveshapeAmtSlider.setBounds(distArea);
-    display.removeFromRight(padding);
-    display.removeFromLeft(padding);
-    display.removeFromTop(padding * 3);
-    display.removeFromBottom(padding * 3);
+    display.removeFromRight(padding + (padding / 1.5f));
+    display.removeFromLeft(padding - (padding / 1.5f));
+    display.removeFromTop(padding * 2.5f);
+    display.removeFromBottom(padding * 2.5f);
     Display.setBounds(display);
+    funcSelect.removeFromLeft(padding);
+    funcSelect.removeFromRight(padding);
+    funcSelect.removeFromTop(padding / 2);
+    funcSelect.removeFromBottom(padding / 2);
+    WaveshapeFuncSelect.setBounds(funcSelect);
 
     PostGainSlider.setBounds(bounds.removeFromRight(thirdsWidth));
 }
