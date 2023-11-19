@@ -11,7 +11,7 @@ namespace GnomeDistort2UIConst {
     inline juce::Colour COLOR_PRIMARY = juce::Colour(110u, 10u, 10u);
     inline juce::Colour COLOR_TEXT = juce::Colours::white;
 
-    inline int TEXT_SMALL = 8;
+    inline int TEXT_SMALL = 10;
     inline int TEXT_NORMAL = 12;
     inline int SELECT_HEIGHT = 24;
 }

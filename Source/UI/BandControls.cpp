@@ -5,14 +5,14 @@ BandControls::BandControls(const Band b,
                            const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>& paramMap,
                            juce::Image& knobOverlay) :
     lnfCombo(),
-    PeakFreqSlider("FREQ", true, false, knobOverlay),
-    PeakGainSlider("GAIN", true, true, knobOverlay),
-    PeakQSlider("Q", true, true, knobOverlay),
-    PreGainSlider("GAIN", false, true, knobOverlay),
-    SmearAmtSlider("SMEAR AMT", true, true, knobOverlay),
-    SmearLengthSlider("SMEAR LNGTH", true, true, knobOverlay),
-    WaveshapeAmtSlider("DIST", false, true, knobOverlay),
-    PostGainSlider("GAIN", false, true, knobOverlay),
+    PeakFreqSlider("FREQ", true, knobOverlay),
+    PeakGainSlider("GAIN", true, knobOverlay),
+    PeakQSlider("Q", true, knobOverlay),
+    PreGainSlider("GAIN", true, knobOverlay),
+    SmearAmtSlider("AMT", true, knobOverlay, GnomeDistort2Controls::SliderLabeledValue::NO_VALUE),
+    SmearLengthSlider("LNGTH", true, knobOverlay, GnomeDistort2Controls::SliderLabeledValue::NO_VALUE),
+    WaveshapeAmtSlider("DIST", false, knobOverlay),
+    PostGainSlider("GAIN", true, knobOverlay),
 
     Display(apvts.getParameter(paramMap.at(b == Lo ? GnomeDistort2Parameters::TreeParameter::WaveshapeFunctionLo :
                                            b == Mid ? GnomeDistort2Parameters::TreeParameter::WaveshapeFunctionMid :
@@ -90,12 +90,13 @@ void BandControls::resized() {
     auto preDistArea = bounds.removeFromTop(fifthHeight);
     PreGainSlider.setBounds(preDistArea.removeFromLeft(thirdsWidth));
     auto smearArea = preDistArea.removeFromRight(preDistArea.getWidth() / 1.5f);
+    smearArea.expand(padding / 2, padding / 2);
     auto smearLength = juce::Rectangle<int>(smearArea.getX(), smearArea.getY(), smearArea.getWidth(), smearArea.getHeight());
-    smearArea.removeFromRight(smearArea.getWidth() / 3 + (padding / 3));
-    smearArea.removeFromBottom(smearArea.getHeight() / 3);
+    smearArea.removeFromRight(smearArea.getWidth() / 3 + padding);
+    smearArea.removeFromBottom(smearArea.getHeight() / 4);
     SmearAmtSlider.setBounds(smearArea);
-    smearLength.removeFromLeft(smearLength.getWidth() / 3 + (padding / 3));
-    smearLength.removeFromTop(smearLength.getHeight() / 3);
+    smearLength.removeFromLeft(smearLength.getWidth() / 3 + padding);
+    smearLength.removeFromTop(smearLength.getHeight() / 4);
     SmearLengthSlider.setBounds(smearLength);
 
     auto distArea = bounds.removeFromTop(fifthHeight * 2);
@@ -107,8 +108,8 @@ void BandControls::resized() {
     display.removeFromTop(padding * 2.5f);
     display.removeFromBottom(padding * 2.5f);
     Display.setBounds(display);
-    funcSelect.removeFromLeft(padding);
-    funcSelect.removeFromRight(padding);
+    funcSelect.removeFromLeft(padding * 2);
+    funcSelect.removeFromRight(padding * 2);
     funcSelect.removeFromTop(padding / 2);
     funcSelect.removeFromBottom(padding / 2);
     WaveshapeFuncSelect.setBounds(funcSelect);

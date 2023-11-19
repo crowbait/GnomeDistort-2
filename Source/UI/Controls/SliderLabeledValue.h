@@ -9,9 +9,15 @@ namespace GnomeDistort2Controls {
     };
 
     struct SliderLabeledValue : juce::Slider {
-        SliderLabeledValue(const juce::String& label, const bool smallText, const bool showDecimals, juce::Image& knobOverlay) :
+        enum DisplayMode {
+            DEFAULT,
+            NO_VALUE,
+            VALUE_NO_DECIMALS
+        };
+
+        SliderLabeledValue(const juce::String& label, const bool smallText, juce::Image& knobOverlay, DisplayMode mode = DEFAULT) :
             juce::Slider(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag, juce::Slider::TextEntryBoxPosition::NoTextBox),
-            label(label), isSmallText(smallText), isShowDecimals(showDecimals), overlay(knobOverlay) {
+            label(label), mode(mode), isSmallText(smallText), overlay(knobOverlay) {
             setLookAndFeel(&LNF);
         }
         ~SliderLabeledValue() {
@@ -19,12 +25,13 @@ namespace GnomeDistort2Controls {
         }
 
         juce::String label;
-        bool isSmallText, isShowDecimals;
+        DisplayMode mode;
+        bool isSmallText;
         juce::Image& overlay;
 
         void paint(juce::Graphics&) override;
         juce::Rectangle<int> getSliderBounds(juce::Rectangle<int>&) const; // const at END of function declares that this function MUST not change class member variables
-        juce::String getValueDisplayString() const { return juce::String((float)getValue(), isShowDecimals ? 2 : 0); }
+        juce::String getValueDisplayString() const { return juce::String((float)getValue(), mode == VALUE_NO_DECIMALS ? 0 : 2); }
 
     private:
         LnFSliderLabeledValue LNF;
