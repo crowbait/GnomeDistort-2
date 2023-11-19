@@ -18,7 +18,7 @@
 
 class GnomeDistort2AudioProcessorEditor : public juce::AudioProcessorEditor {
 public:
-    GnomeDistort2AudioProcessorEditor(GnomeDistort2AudioProcessor&, const std::map<TreeParameter, juce::String>);
+    GnomeDistort2AudioProcessorEditor(GnomeDistort2AudioProcessor&, const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>);
     ~GnomeDistort2AudioProcessorEditor() override;
 
     enum componentIndex {
@@ -30,7 +30,6 @@ public:
         IndPostBandControls
     };
 
-    //==============================================================================
     void paint(juce::Graphics&) override;
     void resized() override;
 

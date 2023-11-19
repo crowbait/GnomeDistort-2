@@ -10,7 +10,7 @@
 #include "PluginEditor.h"
 
 //==============================================================================
-GnomeDistort2AudioProcessorEditor::GnomeDistort2AudioProcessorEditor(GnomeDistort2AudioProcessor& p, const std::map<TreeParameter, juce::String> pm)
+GnomeDistort2AudioProcessorEditor::GnomeDistort2AudioProcessorEditor(GnomeDistort2AudioProcessor& p, const std::map<GnomeDistort2Parameters::TreeParameter, juce::String> pm)
     : AudioProcessorEditor(&p), audioProcessor(p),
     BandControlsLo(Band::Lo, p.apvts, pm, knobOverlay),
     BandControlsMid(Band::Mid, p.apvts, pm, knobOverlay),
@@ -51,18 +51,18 @@ void GnomeDistort2AudioProcessorEditor::resized() {
     PostBandControl.setBounds(bounds.removeFromRight(bandWidth));
     bounds.removeFromRight(padding * 0.5f);
 
-    auto displayArea = bounds.removeFromTop(bounds.getHeight() * 0.2f);
+    auto displayArea = bounds.removeFromTop(bounds.getHeight() / 5);
     displayArea.removeFromLeft(padding);
     displayArea.removeFromRight(padding);
     displayArea.removeFromBottom(padding * 2);
     Display.setBounds(displayArea);
-    PreBandControl.setBounds(bounds.removeFromTop(bounds.getHeight() * 0.2f));
+    PreBandControl.setBounds(bounds.removeFromTop(bounds.getHeight() / 5));
 
-    bounds.removeFromTop(padding * 0.5f);
+    bounds.removeFromTop(padding / 2);
     BandControlsLo.setBounds(bounds.removeFromLeft(bandWidth));
-    bounds.removeFromLeft(padding * 0.5f);
+    bounds.removeFromLeft(padding / 2);
     BandControlsMid.setBounds(bounds.removeFromLeft(bandWidth));
-    bounds.removeFromLeft(padding * 0.5f);
+    bounds.removeFromLeft(padding / 2);
     BandControlsHi.setBounds(bounds.removeFromLeft(bandWidth));
 }
 

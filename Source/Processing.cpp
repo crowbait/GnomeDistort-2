@@ -1,6 +1,6 @@
 #include "Processing.h"
 
-void GnomeDistort2Processing::DistBand::updateSettings(const GnomeDistort2Parameters::ChainSettings::BandChainSettings& bandChainSettings, double sampleRate) {
+void GnomeDistort2Processing::Processing::DistBand::updateSettings(const GnomeDistort2Parameters::Parameters::ChainSettings::BandChainSettings& bandChainSettings, double sampleRate) {
     updateCoefficients(
         chain.get<ChainPositions::PeakFilter>().coefficients,
         generatePeakFilter(juce::jmap<float>(bandChainSettings.PeakFreq, LowerFreqBound, UpperFreqBound), bandChainSettings.PeakQ, bandChainSettings.PeakGain, sampleRate)
@@ -18,7 +18,7 @@ void GnomeDistort2Processing::DistBand::updateSettings(const GnomeDistort2Parame
 
 //==============================================================================
 
-void GnomeDistort2Processing::GnomeDSP::prepare(const juce::dsp::ProcessSpec& spec) {
+void GnomeDistort2Processing::Processing::GnomeDSP::prepare(const juce::dsp::ProcessSpec& spec) {
     preBandChainL.prepare(spec);
     preBandChainR.prepare(spec);
 
@@ -51,7 +51,7 @@ void GnomeDistort2Processing::GnomeDSP::prepare(const juce::dsp::ProcessSpec& sp
     dryWetMixR.setMixingRule(juce::dsp::DryWetMixingRule::linear);
 }
 
-void GnomeDistort2Processing::GnomeDSP::process(juce::AudioBuffer<float>& buffer) {
+void GnomeDistort2Processing::Processing::GnomeDSP::process(juce::AudioBuffer<float>& buffer) {
     juce::dsp::AudioBlock<float> block(buffer);
     juce::dsp::AudioBlock<float> blockL = block.getSingleChannelBlock(0);
     juce::dsp::AudioBlock<float> blockR = block.getSingleChannelBlock(1);
@@ -109,7 +109,7 @@ void GnomeDistort2Processing::GnomeDSP::process(juce::AudioBuffer<float>& buffer
     dryWetMixR.mixWetSamples(blockR);
 }
 
-void GnomeDistort2Processing::GnomeDSP::updateSettings(const GnomeDistort2Parameters::ChainSettings& chainSettings, double sampleRate) {
+void GnomeDistort2Processing::Processing::GnomeDSP::updateSettings(const GnomeDistort2Parameters::Parameters::ChainSettings& chainSettings, double sampleRate) {
     auto preBandsLoCut = generateLoCutFilter(chainSettings.LoCutFreq, chainSettings.LoCutSlope, sampleRate);
     auto preBandsHiCut = generateHiCutFilter(chainSettings.HiCutFreq, chainSettings.HiCutSlope, sampleRate);
     updateCutFilter(preBandChainL.get<0>(), preBandsLoCut, chainSettings.LoCutSlope);

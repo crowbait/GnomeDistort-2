@@ -49,9 +49,9 @@ public:
 
     //==============================================================================
 
-    GnomeDistort2Parameters::ChainSettings chainSettings;
-    juce::AudioProcessorValueTreeState apvts{ *this, nullptr, "Parameters", GnomeDistort2Parameters::createParameterLayout() };
-    GnomeDistort2Processing::GnomeDSP processorChain;
+    GnomeDistort2Parameters::Parameters::ChainSettings chainSettings;
+    juce::AudioProcessorValueTreeState apvts{ *this, nullptr, "Parameters", GnomeDistort2Parameters::Parameters::createParameterLayout() };
+    GnomeDistort2Processing::Processing::GnomeDSP processorChain;
 
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(GnomeDistort2AudioProcessor);

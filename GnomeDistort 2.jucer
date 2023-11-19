@@ -7,14 +7,28 @@
               pluginManufacturerCode="CrBt" pluginCode="GDs2" aaxIdentifier="de.crowbait.gnomedistort2"
               pluginVST3Category="Distortion,Fx" pluginChannelConfigs="{2, 2}">
   <MAINGROUP id="jjautv" name="GnomeDistort 2">
+    <GROUP id="{DD7B0637-8D4C-833E-5DE4-632D1E92A377}" name="Resources">
+      <FILE id="Cap02M" name="knob_overlay_128.png" compile="0" resource="1"
+            file="Assets/knob_overlay_128.png"/>
+    </GROUP>
     <GROUP id="{37019FB3-77C2-F5BE-8075-A39A7B85E738}" name="Source">
       <GROUP id="{F04FB702-04D1-3718-FA9E-035CE47FB04B}" name="UI">
+        <GROUP id="{A3CB6517-1173-ECFE-E54A-676F46DD9BC4}" name="Controls">
+          <FILE id="jUVqBq" name="ComboBox.h" compile="0" resource="0" file="Source/UI/Controls/ComboBox.h"/>
+          <FILE id="V9z4sC" name="SliderLabeledValue.cpp" compile="1" resource="0"
+                file="Source/UI/Controls/SliderLabeledValue.cpp"/>
+          <FILE id="q9rmIP" name="SliderLabeledValue.h" compile="0" resource="0"
+                file="Source/UI/Controls/SliderLabeledValue.h"/>
+        </GROUP>
+        <FILE id="q1Va4x" name="BandControls.cpp" compile="1" resource="0"
+              file="Source/UI/BandControls.cpp"/>
         <FILE id="h0PYHj" name="BandControls.h" compile="0" resource="0" file="Source/UI/BandControls.h"/>
         <FILE id="tlNp2p" name="Display.h" compile="0" resource="0" file="Source/UI/Display.h"/>
         <FILE id="BXR7G1" name="PostBandControls.h" compile="0" resource="0"
               file="Source/UI/PostBandControls.h"/>
         <FILE id="FsXJO6" name="PreBandControls.h" compile="0" resource="0"
               file="Source/UI/PreBandControls.h"/>
+        <FILE id="ywVgCK" name="UIConsts.h" compile="0" resource="0" file="Source/UI/UIConsts.h"/>
       </GROUP>
       <FILE id="Bhyh0v" name="Processing.cpp" compile="1" resource="0" file="Source/Processing.cpp"/>
       <FILE id="IPv87m" name="WaveshaperFunctions.h" compile="0" resource="0"
