@@ -9,7 +9,7 @@ void GnomeDistort2Controls::LnFSliderLabeledValue::drawRotarySlider(juce::Graphi
     Point<int> center = bounds.getCentre();
 
     // knob body
-    g.setColour(GnomeDistort2UIConst::COLOR_KNOB);
+    g.setColour(GnomeDistort2UIConst::COLOR_PRIMARY);
     g.fillEllipse(bounds.toFloat());
 
     if (auto* sldr = dynamic_cast<SliderLabeledValue*>(&slider)) {

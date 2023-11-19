@@ -102,10 +102,10 @@ void BandControls::resized() {
     WaveshapeFuncSelect.setBounds(distArea.removeFromBottom(GnomeDistort2UIConst::SELECT_HEIGHT));
     auto display = distArea.removeFromRight(distArea.getHeight() - padding * 2);
     WaveshapeAmtSlider.setBounds(distArea);
-    display.removeFromRight(padding / 2);
-    display.removeFromLeft(padding / 2);
-    display.removeFromTop(padding * 1.5f);
-    display.removeFromBottom(padding * 1.5f);
+    display.removeFromRight(padding);
+    display.removeFromLeft(padding);
+    display.removeFromTop(padding * 3);
+    display.removeFromBottom(padding * 3);
     Display.setBounds(display);
 
     PostGainSlider.setBounds(bounds.removeFromRight(thirdsWidth));

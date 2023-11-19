@@ -9,7 +9,7 @@ namespace GnomeDistort2Controls {
             setColour(juce::ComboBox::ColourIds::textColourId, GnomeDistort2UIConst::COLOR_TEXT);
             setColour(juce::ComboBox::ColourIds::outlineColourId, GnomeDistort2UIConst::COLOR_BG_VERYDARK);
             setColour(juce::ComboBox::ColourIds::arrowColourId, GnomeDistort2UIConst::COLOR_BG_LIGHT);
-            setColour(juce::ComboBox::ColourIds::arrowColourId, GnomeDistort2UIConst::COLOR_KNOB);
+            setColour(juce::ComboBox::ColourIds::arrowColourId, GnomeDistort2UIConst::COLOR_PRIMARY);
             setColour(juce::PopupMenu::ColourIds::backgroundColourId, GnomeDistort2UIConst::COLOR_BG_MIDDARK);
             setColour(juce::PopupMenu::ColourIds::textColourId, GnomeDistort2UIConst::COLOR_TEXT);
         }
