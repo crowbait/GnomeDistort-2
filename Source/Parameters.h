@@ -125,8 +125,8 @@ namespace GnomeDistort2Parameters {
             layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::PeakQHi), "High Band Peak Q", PeakQRange, 1));
             // Dist
             juce::NormalisableRange<float> PreGainRange = juce::NormalisableRange<float>(-8, 32, 0.5f, 1);
-            juce::NormalisableRange<float> SmearAmountRange = juce::NormalisableRange<float>(0, 1, 0.01f, 0.5f);
-            juce::NormalisableRange<float> SmearLengthRange = juce::NormalisableRange<float>(0, 1, 0.01f, 0.5f);
+            juce::NormalisableRange<float> SmearAmountRange = juce::NormalisableRange<float>(0, 1, 0.01f, 0.75f);
+            juce::NormalisableRange<float> SmearLengthRange = juce::NormalisableRange<float>(0, 1, 0.01f, 0.75f);
             juce::NormalisableRange<float> WaveshapeAmountRange = juce::NormalisableRange<float>(0, 0.990f, 0.01f, 0.75f);
             juce::NormalisableRange<float> PostGainRange = juce::NormalisableRange<float>(-32, 8, 0.5f, 1);
             layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::PreGainLo), "Low Band Pre-Gain", PreGainRange, 0));

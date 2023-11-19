@@ -115,4 +115,12 @@ void BandControls::resized() {
     WaveshapeFuncSelect.setBounds(funcSelect);
 
     PostGainSlider.setBounds(bounds.removeFromRight(thirdsWidth));
+
+    /*
+//////////////////////////////////////////////////////////////////////////
+
+        M U T E     S O L O     B Y P A S S
+
+//////////////////////////////////////////////////////////////////////////
+    */
 }
