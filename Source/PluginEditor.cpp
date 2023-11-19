@@ -36,7 +36,6 @@ void GnomeDistort2AudioProcessorEditor::paint(juce::Graphics& g) {
 
 void GnomeDistort2AudioProcessorEditor::resized() {
     const int padding = 16; // (windowWidth - (padding * 1.5)) % 4 MUST be 0
-    const int selectHeight = 24;
 
     auto bounds = getLocalBounds();
     bounds.removeFromLeft(padding);

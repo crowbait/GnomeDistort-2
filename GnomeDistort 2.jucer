@@ -15,6 +15,9 @@
       <GROUP id="{F04FB702-04D1-3718-FA9E-035CE47FB04B}" name="UI">
         <GROUP id="{A3CB6517-1173-ECFE-E54A-676F46DD9BC4}" name="Controls">
           <FILE id="jUVqBq" name="ComboBox.h" compile="0" resource="0" file="Source/UI/Controls/ComboBox.h"/>
+          <FILE id="uIOlRW" name="DisplayGraph.cpp" compile="1" resource="0"
+                file="Source/UI/Controls/DisplayGraph.cpp"/>
+          <FILE id="RR9hWh" name="DisplayGraph.h" compile="0" resource="0" file="Source/UI/Controls/DisplayGraph.h"/>
           <FILE id="V9z4sC" name="SliderLabeledValue.cpp" compile="1" resource="0"
                 file="Source/UI/Controls/SliderLabeledValue.cpp"/>
           <FILE id="q9rmIP" name="SliderLabeledValue.h" compile="0" resource="0"

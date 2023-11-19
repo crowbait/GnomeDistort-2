@@ -15,7 +15,7 @@ namespace GnomeDistort2Processing {
                 return [amount](float x) { return juce::jlimit(-1.f, 1.f, (float)(pow(x, 3) * pow((cos(x * amount * 9.4f)), 3))); };
                 break;
             case GNOME:   // x - (a/x)
-                return [amount](float x) { return juce::jlimit(-1.f, 1.f, x == 0 ? 0 : x - (amount / x)); };
+                return [amount](float x) { return juce::jlimit(-1.f + (amount > 0 ? 0.4f : 0), 1.f - (amount > 0 ? 0.4f : 0), x == 0 ? 0 : x - (amount / x)); };
                 break;
             case Warm:      // x < 0: x*a   --  x > 0: x*(1+a)
                 return [amount](float x) {

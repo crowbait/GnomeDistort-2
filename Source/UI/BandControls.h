@@ -3,6 +3,7 @@
 #include "../PluginProcessor.h"
 #include "../Parameters.h"
 #include "Controls/SliderLabeledValue.h"
+#include "Controls/DisplayGraph.h"
 #include "Controls/ComboBox.h"
 
 enum Band {
@@ -11,7 +12,7 @@ enum Band {
     Hi
 };
 struct BandControls : juce::Component {
-    BandControls(const Band, juce::AudioProcessorValueTreeState&, const std::map<TreeParameter, juce::String>&, const juce::Image&);
+    BandControls(const Band, juce::AudioProcessorValueTreeState&, const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>&, juce::Image&);
     ~BandControls() { WaveshapeFuncSelect.setLookAndFeel(nullptr); };
 
     enum componentIndex {
@@ -23,19 +24,16 @@ struct BandControls : juce::Component {
         IndSmearLength,
         IndWaveshapeAmt,
         IndWaveshapeFunc,
+        IndWaveshapeDisplay,
         IndPostGain
     };
 
-    void paint(juce::Graphics& g) override {
-        g.setColour(juce::Colours::orangered);
-        g.fillAll();
-    }
-    void resized() override {
-
-    }
+    void paint(juce::Graphics& g) override {};
+    void resized() override;
 
 private:
     GnomeDistort2Controls::SliderLabeledValue PeakFreqSlider, PeakGainSlider, PeakQSlider, PreGainSlider, SmearAmtSlider, SmearLengthSlider, WaveshapeAmtSlider, PostGainSlider;
+    GnomeDistort2Controls::DisplayGraph Display;
     juce::ComboBox WaveshapeFuncSelect;
     using APVTS = juce::AudioProcessorValueTreeState;
     APVTS::SliderAttachment AttachPeakFreqSlider, AttachPeakGainSlider, AttachPeakQSlider, AttachPreGainSlider, AttachSmearAmtSlider, AttachSmearLengthSlider, AttachWaveshapeAmtSlider, AttachPostGainSlider;
@@ -48,10 +46,12 @@ private:
             &PeakFreqSlider,
             &PeakGainSlider,
             &PeakQSlider,
+            &PreGainSlider,
             &SmearAmtSlider,
             &SmearLengthSlider,
             &WaveshapeAmtSlider,
             &WaveshapeFuncSelect,
+            &Display,
             &PostGainSlider
         };
     }
