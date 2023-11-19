@@ -139,6 +139,7 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\UI\Displays\DisplayGraph.cpp"/>
     <ClCompile Include="..\..\Source\UI\Controls\SliderLabeledValue.cpp"/>
     <ClCompile Include="..\..\Source\UI\BandControls.cpp"/>
     <ClCompile Include="..\..\Source\Processing.cpp"/>
@@ -2514,6 +2515,7 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_gui_extra.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\UI\Displays\DisplayGraph.h"/>
     <ClInclude Include="..\..\Source\UI\Controls\ComboBox.h"/>
     <ClInclude Include="..\..\Source\UI\Controls\SliderLabeledValue.h"/>
     <ClInclude Include="..\..\Source\UI\BandControls.h"/>

@@ -5,6 +5,9 @@
     <Filter Include="GnomeDistort 2\Resources">
       <UniqueIdentifier>{813E4FDA-6793-9817-E2C7-400E1FC74DD5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GnomeDistort 2\Source\UI\Displays">
+      <UniqueIdentifier>{A01AF499-D24D-DF2E-10CB-C2843557E31F}</UniqueIdentifier>
+    </Filter>
     <Filter Include="GnomeDistort 2\Source\UI\Controls">
       <UniqueIdentifier>{A0C0333D-ADE8-253C-27B5-C7B62AB4DCC0}</UniqueIdentifier>
     </Filter>
@@ -628,6 +631,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\UI\Displays\DisplayGraph.cpp">
+      <Filter>GnomeDistort 2\Source\UI\Displays</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\UI\Controls\SliderLabeledValue.cpp">
       <Filter>GnomeDistort 2\Source\UI\Controls</Filter>
     </ClCompile>
@@ -3183,6 +3189,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\UI\Displays\DisplayGraph.h">
+      <Filter>GnomeDistort 2\Source\UI\Displays</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\UI\Controls\ComboBox.h">
       <Filter>GnomeDistort 2\Source\UI\Controls</Filter>
     </ClInclude>
