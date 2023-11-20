@@ -4,7 +4,6 @@ BandControls::BandControls(const Band b,
                            juce::AudioProcessorValueTreeState& apvts,
                            const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>& paramMap,
                            juce::Image& knobOverlay) :
-    lnfCombo(),
     PeakFreqSlider("FREQ", true, knobOverlay),
     PeakGainSlider("GAIN", true, knobOverlay),
     PeakQSlider("Q", true, knobOverlay),
@@ -51,11 +50,20 @@ BandControls::BandControls(const Band b,
     AttachPostGainSlider(apvts, paramMap.at(b == Lo ? GnomeDistort2Parameters::TreeParameter::PostGainLo :
                                             b == Mid ? GnomeDistort2Parameters::TreeParameter::PostGainMid :
                                             GnomeDistort2Parameters::TreeParameter::PostGainHi), PostGainSlider),
+
     AttachWaveshapeFuncSelect(apvts, paramMap.at(b == Lo ? GnomeDistort2Parameters::TreeParameter::WaveshapeFunctionLo :
                                                  b == Mid ? GnomeDistort2Parameters::TreeParameter::WaveshapeFunctionMid :
-                                                 GnomeDistort2Parameters::TreeParameter::WaveshapeFunctionHi), WaveshapeFuncSelect) {
+                                                 GnomeDistort2Parameters::TreeParameter::WaveshapeFunctionHi), WaveshapeFuncSelect),
+    AttachBtnMute(apvts, paramMap.at(b == Lo ? GnomeDistort2Parameters::TreeParameter::MuteLo :
+                                     b == Mid ? GnomeDistort2Parameters::TreeParameter::MuteMid :
+                                     GnomeDistort2Parameters::TreeParameter::MuteHi), BtnMute),
+    AttachBtnSolo(apvts, paramMap.at(b == Lo ? GnomeDistort2Parameters::TreeParameter::SoloLo :
+                                     b == Mid ? GnomeDistort2Parameters::TreeParameter::SoloMid :
+                                     GnomeDistort2Parameters::TreeParameter::SoloHi), BtnSolo),
+    AttachBtnBypass(apvts, paramMap.at(b == Lo ? GnomeDistort2Parameters::TreeParameter::BypassLo :
+                                       b == Mid ? GnomeDistort2Parameters::TreeParameter::BypassMid :
+                                       GnomeDistort2Parameters::TreeParameter::BypassHi), BtnBypass) {
 
-    WaveshapeFuncSelect.setLookAndFeel(&lnfCombo);
     WaveshapeFuncSelect.addItemList(GnomeDistort2Parameters::Options::WaveshaperFunctionOptions, 1);
     WaveshapeFuncSelect.setSelectedId(
         apvts.getRawParameterValue(
@@ -64,6 +72,14 @@ BandControls::BandControls(const Band b,
                 b == Mid ? GnomeDistort2Parameters::TreeParameter::WaveshapeFunctionMid :
                 GnomeDistort2Parameters::TreeParameter::WaveshapeFunctionHi)
         )->load() + 1);
+    WaveshapeFuncSelect.setLookAndFeel(&lnfCombo);
+
+    BtnMute.setClickingTogglesState(true);
+    BtnMute.setLookAndFeel(&lnfTextToggle);
+    BtnSolo.setClickingTogglesState(true);
+    BtnSolo.setLookAndFeel(&lnfTextToggle);
+    BtnBypass.setClickingTogglesState(true);
+    BtnBypass.setLookAndFeel(&lnfTextToggle);
 
     for (auto* comp : getComponents()) {
         addAndMakeVisible(comp);
@@ -116,11 +132,13 @@ void BandControls::resized() {
 
     PostGainSlider.setBounds(bounds.removeFromRight(thirdsWidth));
 
-    /*
-//////////////////////////////////////////////////////////////////////////
+    bounds.removeFromTop(bounds.getHeight() - (padding * 4));   // together with next line, results in button size of padding * 2
+    bounds.removeFromBottom(padding * 2);
+    bounds.removeFromLeft(padding * 2);
 
-        M U T E     S O L O     B Y P A S S
-
-//////////////////////////////////////////////////////////////////////////
-    */
+    BtnMute.setBounds(bounds.removeFromLeft(padding * 2));
+    bounds.removeFromLeft(padding / 2);
+    BtnSolo.setBounds(bounds.removeFromLeft(padding * 2));
+    bounds.removeFromLeft(padding / 2);
+    BtnBypass.setBounds(bounds.removeFromLeft(padding * 3));
 }

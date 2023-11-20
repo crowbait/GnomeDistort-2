@@ -12,6 +12,7 @@ namespace GnomeDistort2Controls {
             setColour(juce::ComboBox::ColourIds::arrowColourId, GnomeDistort2UIConst::COLOR_PRIMARY);
             setColour(juce::PopupMenu::ColourIds::backgroundColourId, GnomeDistort2UIConst::COLOR_BG_MIDDARK);
             setColour(juce::PopupMenu::ColourIds::textColourId, GnomeDistort2UIConst::COLOR_TEXT);
+            setColour(juce::PopupMenu::ColourIds::highlightedBackgroundColourId, GnomeDistort2UIConst::COLOR_BG_DARK);
         }
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(LnFComboBox)

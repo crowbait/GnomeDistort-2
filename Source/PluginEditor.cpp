@@ -42,7 +42,7 @@ void GnomeDistort2AudioProcessorEditor::resized() {
     bounds.removeFromRight(padding / 2);
     bounds.removeFromBottom(padding);
 
-    int bandWidth = (bounds.getWidth() - (padding * 1.5f)) * 0.25f; // padding * 1.5 = 3 times half padding -> space between control columns
+    int bandWidth = (bounds.getWidth() - (padding * 2)) * 0.25f; // padding * 2 = 4 times half padding -> space between control columns
 
     auto switchesArea = bounds.removeFromTop(padding);
     bounds.removeFromTop(padding);
@@ -57,11 +57,11 @@ void GnomeDistort2AudioProcessorEditor::resized() {
     Display.setBounds(displayArea);
     PreBandControl.setBounds(bounds.removeFromTop(bounds.getHeight() / 5));
 
-    bounds.removeFromTop(padding / 2);
+    bounds.removeFromTop(padding);
     BandControlsLo.setBounds(bounds.removeFromLeft(bandWidth));
-    bounds.removeFromLeft(padding / 2);
+    bounds.removeFromLeft(padding);
     BandControlsMid.setBounds(bounds.removeFromLeft(bandWidth));
-    bounds.removeFromLeft(padding / 2);
+    bounds.removeFromLeft(padding);
     BandControlsHi.setBounds(bounds.removeFromLeft(bandWidth));
 }
 

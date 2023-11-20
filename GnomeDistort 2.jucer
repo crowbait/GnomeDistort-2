@@ -14,7 +14,7 @@
     <GROUP id="{37019FB3-77C2-F5BE-8075-A39A7B85E738}" name="Source">
       <GROUP id="{F04FB702-04D1-3718-FA9E-035CE47FB04B}" name="UI">
         <GROUP id="{A3CB6517-1173-ECFE-E54A-676F46DD9BC4}" name="Controls">
-          <FILE id="jUVqBq" name="ComboBox.h" compile="0" resource="0" file="Source/UI/Controls/ComboBox.h"/>
+          <FILE id="jUVqBq" name="ComboBoxLnF.h" compile="0" resource="0" file="Source/UI/Controls/ComboBoxLnF.h"/>
           <FILE id="uIOlRW" name="DisplayGraph.cpp" compile="1" resource="0"
                 file="Source/UI/Controls/DisplayGraph.cpp"/>
           <FILE id="RR9hWh" name="DisplayGraph.h" compile="0" resource="0" file="Source/UI/Controls/DisplayGraph.h"/>
@@ -22,6 +22,8 @@
                 file="Source/UI/Controls/SliderLabeledValue.cpp"/>
           <FILE id="q9rmIP" name="SliderLabeledValue.h" compile="0" resource="0"
                 file="Source/UI/Controls/SliderLabeledValue.h"/>
+          <FILE id="bjhuJd" name="ToggleButtonLnF.h" compile="0" resource="0"
+                file="Source/UI/Controls/ToggleButtonLnF.h"/>
         </GROUP>
         <FILE id="q1Va4x" name="BandControls.cpp" compile="1" resource="0"
               file="Source/UI/BandControls.cpp"/>
@@ -72,19 +74,19 @@
         <CONFIGURATION isDebug="0" name="Release" targetName="GnomeDistort 2" enablePluginBinaryCopyStep="1"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_audio_basics" path="../../.JUCE/modules"/>
-        <MODULEPATH id="juce_audio_devices" path="../../.JUCE/modules"/>
-        <MODULEPATH id="juce_audio_formats" path="../../.JUCE/modules"/>
-        <MODULEPATH id="juce_audio_plugin_client" path="../../.JUCE/modules"/>
-        <MODULEPATH id="juce_audio_processors" path="../../.JUCE/modules"/>
-        <MODULEPATH id="juce_audio_utils" path="../../.JUCE/modules"/>
-        <MODULEPATH id="juce_core" path="../../.JUCE/modules"/>
-        <MODULEPATH id="juce_data_structures" path="../../.JUCE/modules"/>
-        <MODULEPATH id="juce_events" path="../../.JUCE/modules"/>
-        <MODULEPATH id="juce_graphics" path="../../.JUCE/modules"/>
-        <MODULEPATH id="juce_gui_basics" path="../../.JUCE/modules"/>
-        <MODULEPATH id="juce_gui_extra" path="../../.JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="../.JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../.JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../.JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../.JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../.JUCE/modules"/>
         <MODULEPATH id="juce_dsp" path="../.JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../.JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="../.JUCE/modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="../.JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../.JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../.JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../.JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../.JUCE/modules"/>
       </MODULEPATHS>
     </VS2022>
     <XCODE_MAC targetFolder="Builds/MacOSX">
@@ -93,19 +95,19 @@
         <CONFIGURATION isDebug="0" name="Release" targetName="GnomeDistort 2"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_audio_basics" path="../../.JUCE/modules"/>
-        <MODULEPATH id="juce_audio_devices" path="../../.JUCE/modules"/>
-        <MODULEPATH id="juce_audio_formats" path="../../.JUCE/modules"/>
-        <MODULEPATH id="juce_audio_plugin_client" path="../../.JUCE/modules"/>
-        <MODULEPATH id="juce_audio_processors" path="../../.JUCE/modules"/>
-        <MODULEPATH id="juce_audio_utils" path="../../.JUCE/modules"/>
-        <MODULEPATH id="juce_core" path="../../.JUCE/modules"/>
-        <MODULEPATH id="juce_data_structures" path="../../.JUCE/modules"/>
-        <MODULEPATH id="juce_events" path="../../.JUCE/modules"/>
-        <MODULEPATH id="juce_graphics" path="../../.JUCE/modules"/>
-        <MODULEPATH id="juce_gui_basics" path="../../.JUCE/modules"/>
-        <MODULEPATH id="juce_gui_extra" path="../../.JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="../.JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../.JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../.JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../.JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../.JUCE/modules"/>
         <MODULEPATH id="juce_dsp" path="../.JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../.JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="../.JUCE/modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="../.JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../.JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../.JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../.JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../.JUCE/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
   </EXPORTFORMATS>
