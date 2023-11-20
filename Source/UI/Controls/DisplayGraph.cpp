@@ -54,7 +54,10 @@ void GnomeDistort2Controls::DisplayGraph::parameterValueChanged(int parameterInd
     if (parameterIndex == funcParamIndex) func = static_cast<GnomeDistort2Parameters::Options::WaveshaperFunction>(juce::jmap(newValue, 0.f, (float)GnomeDistort2Parameters::Options::WaveshaperFunctionOptions.size() - 1));
     if (parameterIndex == amtParamIndex) amount = newValue;
     waveshaperFunction = GnomeDistort2Processing::GetWaveshaperFunction(func, amount);
-    repaint();
+    juce::MessageManagerLock mml(juce::Thread::getCurrentThread());
+    if (mml.lockWasGained()) {
+        repaint();
+    } else DBG("No Lock");
 }
 
 juce::Rectangle<int> GnomeDistort2Controls::DisplayGraph::getRenderArea() {
