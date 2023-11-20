@@ -32,10 +32,10 @@ namespace GnomeDistort2Processing {
             filter.template setBypassed<2>(true);
             filter.template setBypassed<3>(true);
             switch (slope) {
-                case GnomeDistort2Parameters::Options::FilterSlope::Slope48: *filter.template get<3>().coefficients = *cutCoefficients[3]; filter.setBypassed<3>(false);
-                case GnomeDistort2Parameters::Options::FilterSlope::Slope36: *filter.template get<2>().coefficients = *cutCoefficients[2]; filter.setBypassed<2>(false);
-                case GnomeDistort2Parameters::Options::FilterSlope::Slope24: *filter.template get<1>().coefficients = *cutCoefficients[1]; filter.setBypassed<0>(false);
-                case GnomeDistort2Parameters::Options::FilterSlope::Slope12: *filter.template get<0>().coefficients = *cutCoefficients[0]; filter.setBypassed<0>(false);
+                case GnomeDistort2Parameters::Options::FilterSlope::Slope48: *filter.template get<3>().coefficients = *cutCoefficients[3]; filter.template setBypassed<3>(false);
+                case GnomeDistort2Parameters::Options::FilterSlope::Slope36: *filter.template get<2>().coefficients = *cutCoefficients[2]; filter.template setBypassed<2>(false);
+                case GnomeDistort2Parameters::Options::FilterSlope::Slope24: *filter.template get<1>().coefficients = *cutCoefficients[1]; filter.template setBypassed<1>(false);
+                case GnomeDistort2Parameters::Options::FilterSlope::Slope12: *filter.template get<0>().coefficients = *cutCoefficients[0]; filter.template setBypassed<0>(false);
             }
         }
 
@@ -50,11 +50,11 @@ namespace GnomeDistort2Processing {
                 Waveshaper,     // dist
                 Gain>;          // post-gain
             enum ChainPositions {
-                PeakFilter,
-                PreGain,
-                Reverb,
-                Waveshaper,
-                PostGain
+                PosPeakFilter,
+                PosPreGain,
+                PosReverb,
+                PosWaveshaper,
+                PosPostGain
             };
             BandChain chain;
             float LowerFreqBound = 20, UpperFreqBound = 20000;

@@ -62,6 +62,7 @@ target_compile_definitions(GnomeDistort2
 juce_add_binary_data(GnomeDistort2_binary SOURCES 
   Assets/knob_overlay_128.png
 )
+target_compile_options(GnomeDistort2_binary PRIVATE -fPIC)
 
 target_link_libraries(GnomeDistort2 PRIVATE juce::juce_recommended_warning_flags juce::juce_recommended_config_flags juce::juce_recommended_lto_flags)
 target_link_libraries(GnomeDistort2 

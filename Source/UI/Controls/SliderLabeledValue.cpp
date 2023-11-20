@@ -72,8 +72,8 @@ void GnomeDistort2Controls::LnFSliderLabeledValue::drawRotarySlider(juce::Graphi
 
 void GnomeDistort2Controls::SliderLabeledValue::paint(juce::Graphics& g) {
     using namespace juce;
-
-    Rectangle<int> sliderBounds = getSliderBounds(getLocalBounds());
+    Rectangle<int> bounds = getLocalBounds();
+    Rectangle<int> sliderBounds = getSliderBounds(bounds);
     constexpr float minAngle = degreesToRadians(-135.f);
     constexpr float maxAngle = degreesToRadians(135.f);
 

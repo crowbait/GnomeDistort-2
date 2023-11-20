@@ -1,4 +1,5 @@
 #pragma once
+#include <JuceHeader.h>
 #include "ConstOptions.h"
 
 namespace GnomeDistort2Processing {
@@ -9,7 +10,7 @@ namespace GnomeDistort2Processing {
                 return [amount](float x) { return juce::jlimit(0.f - (1.f - amount), 1.f - amount, x) + (x < 0 ? -amount : amount); };
                 break;
             case SoftClip:  // x * sqrt(1+a²) - scaling factor 5
-                return [amount](float x) { return juce::jlimit(-1.f, 1.f, x * sqrt(1 + ((amount * 5) * (amount * 5)))); };
+                return [amount](float x) { return juce::jlimit(-1.f, 1.f, x * (float)sqrt(1 + ((amount * 5) * (amount * 5)))); };
                 break;
             case Cracked:   // x³ * cos(x*a)³ - scaling factor 9.4
                 return [amount](float x) { return juce::jlimit(-1.f, 1.f, (float)(pow(x, 3) * pow((cos(x * amount * 9.4f)), 3))); };
@@ -30,13 +31,13 @@ namespace GnomeDistort2Processing {
                 };
             } break;
             case Fuzz:      // x + (a * sin(10a * x))
-                return [amount](float x) { return juce::jlimit(-1.f, 1.f, x + (amount * sin(10 * amount * x))); };
+                return [amount](float x) { return juce::jlimit(-1.f, 1.f, x + (amount * (float)sin(10 * amount * x))); };
                 break;
             case Hollowing: // x * (3a * sin(x)) - x - a
-                return [amount](float x) { return juce::jlimit(-1.f, 1.f, x * (3 * amount * sin(x)) - x - amount); };
+                return [amount](float x) { return juce::jlimit(-1.f, 1.f, x * (3 * amount * (float)sin(x)) - x - amount); };
                 break;
             case Sin:
-                return [amount](float x) { return juce::jlimit(-1.f, 1.f, 2 * amount * sin(x * 100 * amount) + ((1 - amount) * x)); };
+                return [amount](float x) { return juce::jlimit(-1.f, 1.f, 2 * amount * (float)sin(x * 100 * amount) + ((1 - amount) * x)); };
                 break;
             case Rash: {      //  -1           -0.8          -0.6          -0.4          -0.2           0            0.2           0.4           0.6           0.8           1
                 const float noise[] = { 2.22f, 3.21f, 1.38f, 0.21f, 3.66f, 1.51f, 3.41f, 2.14f, 2.09f, 0.31f, 1.15f, 3.15f, 2.58f, 0.91f, 1.18f, 4.29f, 3.24f, 0.11f, 0.05f, 2.11f, 1.77f };
@@ -59,10 +60,10 @@ namespace GnomeDistort2Processing {
                 const float pi3p16 = 3 * 3.14159f / 16;
                 return [amount, pi3p16](float x) {
                     if (x < -pi3p16) return juce::jlimit(-1.f, 1.f, amount + (x * (1.f - amount)));
-                    if (x < 0) return juce::jlimit(-1.f, 1.f, (sin(8 * x) * amount) + (x * (1.f - amount)));
-                    if (x < 0.25f) return juce::jlimit(-1.f, 1.f, ((sin(10 * x) + 0.25f) * amount) + (x * (1.f - amount)));
-                    if (x < 0.5f) return juce::jlimit(-1.f, 1.f, ((sin(10 * x + 1) + 0.25f) * amount) + (x * (1.f - amount)));
-                    if (x < 0.75f) return juce::jlimit(-1.f, 1.f, ((sin(10 * x + 2) + 0.25f) * amount) + (x * (1.f - amount)));
+                    if (x < 0) return juce::jlimit(-1.f, 1.f, ((float)sin(8 * x) * amount) + (x * (1.f - amount)));
+                    if (x < 0.25f) return juce::jlimit(-1.f, 1.f, (((float)sin(10 * x) + 0.25f) * amount) + (x * (1.f - amount)));
+                    if (x < 0.5f) return juce::jlimit(-1.f, 1.f, (((float)sin(10 * x + 1) + 0.25f) * amount) + (x * (1.f - amount)));
+                    if (x < 0.75f) return juce::jlimit(-1.f, 1.f, (((float)sin(10 * x + 2) + 0.25f) * amount) + (x * (1.f - amount)));
                     return juce::jlimit(-1.f, 1.f, x * (1.f - amount) + amount);
                 };
             } break;
