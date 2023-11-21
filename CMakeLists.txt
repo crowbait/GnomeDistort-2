@@ -1,6 +1,6 @@
 # based on https://github.com/ffAudio/Frequalizer/blob/master/CMakeLists.txt
 
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.22)
 project(GNOME_DISTORT_2 VERSION 0.0.1)
 add_subdirectory(JUCE)
 
