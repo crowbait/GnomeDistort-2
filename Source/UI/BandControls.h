@@ -1,7 +1,6 @@
 #pragma once
 #include <JuceHeader.h>
 #include "../PluginProcessor.h"
-#include "../Parameters.h"
 #include "Controls/SliderLabeledValue.h"
 #include "Controls/DisplayGraph.h"
 #include "Controls/ComboBoxLnF.h"
@@ -13,7 +12,7 @@ enum Band {
     Hi
 };
 struct BandControls : juce::Component {
-    BandControls(const Band, juce::AudioProcessorValueTreeState&, const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>&, juce::Image&);
+    BandControls(const Band, juce::AudioProcessorValueTreeState*, const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>&, juce::Image&);
     ~BandControls() {
         WaveshapeFuncSelect.setLookAndFeel(nullptr);
         BtnMute.setLookAndFeel(nullptr);
@@ -37,14 +36,16 @@ struct BandControls : juce::Component {
         IndBtnBypass
     };
 
-    void paint(juce::Graphics& g) override {};
-    void resized() override;
-
-private:
+    // child components public for background drawing in Editor
     GnomeDistort2Controls::SliderLabeledValue PeakFreqSlider, PeakGainSlider, PeakQSlider, PreGainSlider, SmearAmtSlider, SmearLengthSlider, WaveshapeAmtSlider, PostGainSlider;
     GnomeDistort2Controls::DisplayGraph Display;
     juce::ComboBox WaveshapeFuncSelect;
     juce::TextButton BtnMute{ "M" }, BtnSolo{ "S" }, BtnBypass{ "By" };
+
+    void paint(juce::Graphics& g) override {};
+    void resized() override;
+
+private:
     using APVTS = juce::AudioProcessorValueTreeState;
     APVTS::SliderAttachment AttachPeakFreqSlider, AttachPeakGainSlider, AttachPeakQSlider, AttachPreGainSlider, AttachSmearAmtSlider, AttachSmearLengthSlider, AttachWaveshapeAmtSlider, AttachPostGainSlider;
     APVTS::ComboBoxAttachment AttachWaveshapeFuncSelect;

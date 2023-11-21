@@ -1,11 +1,3 @@
-/*
-  ==============================================================================
-
-    This file contains the basic framework code for a JUCE plugin editor.
-
-  ==============================================================================
-*/
-
 #pragma once
 
 #include <JuceHeader.h>
@@ -18,7 +10,7 @@
 
 class GnomeDistort2AudioProcessorEditor : public juce::AudioProcessorEditor {
 public:
-    GnomeDistort2AudioProcessorEditor(GnomeDistort2AudioProcessor&, const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>);
+    GnomeDistort2AudioProcessorEditor(GnomeDistort2AudioProcessor&, juce::AudioProcessorValueTreeState*, const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>);
     ~GnomeDistort2AudioProcessorEditor() override;
 
     enum componentIndex {
@@ -34,8 +26,6 @@ public:
     void resized() override;
 
 private:
-    GnomeDistort2AudioProcessor& audioProcessor;
-
     DisplayComp Display;
     PreBandControls PreBandControl;
     BandControls BandControlsLo, BandControlsMid, BandControlsHi;

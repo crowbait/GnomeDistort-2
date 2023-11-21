@@ -1,20 +1,14 @@
-/*
-  ==============================================================================
-
-    This file contains the basic framework code for a JUCE plugin editor.
-
-  ==============================================================================
-*/
-
-#include "PluginProcessor.h"
 #include "PluginEditor.h"
 
 //==============================================================================
-GnomeDistort2AudioProcessorEditor::GnomeDistort2AudioProcessorEditor(GnomeDistort2AudioProcessor& p, const std::map<GnomeDistort2Parameters::TreeParameter, juce::String> pm)
-    : AudioProcessorEditor(&p), audioProcessor(p),
-    BandControlsLo(Band::Lo, p.apvts, pm, knobOverlay),
-    BandControlsMid(Band::Mid, p.apvts, pm, knobOverlay),
-    BandControlsHi(Band::Hi, p.apvts, pm, knobOverlay) {
+GnomeDistort2AudioProcessorEditor::GnomeDistort2AudioProcessorEditor(GnomeDistort2AudioProcessor& p,
+                                                                     juce::AudioProcessorValueTreeState* apvts,
+                                                                     const std::map<GnomeDistort2Parameters::TreeParameter, juce::String> pm)
+    : AudioProcessorEditor(&p),
+    PreBandControl(apvts, pm, knobOverlay),
+    BandControlsLo(Band::Lo, apvts, pm, knobOverlay),
+    BandControlsMid(Band::Mid, apvts, pm, knobOverlay),
+    BandControlsHi(Band::Hi, apvts, pm, knobOverlay) {
 
     for (auto* comp : getComponents()) {
         addAndMakeVisible(comp);
