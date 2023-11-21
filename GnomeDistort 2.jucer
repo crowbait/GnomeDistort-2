@@ -31,6 +31,8 @@
         <FILE id="tlNp2p" name="Display.h" compile="0" resource="0" file="Source/UI/Display.h"/>
         <FILE id="BXR7G1" name="PostBandControls.h" compile="0" resource="0"
               file="Source/UI/PostBandControls.h"/>
+        <FILE id="ruYDlC" name="PreBandControls.cpp" compile="1" resource="0"
+              file="Source/UI/PreBandControls.cpp"/>
         <FILE id="FsXJO6" name="PreBandControls.h" compile="0" resource="0"
               file="Source/UI/PreBandControls.h"/>
         <FILE id="ywVgCK" name="UIConsts.h" compile="0" resource="0" file="Source/UI/UIConsts.h"/>
