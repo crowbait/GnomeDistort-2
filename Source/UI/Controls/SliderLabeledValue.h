@@ -15,9 +15,9 @@ namespace GnomeDistort2Controls {
             VALUE_NO_DECIMALS
         };
 
-        SliderLabeledValue(const juce::String& label, const bool smallText, juce::Image& knobOverlay, DisplayMode mode = DEFAULT) :
+        SliderLabeledValue(const juce::String& label, const bool smallText, juce::Image& knobOverlay, juce::Colour& color, DisplayMode mode = DEFAULT) :
             juce::Slider(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag, juce::Slider::TextEntryBoxPosition::NoTextBox),
-            label(label), mode(mode), isSmallText(smallText), overlay(knobOverlay) {
+            label(label), isSmallText(smallText), overlay(knobOverlay), color(color), mode(mode) {
             setLookAndFeel(&LNF);
         }
         ~SliderLabeledValue() {
@@ -28,6 +28,7 @@ namespace GnomeDistort2Controls {
         DisplayMode mode;
         bool isSmallText;
         juce::Image& overlay;
+        juce::Colour& color;
 
         void paint(juce::Graphics&) override;
         juce::Rectangle<int> getSliderBounds(juce::Rectangle<int>&) const; // const at END of function declares that this function MUST not change class member variables

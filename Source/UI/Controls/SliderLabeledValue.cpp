@@ -12,7 +12,7 @@ void GnomeDistort2Controls::LnFSliderLabeledValue::drawRotarySlider(juce::Graphi
         const int textHeight = sldr->isSmallText ? GnomeDistort2UIConst::TEXT_SMALL : GnomeDistort2UIConst::TEXT_NORMAL;
 
         // knob body
-        g.setColour(GnomeDistort2UIConst::COLOR_PRIMARY);
+        g.setColour(sldr->color);
         g.fillEllipse(bounds.toFloat());
 
         g.drawImage(sldr->overlay, bounds, RectanglePlacement::stretchToFit);

@@ -105,7 +105,7 @@ namespace GnomeDistort2Parameters {
                                                                    20));                                                     // default value
             layout.add(std::make_unique<juce::AudioParameterChoice>(Names.at(TreeParameter::LoCutSlope), "Low-Cut Slope",                             // Parameter ID, Name
                                                                     GnomeDistort2Parameters::Options::FilterSlopeOptions, 1));                        // Choices StringArray, default index
-            layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::BandFreqLoMid), "Low/Mid-Band Frequency", juce::NormalisableRange<float>(20, 999, 1, 0.25f), 400));
+            layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::BandFreqLoMid), "Low/Mid-Band Frequency", juce::NormalisableRange<float>(20, 999, 1, 0.5f), 400));
             layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::BandFreqMidHi), "Mid/High-Band Frequency", juce::NormalisableRange<float>(1000, 20000, 1, 0.25f), 2000));
             layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::HiCutFreq), "High-Cut Frequency", juce::NormalisableRange<float>(20, 20000, 1, 0.25f), 20000));
             layout.add(std::make_unique<juce::AudioParameterChoice>(Names.at(TreeParameter::HiCutSlope), "High-Cut Slope", GnomeDistort2Parameters::Options::FilterSlopeOptions, 1));

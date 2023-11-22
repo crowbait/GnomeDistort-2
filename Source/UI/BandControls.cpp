@@ -3,15 +3,16 @@
 BandControls::BandControls(const Band b,
                            juce::AudioProcessorValueTreeState* apvts,
                            const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>& paramMap,
-                           juce::Image& knobOverlay) :
-    PeakFreqSlider("FREQ", true, knobOverlay),
-    PeakGainSlider("GAIN", true, knobOverlay),
-    PeakQSlider("Q", true, knobOverlay),
-    PreGainSlider("GAIN", true, knobOverlay),
-    SmearAmtSlider("AMT", true, knobOverlay, GnomeDistort2Controls::SliderLabeledValue::NO_VALUE),
-    SmearLengthSlider("LNGTH", true, knobOverlay, GnomeDistort2Controls::SliderLabeledValue::NO_VALUE),
-    WaveshapeAmtSlider("DIST", false, knobOverlay),
-    PostGainSlider("GAIN", true, knobOverlay),
+                           juce::Image& knobOverlay,
+                           juce::Colour& primaryColor, juce::Colour& secondaryColor) :
+    PeakFreqSlider("FREQ", true, knobOverlay, secondaryColor),
+    PeakGainSlider("GAIN", true, knobOverlay, secondaryColor),
+    PeakQSlider("Q", true, knobOverlay, secondaryColor),
+    PreGainSlider("GAIN", true, knobOverlay, GnomeDistort2UIConst::COLOR_PRIMARY),
+    SmearAmtSlider("AMT", true, knobOverlay, secondaryColor, GnomeDistort2Controls::SliderLabeledValue::NO_VALUE),
+    SmearLengthSlider("LNGTH", true, knobOverlay, secondaryColor, GnomeDistort2Controls::SliderLabeledValue::NO_VALUE),
+    WaveshapeAmtSlider("DIST", false, knobOverlay, primaryColor),
+    PostGainSlider("GAIN", true, knobOverlay, secondaryColor),
 
     Display(apvts->getParameter(paramMap.at(b == Lo ? GnomeDistort2Parameters::TreeParameter::WaveshapeFunctionLo :
                                             b == Mid ? GnomeDistort2Parameters::TreeParameter::WaveshapeFunctionMid :

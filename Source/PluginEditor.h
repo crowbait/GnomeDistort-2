@@ -46,6 +46,7 @@ private:
 
     juce::Image background;
     juce::Image knobOverlay;
+    juce::Colour primaryColor = GnomeDistort2UIConst::COLOR_PRIMARY, secondaryColor = GnomeDistort2UIConst::COLOR_SECONDARY;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(GnomeDistort2AudioProcessorEditor)
 };
