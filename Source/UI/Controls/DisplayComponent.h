@@ -2,6 +2,8 @@
 #include <JuceHeader.h>
 #include "../../PluginProcessor.h"
 #include "../../Parameters.h"
+#include "../../Helpers/SingleChannelSampleFifo.h"
+#include "../../Helpers/FFTDataGenerator.h"
 
 namespace GnomeDistort2Controls {
     struct DisplayComponent : juce::Component, juce::AudioProcessorParameter::Listener, juce::Timer {
@@ -10,6 +12,7 @@ namespace GnomeDistort2Controls {
 
         bool isEnabled = true;
         bool isHQ = true;
+        juce::Atomic<bool> qualityChanged{ true };
 
         void timerCallback() override;
         void parameterValueChanged(int parameterIndex, float newValue) override;
@@ -20,6 +23,7 @@ namespace GnomeDistort2Controls {
 
     private:
         GnomeDistort2AudioProcessor* processor;
+        GnomeDistort2Processing::Processing::GnomeDSP* DSP;
         juce::Atomic<bool> parametersChanged{ true };   // set true to draw filter curve on launch
 
         const std::vector<GnomeDistort2Parameters::TreeParameter> paramIndexes = {
@@ -43,6 +47,16 @@ namespace GnomeDistort2Controls {
 
         juce::Image background;
         juce::Path filterCurve;
+        juce::Path audioCurvePre;
+        juce::Path audioCurvePost;
+
+        GnomeDistort2Helpers::SingleChannelSampleFifo<juce::AudioBuffer<float>>* leftPreFifo;
+        GnomeDistort2Helpers::SingleChannelSampleFifo<juce::AudioBuffer<float>>* leftPostFifo;
+        juce::AudioBuffer<float> preBuffer, postBuffer;
+        GnomeDistort2Helpers::FFTDataGenerator<std::vector<float>> preFFTDataGenerator, postFFTDataGenerator;
+        GnomeDistort2Helpers::AnalyzerPathGenerator<juce::Path> prePathProducer, postPathProducer;
+        void generatePathFromBuffer(GnomeDistort2Helpers::SingleChannelSampleFifo<juce::AudioBuffer<float>>*, GnomeDistort2Helpers::FFTDataGenerator<std::vector<float>>*,
+                                    juce::AudioBuffer<float>*, GnomeDistort2Helpers::AnalyzerPathGenerator<juce::Path>*, juce::Path*);
 
         juce::Rectangle<int> getRenderArea();
         juce::Rectangle<int> getAnalysisArea();

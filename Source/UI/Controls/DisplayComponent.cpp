@@ -7,6 +7,10 @@ GnomeDistort2Controls::DisplayComponent::DisplayComponent(GnomeDistort2AudioProc
                                                           const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>* paramMap) :
     processor(processorPointer) {
 
+    DSP = &processor->processorChain;
+    leftPreFifo = &DSP->leftPreProcessingFifo;
+    leftPostFifo = &DSP->leftPostProcessingFifo;
+
     params.resize(paramIndexes.size());
     for (int i = 0; i < params.size(); i++) {
         params[i] = apvts->getParameter(paramMap->at(paramIndexes[i]));
@@ -38,6 +42,15 @@ void GnomeDistort2Controls::DisplayComponent::paint(juce::Graphics& g) {
     g.fillRect(displayArea.toFloat());
     g.drawImage(background, displayArea.toFloat());
 
+    if (isEnabled) {    // draw oscilloscope if not disabled
+        g.setColour(GnomeDistort2UIConst::COLOR_SECONDARY);
+        audioCurvePre.applyTransform(AffineTransform().translation(analysisArea.getX(), analysisArea.getY()));
+        g.strokePath(audioCurvePre, PathStrokeType(2));
+        g.setColour(GnomeDistort2UIConst::COLOR_PRIMARY);
+        audioCurvePost.applyTransform(AffineTransform().translation(analysisArea.getX(), analysisArea.getY()));
+        g.strokePath(audioCurvePost, PathStrokeType(2));
+    }
+
     g.setColour(Colours::white);
     g.strokePath(filterCurve, PathStrokeType(2));
 }
@@ -46,12 +59,40 @@ void GnomeDistort2Controls::DisplayComponent::parameterValueChanged(int paramete
     parametersChanged.set(true);
 }
 
+void GnomeDistort2Controls::DisplayComponent::generatePathFromBuffer(GnomeDistort2Helpers::SingleChannelSampleFifo<juce::AudioBuffer<float>>* fifo,
+                                                                     GnomeDistort2Helpers::FFTDataGenerator<std::vector<float>>* FFTGen,
+                                                                     juce::AudioBuffer<float>* buffer,
+                                                                     GnomeDistort2Helpers::AnalyzerPathGenerator<juce::Path>* pathProducer,
+                                                                     juce::Path* path) {
+    const float negInfinity = -48.f;
+    juce::AudioBuffer<float> tempBuffer;
+    while (fifo->getNumCompletedBuffersAvailable() > 0) {
+        if (fifo->getAudioBuffer(tempBuffer)) {
+            int size = tempBuffer.getNumSamples();
+            juce::FloatVectorOperations::copy(buffer->getWritePointer(0, 0), buffer->getReadPointer(0, size), buffer->getNumSamples() - size);
+            juce::FloatVectorOperations::copy(buffer->getWritePointer(0, buffer->getNumSamples() - size), tempBuffer.getReadPointer(0, 0), size);
+            FFTGen->produceFFTData(*buffer, negInfinity);
+        }
+    }
+    const auto fftBounds = getAnalysisArea().toFloat();
+    const int fftSize = FFTGen->getFFTSize();
+    const float binWidth = processor->getSampleRate() / (double)fftSize;
+    while (FFTGen->getNumAvailableFFTDataBlocks() > 0) {    // generate paths from FFT data
+        std::vector<float> fftData;
+        if (FFTGen->getFFTData(fftData)) {
+            pathProducer->generatePath(fftData, fftBounds, fftSize, binWidth, negInfinity, false);
+        }
+    }
+    while (pathProducer->getNumPathsAvailable() > 0) {    // pull paths as long as there are any, draw the most recent one
+        pathProducer->getPath(*path);
+    }
+}
+
 void GnomeDistort2Controls::DisplayComponent::timerCallback() {
     using namespace juce;
 
     // if filter params have changed, regenerate new path
     if (parametersChanged.compareAndSetBool(false, true)) {
-        GnomeDistort2Processing::Processing::GnomeDSP* DSP = &processor->processorChain;
         auto analysisArea = getAnalysisArea();
         const int analysisWidth = analysisArea.getWidth();
         const double outputMin = analysisArea.getBottom();
@@ -90,12 +131,34 @@ void GnomeDistort2Controls::DisplayComponent::timerCallback() {
         for (int i = 1; i < magnitudes.size(); i++) {   // set path for every pixel
             filterCurve.lineTo(analysisArea.getX() + i, map(magnitudes[i]));
         }
+
+        if (!isEnabled) {   // repaint on parameter change even if display not enabled
+            juce::MessageManagerLock mml(juce::Thread::getCurrentThread());
+            if (mml.lockWasGained()) {
+                repaint();
+            } else DBG("No Lock");
+        }
     }
 
-    juce::MessageManagerLock mml(juce::Thread::getCurrentThread());
-    if (mml.lockWasGained()) {
-        repaint();
-    } else DBG("No Lock");
+    if (isEnabled) {
+        if (qualityChanged.compareAndSetBool(false, true)) {
+            preFFTDataGenerator.changeOrder(isHQ ? GnomeDistort2Helpers::FFTOrder::order8192 : GnomeDistort2Helpers::FFTOrder::order2048);
+            postFFTDataGenerator.changeOrder(isHQ ? GnomeDistort2Helpers::FFTOrder::order8192 : GnomeDistort2Helpers::FFTOrder::order2048);
+            preBuffer.setSize(1, preFFTDataGenerator.getFFTSize());
+            postBuffer.setSize(1, postFFTDataGenerator.getFFTSize());
+
+            stopTimer();
+            startTimerHz(isHQ ? 30 : 15);
+        }
+
+        generatePathFromBuffer(leftPreFifo, &preFFTDataGenerator, &preBuffer, &prePathProducer, &audioCurvePre);
+        generatePathFromBuffer(leftPostFifo, &postFFTDataGenerator, &postBuffer, &postPathProducer, &audioCurvePost);
+
+        juce::MessageManagerLock mml(juce::Thread::getCurrentThread());
+        if (mml.lockWasGained()) {
+            repaint();
+        } else DBG("No Lock");
+    }
 }
 
 juce::Rectangle<int> GnomeDistort2Controls::DisplayComponent::getRenderArea() {

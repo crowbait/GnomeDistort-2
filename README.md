@@ -1,3 +1,9 @@
+## build
+- init submodules
+- build projuicer
+- open project, save to IDE
+- build
+
 ## Submodules
 - `git submodule update --init --recursive` to initialize on cloning
 - `git submodule update --recursive --remote` to pull submodules

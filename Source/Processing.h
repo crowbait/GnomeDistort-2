@@ -2,6 +2,7 @@
 #include <JuceHeader.h>
 #include "Parameters.h"
 #include "WaveshaperFunctions.h"
+#include "Helpers/SingleChannelSampleFifo.h"
 
 namespace GnomeDistort2Processing {
     struct Processing {
@@ -75,6 +76,8 @@ namespace GnomeDistort2Processing {
             DistBand BandLoL, BandMidL, BandHiL, BandLoR, BandMidR, BandHiR;
             bool isBypassedLo = false, isBypassedMid = false, isBypassedHi = false;
             juce::dsp::ProcessorChain<Waveshaper, Gain> postBandChainL, postBandChainR;
+
+            GnomeDistort2Helpers::SingleChannelSampleFifo<juce::AudioBuffer<float>> leftPreProcessingFifo{ GnomeDistort2Helpers::Channel::Left }, leftPostProcessingFifo{ GnomeDistort2Helpers::Channel::Left };
 
             void prepare(const juce::dsp::ProcessSpec& spec);
             void process(juce::AudioBuffer<float>& buffer);

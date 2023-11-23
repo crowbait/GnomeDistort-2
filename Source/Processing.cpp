@@ -49,6 +49,9 @@ void GnomeDistort2Processing::Processing::GnomeDSP::prepare(const juce::dsp::Pro
     dryWetMixR.prepare(monoSpec);
     dryWetMixL.setMixingRule(juce::dsp::DryWetMixingRule::linear);
     dryWetMixR.setMixingRule(juce::dsp::DryWetMixingRule::linear);
+
+    leftPreProcessingFifo.prepare(spec.maximumBlockSize);
+    leftPostProcessingFifo.prepare(spec.maximumBlockSize);
 }
 
 void GnomeDistort2Processing::Processing::GnomeDSP::process(juce::AudioBuffer<float>& buffer) {
@@ -59,6 +62,7 @@ void GnomeDistort2Processing::Processing::GnomeDSP::process(juce::AudioBuffer<fl
         juce::dsp::ProcessContextReplacing<float> contextL = (blockL);
         juce::dsp::ProcessContextReplacing<float> contextR = (blockR);
 
+        leftPreProcessingFifo.update(buffer);
         dryWetMixL.pushDrySamples(blockL);
         dryWetMixR.pushDrySamples(blockR);
 
@@ -115,6 +119,8 @@ void GnomeDistort2Processing::Processing::GnomeDSP::process(juce::AudioBuffer<fl
         postBandChainR.process(contextR);
         dryWetMixL.mixWetSamples(blockL);
         dryWetMixR.mixWetSamples(blockR);
+
+        leftPostProcessingFifo.update(buffer);
     }
 }
 
