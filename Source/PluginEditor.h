@@ -10,7 +10,7 @@
 
 class GnomeDistort2AudioProcessorEditor : public juce::AudioProcessorEditor {
 public:
-    GnomeDistort2AudioProcessorEditor(GnomeDistort2AudioProcessor&, juce::AudioProcessorValueTreeState*, const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>);
+    GnomeDistort2AudioProcessorEditor(GnomeDistort2AudioProcessor&, juce::AudioProcessorValueTreeState*, const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>*);
     ~GnomeDistort2AudioProcessorEditor() override;
 
     enum componentIndex {
@@ -26,7 +26,7 @@ public:
     void resized() override;
 
 private:
-    DisplayComp Display;
+    Display DisplayArea;
     PreBandControls PreBandControl;
     BandControls BandControlsLo, BandControlsMid, BandControlsHi;
     PostBandControls PostBandControl;
@@ -35,7 +35,7 @@ private:
 
     std::vector<juce::Component*> getComponents() {
         return {
-            &Display,
+            &DisplayArea,
             &PreBandControl,
             &BandControlsLo,
             &BandControlsMid,

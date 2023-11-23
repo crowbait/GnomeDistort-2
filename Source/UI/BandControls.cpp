@@ -2,24 +2,24 @@
 
 BandControls::BandControls(const Band b,
                            juce::AudioProcessorValueTreeState* apvts,
-                           const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>& paramMap,
-                           juce::Image& knobOverlay,
-                           juce::Colour& primaryColor, juce::Colour& secondaryColor) :
+                           const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>* paramMap,
+                           juce::Image* knobOverlay,
+                           juce::Colour* primaryColor, juce::Colour* secondaryColor) :
     PeakFreqSlider("FREQ", true, knobOverlay, secondaryColor),
     PeakGainSlider("GAIN", true, knobOverlay, secondaryColor),
     PeakQSlider("Q", true, knobOverlay, secondaryColor),
-    PreGainSlider("GAIN", true, knobOverlay, GnomeDistort2UIConst::COLOR_PRIMARY),
+    PreGainSlider("GAIN", true, knobOverlay, primaryColor),
     SmearAmtSlider("AMT", true, knobOverlay, secondaryColor, GnomeDistort2Controls::SliderLabeledValue::NO_VALUE),
     SmearLengthSlider("LNGTH", true, knobOverlay, secondaryColor, GnomeDistort2Controls::SliderLabeledValue::NO_VALUE),
     WaveshapeAmtSlider("DIST", false, knobOverlay, primaryColor),
     PostGainSlider("GAIN", true, knobOverlay, secondaryColor),
 
-    Display(apvts->getParameter(paramMap.at(b == Lo ? GnomeDistort2Parameters::TreeParameter::WaveshapeFunctionLo :
-                                            b == Mid ? GnomeDistort2Parameters::TreeParameter::WaveshapeFunctionMid :
-                                            GnomeDistort2Parameters::TreeParameter::WaveshapeFunctionHi)),
-            apvts->getParameter(paramMap.at(b == Lo ? GnomeDistort2Parameters::TreeParameter::WaveshapeAmountLo :
-                                            b == Mid ? GnomeDistort2Parameters::TreeParameter::WaveshapeAmountMid :
-                                            GnomeDistort2Parameters::TreeParameter::WaveshapeAmountHi)),
+    Display(apvts->getParameter(paramMap->at(b == Lo ? GnomeDistort2Parameters::TreeParameter::WaveshapeFunctionLo :
+                                             b == Mid ? GnomeDistort2Parameters::TreeParameter::WaveshapeFunctionMid :
+                                             GnomeDistort2Parameters::TreeParameter::WaveshapeFunctionHi)),
+            apvts->getParameter(paramMap->at(b == Lo ? GnomeDistort2Parameters::TreeParameter::WaveshapeAmountLo :
+                                             b == Mid ? GnomeDistort2Parameters::TreeParameter::WaveshapeAmountMid :
+                                             GnomeDistort2Parameters::TreeParameter::WaveshapeAmountHi)),
             (b == Lo ? GnomeDistort2Parameters::TreeParameter::WaveshapeFunctionLo :
              b == Mid ? GnomeDistort2Parameters::TreeParameter::WaveshapeFunctionMid :
              GnomeDistort2Parameters::TreeParameter::WaveshapeFunctionHi),
@@ -27,48 +27,48 @@ BandControls::BandControls(const Band b,
              b == Mid ? GnomeDistort2Parameters::TreeParameter::WaveshapeAmountMid :
              GnomeDistort2Parameters::TreeParameter::WaveshapeAmountHi)),
 
-    AttachPeakFreqSlider(*apvts, paramMap.at(b == Lo ? GnomeDistort2Parameters::TreeParameter::PeakFreqLo :
-                                             b == Mid ? GnomeDistort2Parameters::TreeParameter::PeakFreqMid :
-                                             GnomeDistort2Parameters::TreeParameter::PeakFreqHi), PeakFreqSlider),
-    AttachPeakGainSlider(*apvts, paramMap.at(b == Lo ? GnomeDistort2Parameters::TreeParameter::PeakGainLo :
-                                             b == Mid ? GnomeDistort2Parameters::TreeParameter::PeakGainMid :
-                                             GnomeDistort2Parameters::TreeParameter::PeakGainHi), PeakGainSlider),
-    AttachPeakQSlider(*apvts, paramMap.at(b == Lo ? GnomeDistort2Parameters::TreeParameter::PeakQLo :
-                                          b == Mid ? GnomeDistort2Parameters::TreeParameter::PeakQMid :
-                                          GnomeDistort2Parameters::TreeParameter::PeakQHi), PeakQSlider),
-    AttachPreGainSlider(*apvts, paramMap.at(b == Lo ? GnomeDistort2Parameters::TreeParameter::PreGainLo :
-                                            b == Mid ? GnomeDistort2Parameters::TreeParameter::PreGainMid :
-                                            GnomeDistort2Parameters::TreeParameter::PreGainHi), PreGainSlider),
-    AttachSmearAmtSlider(*apvts, paramMap.at(b == Lo ? GnomeDistort2Parameters::TreeParameter::SmearAmountLo :
-                                             b == Mid ? GnomeDistort2Parameters::TreeParameter::SmearAmountMid :
-                                             GnomeDistort2Parameters::TreeParameter::SmearAmountHi), SmearAmtSlider),
-    AttachSmearLengthSlider(*apvts, paramMap.at(b == Lo ? GnomeDistort2Parameters::TreeParameter::SmearLengthLo :
-                                                b == Mid ? GnomeDistort2Parameters::TreeParameter::SmearLengthMid :
-                                                GnomeDistort2Parameters::TreeParameter::SmearLengthHi), SmearLengthSlider),
-    AttachWaveshapeAmtSlider(*apvts, paramMap.at(b == Lo ? GnomeDistort2Parameters::TreeParameter::WaveshapeAmountLo :
-                                                 b == Mid ? GnomeDistort2Parameters::TreeParameter::WaveshapeAmountMid :
-                                                 GnomeDistort2Parameters::TreeParameter::WaveshapeAmountHi), WaveshapeAmtSlider),
-    AttachPostGainSlider(*apvts, paramMap.at(b == Lo ? GnomeDistort2Parameters::TreeParameter::PostGainLo :
-                                             b == Mid ? GnomeDistort2Parameters::TreeParameter::PostGainMid :
-                                             GnomeDistort2Parameters::TreeParameter::PostGainHi), PostGainSlider),
+    AttachPeakFreqSlider(*apvts, paramMap->at(b == Lo ? GnomeDistort2Parameters::TreeParameter::PeakFreqLo :
+                                              b == Mid ? GnomeDistort2Parameters::TreeParameter::PeakFreqMid :
+                                              GnomeDistort2Parameters::TreeParameter::PeakFreqHi), PeakFreqSlider),
+    AttachPeakGainSlider(*apvts, paramMap->at(b == Lo ? GnomeDistort2Parameters::TreeParameter::PeakGainLo :
+                                              b == Mid ? GnomeDistort2Parameters::TreeParameter::PeakGainMid :
+                                              GnomeDistort2Parameters::TreeParameter::PeakGainHi), PeakGainSlider),
+    AttachPeakQSlider(*apvts, paramMap->at(b == Lo ? GnomeDistort2Parameters::TreeParameter::PeakQLo :
+                                           b == Mid ? GnomeDistort2Parameters::TreeParameter::PeakQMid :
+                                           GnomeDistort2Parameters::TreeParameter::PeakQHi), PeakQSlider),
+    AttachPreGainSlider(*apvts, paramMap->at(b == Lo ? GnomeDistort2Parameters::TreeParameter::PreGainLo :
+                                             b == Mid ? GnomeDistort2Parameters::TreeParameter::PreGainMid :
+                                             GnomeDistort2Parameters::TreeParameter::PreGainHi), PreGainSlider),
+    AttachSmearAmtSlider(*apvts, paramMap->at(b == Lo ? GnomeDistort2Parameters::TreeParameter::SmearAmountLo :
+                                              b == Mid ? GnomeDistort2Parameters::TreeParameter::SmearAmountMid :
+                                              GnomeDistort2Parameters::TreeParameter::SmearAmountHi), SmearAmtSlider),
+    AttachSmearLengthSlider(*apvts, paramMap->at(b == Lo ? GnomeDistort2Parameters::TreeParameter::SmearLengthLo :
+                                                 b == Mid ? GnomeDistort2Parameters::TreeParameter::SmearLengthMid :
+                                                 GnomeDistort2Parameters::TreeParameter::SmearLengthHi), SmearLengthSlider),
+    AttachWaveshapeAmtSlider(*apvts, paramMap->at(b == Lo ? GnomeDistort2Parameters::TreeParameter::WaveshapeAmountLo :
+                                                  b == Mid ? GnomeDistort2Parameters::TreeParameter::WaveshapeAmountMid :
+                                                  GnomeDistort2Parameters::TreeParameter::WaveshapeAmountHi), WaveshapeAmtSlider),
+    AttachPostGainSlider(*apvts, paramMap->at(b == Lo ? GnomeDistort2Parameters::TreeParameter::PostGainLo :
+                                              b == Mid ? GnomeDistort2Parameters::TreeParameter::PostGainMid :
+                                              GnomeDistort2Parameters::TreeParameter::PostGainHi), PostGainSlider),
 
-    AttachWaveshapeFuncSelect(*apvts, paramMap.at(b == Lo ? GnomeDistort2Parameters::TreeParameter::WaveshapeFunctionLo :
-                                                  b == Mid ? GnomeDistort2Parameters::TreeParameter::WaveshapeFunctionMid :
-                                                  GnomeDistort2Parameters::TreeParameter::WaveshapeFunctionHi), WaveshapeFuncSelect),
-    AttachBtnMute(*apvts, paramMap.at(b == Lo ? GnomeDistort2Parameters::TreeParameter::MuteLo :
-                                      b == Mid ? GnomeDistort2Parameters::TreeParameter::MuteMid :
-                                      GnomeDistort2Parameters::TreeParameter::MuteHi), BtnMute),
-    AttachBtnSolo(*apvts, paramMap.at(b == Lo ? GnomeDistort2Parameters::TreeParameter::SoloLo :
-                                      b == Mid ? GnomeDistort2Parameters::TreeParameter::SoloMid :
-                                      GnomeDistort2Parameters::TreeParameter::SoloHi), BtnSolo),
-    AttachBtnBypass(*apvts, paramMap.at(b == Lo ? GnomeDistort2Parameters::TreeParameter::BypassLo :
-                                        b == Mid ? GnomeDistort2Parameters::TreeParameter::BypassMid :
-                                        GnomeDistort2Parameters::TreeParameter::BypassHi), BtnBypass) {
+    AttachWaveshapeFuncSelect(*apvts, paramMap->at(b == Lo ? GnomeDistort2Parameters::TreeParameter::WaveshapeFunctionLo :
+                                                   b == Mid ? GnomeDistort2Parameters::TreeParameter::WaveshapeFunctionMid :
+                                                   GnomeDistort2Parameters::TreeParameter::WaveshapeFunctionHi), WaveshapeFuncSelect),
+    AttachBtnMute(*apvts, paramMap->at(b == Lo ? GnomeDistort2Parameters::TreeParameter::MuteLo :
+                                       b == Mid ? GnomeDistort2Parameters::TreeParameter::MuteMid :
+                                       GnomeDistort2Parameters::TreeParameter::MuteHi), BtnMute),
+    AttachBtnSolo(*apvts, paramMap->at(b == Lo ? GnomeDistort2Parameters::TreeParameter::SoloLo :
+                                       b == Mid ? GnomeDistort2Parameters::TreeParameter::SoloMid :
+                                       GnomeDistort2Parameters::TreeParameter::SoloHi), BtnSolo),
+    AttachBtnBypass(*apvts, paramMap->at(b == Lo ? GnomeDistort2Parameters::TreeParameter::BypassLo :
+                                         b == Mid ? GnomeDistort2Parameters::TreeParameter::BypassMid :
+                                         GnomeDistort2Parameters::TreeParameter::BypassHi), BtnBypass) {
 
     WaveshapeFuncSelect.addItemList(GnomeDistort2Parameters::Options::WaveshaperFunctionOptions, 1);
     WaveshapeFuncSelect.setSelectedId(
         apvts->getRawParameterValue(
-            paramMap.at(
+            paramMap->at(
                 b == Lo ? GnomeDistort2Parameters::TreeParameter::WaveshapeFunctionLo :
                 b == Mid ? GnomeDistort2Parameters::TreeParameter::WaveshapeFunctionMid :
                 GnomeDistort2Parameters::TreeParameter::WaveshapeFunctionHi)

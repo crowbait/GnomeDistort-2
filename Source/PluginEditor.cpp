@@ -3,12 +3,13 @@
 //==============================================================================
 GnomeDistort2AudioProcessorEditor::GnomeDistort2AudioProcessorEditor(GnomeDistort2AudioProcessor& p,
                                                                      juce::AudioProcessorValueTreeState* apvts,
-                                                                     const std::map<GnomeDistort2Parameters::TreeParameter, juce::String> pm)
+                                                                     const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>* pm)
     : AudioProcessorEditor(&p),
-    PreBandControl(apvts, pm, knobOverlay, primaryColor, secondaryColor),
-    BandControlsLo(Band::Lo, apvts, pm, knobOverlay, primaryColor, secondaryColor),
-    BandControlsMid(Band::Mid, apvts, pm, knobOverlay, primaryColor, secondaryColor),
-    BandControlsHi(Band::Hi, apvts, pm, knobOverlay, primaryColor, secondaryColor) {
+    DisplayArea(&p),
+    PreBandControl(apvts, pm, &knobOverlay, &primaryColor, &secondaryColor),
+    BandControlsLo(Band::Lo, apvts, pm, &knobOverlay, &primaryColor, &secondaryColor),
+    BandControlsMid(Band::Mid, apvts, pm, &knobOverlay, &primaryColor, &secondaryColor),
+    BandControlsHi(Band::Hi, apvts, pm, &knobOverlay, &primaryColor, &secondaryColor) {
 
     for (auto* comp : getComponents()) {
         addAndMakeVisible(comp);
@@ -48,7 +49,7 @@ void GnomeDistort2AudioProcessorEditor::resized() {
     displayArea.removeFromLeft(padding / 2);
     displayArea.removeFromRight(padding / 2);
     displayArea.removeFromBottom(padding);
-    Display.setBounds(displayArea);
+    DisplayArea.setBounds(displayArea);
     PreBandControl.setBounds(bounds.removeFromTop(bounds.getHeight() / 5));
 
     bounds.removeFromTop(padding);

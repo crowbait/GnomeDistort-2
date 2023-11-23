@@ -5,7 +5,7 @@
 #include "Controls/ComboBoxLnF.h"
 
 struct PreBandControls : juce::Component {
-    PreBandControls(juce::AudioProcessorValueTreeState*, const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>&, juce::Image&, juce::Colour&, juce::Colour&);
+    PreBandControls(juce::AudioProcessorValueTreeState*, const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>*, juce::Image*, juce::Colour*, juce::Colour*);
     ~PreBandControls() {
         LoCutSlopeSelect.setLookAndFeel(nullptr);
         HiCutSlopeSelect.setLookAndFeel(nullptr);

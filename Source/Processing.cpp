@@ -52,80 +52,83 @@ void GnomeDistort2Processing::Processing::GnomeDSP::prepare(const juce::dsp::Pro
 }
 
 void GnomeDistort2Processing::Processing::GnomeDSP::process(juce::AudioBuffer<float>& buffer) {
-    juce::dsp::AudioBlock<float> block(buffer);
-    juce::dsp::AudioBlock<float> blockL = block.getSingleChannelBlock(0);
-    juce::dsp::AudioBlock<float> blockR = block.getSingleChannelBlock(1);
-    juce::dsp::ProcessContextReplacing<float> contextL = (blockL);
-    juce::dsp::ProcessContextReplacing<float> contextR = (blockR);
-    dryWetMixL.pushDrySamples(blockL);
-    dryWetMixR.pushDrySamples(blockR);
+    if (buffer.getMagnitude(0, buffer.getNumSamples() / 10) > 0) {  // stop processing if no input
+        juce::dsp::AudioBlock<float> block(buffer);
+        juce::dsp::AudioBlock<float> blockL = block.getSingleChannelBlock(0);
+        juce::dsp::AudioBlock<float> blockR = block.getSingleChannelBlock(1);
+        juce::dsp::ProcessContextReplacing<float> contextL = (blockL);
+        juce::dsp::ProcessContextReplacing<float> contextR = (blockR);
 
-    preBandChainL.process(contextL);
-    preBandChainR.process(contextR);
+        dryWetMixL.pushDrySamples(blockL);
+        dryWetMixR.pushDrySamples(blockR);
 
-    for (auto& fbuffer : bandBuffers) fbuffer = buffer;
-    juce::dsp::AudioBlock<float> bandBlockLo(bandBuffers[0]);
-    juce::dsp::AudioBlock<float> bandBlockMid(bandBuffers[1]);
-    juce::dsp::AudioBlock<float> bandBlockHi(bandBuffers[2]);
-    juce::dsp::ProcessContextReplacing<float> cntxLo = juce::dsp::ProcessContextReplacing<float>(bandBlockLo);
-    juce::dsp::ProcessContextReplacing<float> cntxMid = juce::dsp::ProcessContextReplacing<float>(bandBlockMid);
-    juce::dsp::ProcessContextReplacing<float> cntxHi = juce::dsp::ProcessContextReplacing<float>(bandBlockHi);
-    LPLo.process(cntxLo);
-    APLo.process(cntxMid);
-    HPMidHi.process(cntxMid);
-    bandBuffers[2] = bandBuffers[1];    // copy HPMidHi output because it needs to be used two times
-    LPMid.process(cntxMid);
-    HPHi.process(cntxHi);
+        preBandChainL.process(contextL);
+        preBandChainR.process(contextR);
 
-    int numSamples = buffer.getNumSamples();
-    int numChannels = buffer.getNumChannels();
-    buffer.clear();
-    auto addFilterBand = [numChannels, numSamples](juce::AudioBuffer<float>& inputBuffer, const juce::AudioBuffer<float>& source) {
-        for (int i = 0; i < numChannels; ++i) { // ++i is pre-increment: increments BEFORE first loop run
-            inputBuffer.addFrom(i, 0, source, i, 0, numSamples);
+        for (auto& fbuffer : bandBuffers) fbuffer = buffer;
+        juce::dsp::AudioBlock<float> bandBlockLo(bandBuffers[0]);
+        juce::dsp::AudioBlock<float> bandBlockMid(bandBuffers[1]);
+        juce::dsp::AudioBlock<float> bandBlockHi(bandBuffers[2]);
+        juce::dsp::ProcessContextReplacing<float> cntxLo = juce::dsp::ProcessContextReplacing<float>(bandBlockLo);
+        juce::dsp::ProcessContextReplacing<float> cntxMid = juce::dsp::ProcessContextReplacing<float>(bandBlockMid);
+        juce::dsp::ProcessContextReplacing<float> cntxHi = juce::dsp::ProcessContextReplacing<float>(bandBlockHi);
+        LPLo.process(cntxLo);
+        APLo.process(cntxMid);
+        HPMidHi.process(cntxMid);
+        bandBuffers[2] = bandBuffers[1];    // copy HPMidHi output because it needs to be used two times
+        LPMid.process(cntxMid);
+        HPHi.process(cntxHi);
+
+        int numSamples = buffer.getNumSamples();
+        int numChannels = buffer.getNumChannels();
+        buffer.clear();
+        auto addFilterBand = [numChannels, numSamples](juce::AudioBuffer<float>& inputBuffer, const juce::AudioBuffer<float>& source) {
+            for (int i = 0; i < numChannels; ++i) { // ++i is pre-increment: increments BEFORE first loop run
+                inputBuffer.addFrom(i, 0, source, i, 0, numSamples);
+            }
+        };
+
+        if (!isBypassedLo && (channelsToAdd & 1) == 1) {
+            juce::dsp::AudioBlock<float> bbLoL = bandBlockLo.getSingleChannelBlock(0);
+            juce::dsp::AudioBlock<float> bbLoR = bandBlockLo.getSingleChannelBlock(1);
+            BandLoL.process(juce::dsp::ProcessContextReplacing<float>(bbLoL));
+            BandLoR.process(juce::dsp::ProcessContextReplacing<float>(bbLoR));
         }
-    };
+        if (!isBypassedMid && (channelsToAdd & 2) == 2) {
+            juce::dsp::AudioBlock<float> bbMidL = bandBlockMid.getSingleChannelBlock(0);
+            juce::dsp::AudioBlock<float> bbMidR = bandBlockMid.getSingleChannelBlock(1);
+            BandMidL.process(juce::dsp::ProcessContextReplacing<float>(bbMidL));
+            BandMidR.process(juce::dsp::ProcessContextReplacing<float>(bbMidR));
+        }
+        if (!isBypassedHi && (channelsToAdd & 4) == 4) {
+            juce::dsp::AudioBlock<float> bbHiL = bandBlockHi.getSingleChannelBlock(0);
+            juce::dsp::AudioBlock<float> bbHiR = bandBlockHi.getSingleChannelBlock(1);
+            BandHiL.process(juce::dsp::ProcessContextReplacing<float>(bbHiL));
+            BandHiR.process(juce::dsp::ProcessContextReplacing<float>(bbHiR));
+        }
 
-    if (!isBypassedLo && (channelsToAdd & 1) == 1) {
-        juce::dsp::AudioBlock<float> bbLoL = bandBlockLo.getSingleChannelBlock(0);
-        juce::dsp::AudioBlock<float> bbLoR = bandBlockLo.getSingleChannelBlock(1);
-        BandLoL.process(juce::dsp::ProcessContextReplacing<float>(bbLoL));
-        BandLoR.process(juce::dsp::ProcessContextReplacing<float>(bbLoR));
-    }
-    if (!isBypassedMid && (channelsToAdd & 2) == 2) {
-        juce::dsp::AudioBlock<float> bbMidL = bandBlockMid.getSingleChannelBlock(0);
-        juce::dsp::AudioBlock<float> bbMidR = bandBlockMid.getSingleChannelBlock(1);
-        BandMidL.process(juce::dsp::ProcessContextReplacing<float>(bbMidL));
-        BandMidR.process(juce::dsp::ProcessContextReplacing<float>(bbMidR));
-    }
-    if (!isBypassedHi && (channelsToAdd & 4) == 4) {
-        juce::dsp::AudioBlock<float> bbHiL = bandBlockHi.getSingleChannelBlock(0);
-        juce::dsp::AudioBlock<float> bbHiR = bandBlockHi.getSingleChannelBlock(1);
-        BandHiL.process(juce::dsp::ProcessContextReplacing<float>(bbHiL));
-        BandHiR.process(juce::dsp::ProcessContextReplacing<float>(bbHiR));
-    }
+        if ((channelsToAdd & 1) == 1) addFilterBand(buffer, bandBuffers[0]);
+        if ((channelsToAdd & 2) == 2) addFilterBand(buffer, bandBuffers[1]);
+        if ((channelsToAdd & 4) == 4) addFilterBand(buffer, bandBuffers[2]);
 
-    if ((channelsToAdd & 1) == 1) addFilterBand(buffer, bandBuffers[0]);
-    if ((channelsToAdd & 2) == 2) addFilterBand(buffer, bandBuffers[1]);
-    if ((channelsToAdd & 4) == 4) addFilterBand(buffer, bandBuffers[2]);
-
-    postBandChainL.process(contextL);
-    postBandChainR.process(contextR);
-    dryWetMixL.mixWetSamples(blockL);
-    dryWetMixR.mixWetSamples(blockR);
+        postBandChainL.process(contextL);
+        postBandChainR.process(contextR);
+        dryWetMixL.mixWetSamples(blockL);
+        dryWetMixR.mixWetSamples(blockR);
+    }
 }
 
 void GnomeDistort2Processing::Processing::GnomeDSP::updateSettings(const GnomeDistort2Parameters::Parameters::ChainSettings& chainSettings, double sampleRate) {
     auto preBandsLoCut = generateLoCutFilter(chainSettings.LoCutFreq, chainSettings.LoCutSlope, sampleRate);
     auto preBandsHiCut = generateHiCutFilter(chainSettings.HiCutFreq, chainSettings.HiCutSlope, sampleRate);
     updateCutFilter<CutFilter, juce::ReferenceCountedArray<juce::dsp::IIR::Coefficients<float>>>(
-                        preBandChainL.get<0>(), preBandsLoCut, chainSettings.LoCutSlope);
+        preBandChainL.get<0>(), preBandsLoCut, chainSettings.LoCutSlope);
     updateCutFilter<CutFilter, juce::ReferenceCountedArray<juce::dsp::IIR::Coefficients<float>>>(
-                        preBandChainL.get<1>(), preBandsHiCut, chainSettings.HiCutSlope);
+        preBandChainL.get<1>(), preBandsHiCut, chainSettings.HiCutSlope);
     updateCutFilter<CutFilter, juce::ReferenceCountedArray<juce::dsp::IIR::Coefficients<float>>>(
-                        preBandChainR.get<0>(), preBandsLoCut, chainSettings.LoCutSlope);
+        preBandChainR.get<0>(), preBandsLoCut, chainSettings.LoCutSlope);
     updateCutFilter<CutFilter, juce::ReferenceCountedArray<juce::dsp::IIR::Coefficients<float>>>(
-                        preBandChainR.get<1>(), preBandsHiCut, chainSettings.HiCutSlope);
+        preBandChainR.get<1>(), preBandsHiCut, chainSettings.HiCutSlope);
 
     LPLo.setCutoffFrequency(chainSettings.BandFreqLoMid);
     APLo.setCutoffFrequency(chainSettings.BandFreqLoMid);

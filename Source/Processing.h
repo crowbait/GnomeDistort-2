@@ -69,17 +69,18 @@ namespace GnomeDistort2Processing {
 
         class GnomeDSP {
         public:
-            void prepare(const juce::dsp::ProcessSpec& spec);
-            void process(juce::AudioBuffer<float>& buffer);
-            void updateSettings(const GnomeDistort2Parameters::Parameters::ChainSettings& chainSettings, double sampleRate);
-
-        private:
             juce::dsp::ProcessorChain<CutFilter, CutFilter> preBandChainL, preBandChainR;
             using LRFilter = juce::dsp::LinkwitzRileyFilter<float>;
             LRFilter LPLo, APLo, HPMidHi, LPMid, HPHi;  // the AllPass is needed to align delays, see https://youtu.be/Mo0Oco3Vimo?t=9034
             DistBand BandLoL, BandMidL, BandHiL, BandLoR, BandMidR, BandHiR;
             bool isBypassedLo = false, isBypassedMid = false, isBypassedHi = false;
             juce::dsp::ProcessorChain<Waveshaper, Gain> postBandChainL, postBandChainR;
+
+            void prepare(const juce::dsp::ProcessSpec& spec);
+            void process(juce::AudioBuffer<float>& buffer);
+            void updateSettings(const GnomeDistort2Parameters::Parameters::ChainSettings& chainSettings, double sampleRate);
+
+        private:
             juce::dsp::DryWetMixer<float> dryWetMixL, dryWetMixR;
 
             std::array<juce::AudioBuffer<float>, 3> bandBuffers;  // one buffer for each band filter

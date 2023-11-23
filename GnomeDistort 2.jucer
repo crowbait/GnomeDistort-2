@@ -12,9 +12,20 @@
             file="Assets/knob_overlay_128.png"/>
     </GROUP>
     <GROUP id="{37019FB3-77C2-F5BE-8075-A39A7B85E738}" name="Source">
+      <GROUP id="{2B0E1941-8ECD-A0C7-911A-B45E86A838BA}" name="Helpers">
+        <FILE id="BkyTnq" name="FFTDataGenerator.h" compile="0" resource="0"
+              file="Source/Helpers/FFTDataGenerator.h"/>
+        <FILE id="ck1Fjg" name="Fifo.h" compile="0" resource="0" file="Source/Helpers/Fifo.h"/>
+        <FILE id="iGnSqD" name="SingleChannelSampleFifo.h" compile="0" resource="0"
+              file="Source/Helpers/SingleChannelSampleFifo.h"/>
+      </GROUP>
       <GROUP id="{F04FB702-04D1-3718-FA9E-035CE47FB04B}" name="UI">
         <GROUP id="{A3CB6517-1173-ECFE-E54A-676F46DD9BC4}" name="Controls">
           <FILE id="jUVqBq" name="ComboBoxLnF.h" compile="0" resource="0" file="Source/UI/Controls/ComboBoxLnF.h"/>
+          <FILE id="yVIoLm" name="DisplayComponent.cpp" compile="1" resource="0"
+                file="Source/UI/Controls/DisplayComponent.cpp"/>
+          <FILE id="an0Pfd" name="DisplayComponent.h" compile="0" resource="0"
+                file="Source/UI/Controls/DisplayComponent.h"/>
           <FILE id="uIOlRW" name="DisplayGraph.cpp" compile="1" resource="0"
                 file="Source/UI/Controls/DisplayGraph.cpp"/>
           <FILE id="RR9hWh" name="DisplayGraph.h" compile="0" resource="0" file="Source/UI/Controls/DisplayGraph.h"/>

@@ -12,7 +12,7 @@ enum Band {
     Hi
 };
 struct BandControls : juce::Component {
-    BandControls(const Band, juce::AudioProcessorValueTreeState*, const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>&, juce::Image&, juce::Colour&, juce::Colour&);
+    BandControls(const Band, juce::AudioProcessorValueTreeState*, const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>*, juce::Image*, juce::Colour*, juce::Colour*);
     ~BandControls() {
         WaveshapeFuncSelect.setLookAndFeel(nullptr);
         BtnMute.setLookAndFeel(nullptr);

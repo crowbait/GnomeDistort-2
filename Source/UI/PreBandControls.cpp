@@ -1,26 +1,26 @@
 #include "PreBandControls.h"
 
 PreBandControls::PreBandControls(juce::AudioProcessorValueTreeState* apvts,
-                                 const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>& paramMap,
-                                 juce::Image& knobOverlay,
-                                 juce::Colour& primaryColor, juce::Colour& secondaryColor) :
+                                 const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>* paramMap,
+                                 juce::Image* knobOverlay,
+                                 juce::Colour* primaryColor, juce::Colour* secondaryColor) :
     LoCutSlider("LOCUT", false, knobOverlay, primaryColor, GnomeDistort2Controls::SliderLabeledValue::VALUE_NO_DECIMALS),
     BandLoMidSlider("BAND", false, knobOverlay, primaryColor, GnomeDistort2Controls::SliderLabeledValue::VALUE_NO_DECIMALS),
     BandMidHiSlider("BAND", false, knobOverlay, primaryColor, GnomeDistort2Controls::SliderLabeledValue::VALUE_NO_DECIMALS),
     HiCutSlider("HICUT", false, knobOverlay, primaryColor, GnomeDistort2Controls::SliderLabeledValue::VALUE_NO_DECIMALS),
 
-    AttachLoCutSlider(*apvts, paramMap.at(GnomeDistort2Parameters::TreeParameter::LoCutFreq), LoCutSlider),
-    AttachBandLoMidSlider(*apvts, paramMap.at(GnomeDistort2Parameters::TreeParameter::BandFreqLoMid), BandLoMidSlider),
-    AttachBandMidHiSlider(*apvts, paramMap.at(GnomeDistort2Parameters::TreeParameter::BandFreqMidHi), BandMidHiSlider),
-    AttachHiCutSlider(*apvts, paramMap.at(GnomeDistort2Parameters::TreeParameter::HiCutFreq), HiCutSlider),
-    AttachLoCutSlopeSelect(*apvts, paramMap.at(GnomeDistort2Parameters::TreeParameter::LoCutSlope), LoCutSlopeSelect),
-    AttachHiCutSlopeSelect(*apvts, paramMap.at(GnomeDistort2Parameters::TreeParameter::HiCutSlope), HiCutSlopeSelect) {
+    AttachLoCutSlider(*apvts, paramMap->at(GnomeDistort2Parameters::TreeParameter::LoCutFreq), LoCutSlider),
+    AttachBandLoMidSlider(*apvts, paramMap->at(GnomeDistort2Parameters::TreeParameter::BandFreqLoMid), BandLoMidSlider),
+    AttachBandMidHiSlider(*apvts, paramMap->at(GnomeDistort2Parameters::TreeParameter::BandFreqMidHi), BandMidHiSlider),
+    AttachHiCutSlider(*apvts, paramMap->at(GnomeDistort2Parameters::TreeParameter::HiCutFreq), HiCutSlider),
+    AttachLoCutSlopeSelect(*apvts, paramMap->at(GnomeDistort2Parameters::TreeParameter::LoCutSlope), LoCutSlopeSelect),
+    AttachHiCutSlopeSelect(*apvts, paramMap->at(GnomeDistort2Parameters::TreeParameter::HiCutSlope), HiCutSlopeSelect) {
 
     LoCutSlopeSelect.addItemList(GnomeDistort2Parameters::Options::FilterSlopeOptions, 1);
-    LoCutSlopeSelect.setSelectedId(apvts->getRawParameterValue(paramMap.at(GnomeDistort2Parameters::TreeParameter::LoCutSlope))->load() + 1);
+    LoCutSlopeSelect.setSelectedId(apvts->getRawParameterValue(paramMap->at(GnomeDistort2Parameters::TreeParameter::LoCutSlope))->load() + 1);
     LoCutSlopeSelect.setLookAndFeel(&lnfCombo);
     HiCutSlopeSelect.addItemList(GnomeDistort2Parameters::Options::FilterSlopeOptions, 1);
-    HiCutSlopeSelect.setSelectedId(apvts->getRawParameterValue(paramMap.at(GnomeDistort2Parameters::TreeParameter::HiCutSlope))->load() + 1);
+    HiCutSlopeSelect.setSelectedId(apvts->getRawParameterValue(paramMap->at(GnomeDistort2Parameters::TreeParameter::HiCutSlope))->load() + 1);
     HiCutSlopeSelect.setLookAndFeel(&lnfCombo);
 
     for (auto* comp : getComponents()) {

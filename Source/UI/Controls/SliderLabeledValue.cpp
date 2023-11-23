@@ -12,10 +12,10 @@ void GnomeDistort2Controls::LnFSliderLabeledValue::drawRotarySlider(juce::Graphi
         const int textHeight = sldr->isSmallText ? GnomeDistort2UIConst::TEXT_SMALL : GnomeDistort2UIConst::TEXT_NORMAL;
 
         // knob body
-        g.setColour(sldr->color);
+        g.setColour(*sldr->color);
         g.fillEllipse(bounds.toFloat());
 
-        g.drawImage(sldr->overlay, bounds, RectanglePlacement::stretchToFit);
+        g.drawImage(*sldr->overlay, bounds, RectanglePlacement::stretchToFit);
 
         // label
         Rectangle<float> labelboxRect;

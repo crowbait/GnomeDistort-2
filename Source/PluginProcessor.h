@@ -53,6 +53,8 @@ public:
     juce::AudioProcessorValueTreeState apvts{ *this, nullptr, "Parameters", GnomeDistort2Parameters::Parameters::createParameterLayout() };
     GnomeDistort2Processing::Processing::GnomeDSP processorChain;
 
+    const std::map<GnomeDistort2Parameters::TreeParameter, juce::String> paramMap = GnomeDistort2Parameters::Parameters::getTreeParameterNames();
+
 private:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(GnomeDistort2AudioProcessor);
 
