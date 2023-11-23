@@ -83,6 +83,8 @@ namespace GnomeDistort2Processing {
             void process(juce::AudioBuffer<float>& buffer);
             void updateSettings(const GnomeDistort2Parameters::Parameters::ChainSettings& chainSettings, double sampleRate);
 
+            float AmplitudeLo = 0, AmplitudeMid = 0, AmplitudeHi = 0;
+
         private:
             juce::dsp::DryWetMixer<float> dryWetMixL, dryWetMixR;
 

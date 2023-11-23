@@ -26,6 +26,10 @@
                 file="Source/UI/Controls/DisplayComponent.cpp"/>
           <FILE id="an0Pfd" name="DisplayComponent.h" compile="0" resource="0"
                 file="Source/UI/Controls/DisplayComponent.h"/>
+          <FILE id="xj1hUa" name="DisplayComponent.paint.cpp" compile="1" resource="0"
+                file="Source/UI/Controls/DisplayComponent.paint.cpp"/>
+          <FILE id="Xh7Qy7" name="DisplayComponent.resized.cpp" compile="1" resource="0"
+                file="Source/UI/Controls/DisplayComponent.resized.cpp"/>
           <FILE id="uIOlRW" name="DisplayGraph.cpp" compile="1" resource="0"
                 file="Source/UI/Controls/DisplayGraph.cpp"/>
           <FILE id="RR9hWh" name="DisplayGraph.h" compile="0" resource="0" file="Source/UI/Controls/DisplayGraph.h"/>

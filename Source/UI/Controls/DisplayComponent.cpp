@@ -1,5 +1,4 @@
 #include "DisplayComponent.h"
-#include "../../Processing.h"
 #include "../UIConsts.h"
 
 GnomeDistort2Controls::DisplayComponent::DisplayComponent(GnomeDistort2AudioProcessor* processorPointer,
@@ -22,37 +21,6 @@ GnomeDistort2Controls::DisplayComponent::~DisplayComponent() {
     for (auto param : params) {
         param->removeListener(this);
     }
-}
-
-void GnomeDistort2Controls::DisplayComponent::resized() {
-
-}
-
-void GnomeDistort2Controls::DisplayComponent::paint(juce::Graphics& g) {
-    using namespace juce;
-
-    auto displayArea = getLocalBounds();
-    auto renderArea = getRenderArea();
-    auto analysisArea = getAnalysisArea();
-    const int analysisWidth = analysisArea.getWidth();
-    const double outputMin = analysisArea.getBottom();
-    const double outputMax = analysisArea.getY();
-
-    g.setColour(GnomeDistort2UIConst::COLOR_BG_VERYDARK);
-    g.fillRect(displayArea.toFloat());
-    g.drawImage(background, displayArea.toFloat());
-
-    if (isEnabled) {    // draw oscilloscope if not disabled
-        g.setColour(GnomeDistort2UIConst::COLOR_SECONDARY);
-        audioCurvePre.applyTransform(AffineTransform().translation(analysisArea.getX(), analysisArea.getY()));
-        g.strokePath(audioCurvePre, PathStrokeType(2));
-        g.setColour(GnomeDistort2UIConst::COLOR_PRIMARY);
-        audioCurvePost.applyTransform(AffineTransform().translation(analysisArea.getX(), analysisArea.getY()));
-        g.strokePath(audioCurvePost, PathStrokeType(2));
-    }
-
-    g.setColour(Colours::white);
-    g.strokePath(filterCurve, PathStrokeType(2));
 }
 
 void GnomeDistort2Controls::DisplayComponent::parameterValueChanged(int parameterIndex, float newValue) {
@@ -164,9 +132,9 @@ void GnomeDistort2Controls::DisplayComponent::timerCallback() {
 juce::Rectangle<int> GnomeDistort2Controls::DisplayComponent::getRenderArea() {
     auto bounds = getLocalBounds();
     bounds.removeFromLeft(24);
-    bounds.removeFromRight(24);
+    bounds.removeFromRight(8);
     bounds.removeFromTop(12);
-    bounds.removeFromBottom(12);
+    bounds.removeFromBottom(4);
     return bounds;
 }
 juce::Rectangle<int> GnomeDistort2Controls::DisplayComponent::getAnalysisArea() {

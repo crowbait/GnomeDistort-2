@@ -115,12 +115,20 @@ void GnomeDistort2Processing::Processing::GnomeDSP::process(juce::AudioBuffer<fl
         if ((channelsToAdd & 2) == 2) addFilterBand(buffer, bandBuffers[1]);
         if ((channelsToAdd & 4) == 4) addFilterBand(buffer, bandBuffers[2]);
 
+        AmplitudeLo = bandBuffers[0].getMagnitude(0, numSamples);
+        AmplitudeMid = bandBuffers[1].getMagnitude(0, numSamples);
+        AmplitudeHi = bandBuffers[2].getMagnitude(0, numSamples);
+
         postBandChainL.process(contextL);
         postBandChainR.process(contextR);
         dryWetMixL.mixWetSamples(blockL);
         dryWetMixR.mixWetSamples(blockR);
 
         leftPostProcessingFifo.update(buffer);
+    } else { // no processing
+        AmplitudeLo = 0;
+        AmplitudeMid = 0;
+        AmplitudeHi = 0;
     }
 }
 
