@@ -38,17 +38,24 @@ target_sources(GnomeDistort2
     Source/Processing.h
     Source/Processing.cpp
     Source/WaveshaperFunctions.h
+    Source/Helpers/FFTDataGenerator.h
+    Source/Helpers/Fifo.h
+    Source/Helpers/SingleChannelSampleFifo.h
     Source/UI/BandControls.h
     Source/UI/BandControls.cpp
     Source/UI/Display.h
     Source/UI/PostBandControls.h
     Source/UI/PreBandControls.h
+    Source/UI/PreBandControls.cpp
     Source/UI/UIConsts.h
-    Source/UI/Controls/ComboBox.h
+    Source/UI/Controls/ComboBoxLnF.h
+    Source/UI/Controls/DisplayComponent.h
+    Source/UI/Controls/DisplayComponent.cpp
     Source/UI/Controls/DisplayGraph.h
     Source/UI/Controls/DisplayGraph.cpp
     Source/UI/Controls/SliderLabeledValue.h
     Source/UI/Controls/SliderLabeledValue.cpp
+    Source/UI/Controls/ToggleButtonLnF.h
 )
 
 target_compile_definitions(GnomeDistort2
