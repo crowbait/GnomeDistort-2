@@ -4,8 +4,8 @@
 #include "UIConsts.h"
 
 struct Display : juce::Component {
-    Display(GnomeDistort2AudioProcessor* processor) :
-        displayComp(processor) {
+    Display(GnomeDistort2AudioProcessor* processor, juce::AudioProcessorValueTreeState* apvts, const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>* paramMap) :
+        displayComp(processor, apvts, paramMap) {
 
         addAndMakeVisible(&displayComp);
     }

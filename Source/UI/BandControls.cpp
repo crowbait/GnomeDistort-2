@@ -12,7 +12,7 @@ BandControls::BandControls(const Band b,
     SmearAmtSlider("AMT", true, knobOverlay, secondaryColor, GnomeDistort2Controls::SliderLabeledValue::NO_VALUE),
     SmearLengthSlider("LNGTH", true, knobOverlay, secondaryColor, GnomeDistort2Controls::SliderLabeledValue::NO_VALUE),
     WaveshapeAmtSlider("DIST", false, knobOverlay, primaryColor),
-    PostGainSlider("GAIN", true, knobOverlay, secondaryColor),
+    PostGainSlider("GAIN", true, knobOverlay, primaryColor),
 
     Display(apvts->getParameter(paramMap->at(b == Lo ? GnomeDistort2Parameters::TreeParameter::WaveshapeFunctionLo :
                                              b == Mid ? GnomeDistort2Parameters::TreeParameter::WaveshapeFunctionMid :

@@ -5,7 +5,7 @@ GnomeDistort2AudioProcessorEditor::GnomeDistort2AudioProcessorEditor(GnomeDistor
                                                                      juce::AudioProcessorValueTreeState* apvts,
                                                                      const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>* pm)
     : AudioProcessorEditor(&p),
-    DisplayArea(&p),
+    DisplayArea(&p, apvts, pm),
     PreBandControl(apvts, pm, &knobOverlay, &primaryColor, &secondaryColor),
     BandControlsLo(Band::Lo, apvts, pm, &knobOverlay, &primaryColor, &secondaryColor),
     BandControlsMid(Band::Mid, apvts, pm, &knobOverlay, &primaryColor, &secondaryColor),
