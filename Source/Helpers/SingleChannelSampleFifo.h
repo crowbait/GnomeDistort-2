@@ -31,7 +31,7 @@ namespace GnomeDistort2Helpers {
 
         int getNumCompletedBuffersAvailable() const { return audioBufferFifo.getNumAvailableForReading(); }
         bool isPrepared() const { return prepared.get(); }
-        int getSize() const { return size.get() }
+        int getSize() const { return size.get(); }
         bool getAudioBuffer(BlockType& buf) { return audioBufferFifo.pull(buf); }
 
     private:
