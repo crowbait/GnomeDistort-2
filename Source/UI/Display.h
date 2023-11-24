@@ -1,11 +1,15 @@
 #pragma once
 #include <JuceHeader.h>
+#include "../Helpers/Settings.h"
 #include "Controls/DisplayComponent.h"
 #include "UIConsts.h"
 
 struct Display : juce::Component {
-    Display(GnomeDistort2AudioProcessor* processor, juce::AudioProcessorValueTreeState* apvts, const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>* paramMap) :
-        displayComp(processor, apvts, paramMap) {
+    Display(GnomeDistort2AudioProcessor* processor,
+            juce::AudioProcessorValueTreeState* apvts,
+            const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>* paramMap,
+            GnomeDistort2Helpers::Settings* settings) :
+        displayComp(processor, apvts, paramMap, settings->displayEnabled, settings->displayHQ) {
 
         addAndMakeVisible(&displayComp);
     }

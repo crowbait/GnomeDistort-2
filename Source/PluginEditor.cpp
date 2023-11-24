@@ -5,7 +5,7 @@ GnomeDistort2AudioProcessorEditor::GnomeDistort2AudioProcessorEditor(GnomeDistor
                                                                      juce::AudioProcessorValueTreeState* apvts,
                                                                      const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>* pm)
     : AudioProcessorEditor(&p),
-    DisplayArea(&p, apvts, pm),
+    DisplayArea(&p, apvts, pm, &settings),
     PreBandControl(apvts, pm, &knobOverlay, &primaryColor, &secondaryColor),
     BandControlsLo(Band::Lo, apvts, pm, &knobOverlay, &primaryColor, &secondaryColor),
     BandControlsMid(Band::Mid, apvts, pm, &knobOverlay, &primaryColor, &secondaryColor),
@@ -67,16 +67,13 @@ void GnomeDistort2AudioProcessorEditor::checkForUpdates() {
     int statusCode = 0;
     String response;
 
-    File appdir = File::getSpecialLocation(File::SpecialLocationType::userDocumentsDirectory);
-    File lastCheckFile = File(appdir.getFullPathName() + File::getSeparatorString() + "CrowbaitVSTs" + File::getSeparatorString() + "GnomeDistort2-update-check");
-    if (!lastCheckFile.exists()) lastCheckFile.create();
-    StringArray readLines;
-    lastCheckFile.readLines(readLines);
-    DBG("Last check: " + readLines[0]);
-
-    if (readLines[0] == "" || Time::fromISO8601(readLines[0]).getDayOfMonth() != Time().getCurrentTime().getDayOfMonth()) {
+    DBG("Last check: " + settings.lastUpdateCheck.toISO8601(true));
+    Time now = Time().getCurrentTime();
+    if (settings.lastUpdateCheck.toMilliseconds() < now.toMilliseconds() - (24 * 60 * 60 * 1000)) {   // lastcheck < (now - 24h)
         DBG("Checking for update");
-        lastCheckFile.replaceWithText(Time::getCurrentTime().toISO8601(true));
+        settings.lastUpdateCheck = now;
+        settings.saveSettings();
+
         std::unique_ptr<InputStream> stream(url.createInputStream(false, nullptr, nullptr, String(),
                                                                   750, // timeout in ms
                                                                   &responseHeaders, &statusCode));
@@ -103,5 +100,4 @@ void GnomeDistort2AudioProcessorEditor::checkForUpdates() {
             DBG("Failed to connect, status " + String(statusCode));
         } else DBG("Failed to connect.");
     } else DBG("Already checked for update today.");
-    lastCheckFile.~File();
 }

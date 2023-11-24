@@ -3,12 +3,16 @@
 
 GnomeDistort2Controls::DisplayComponent::DisplayComponent(GnomeDistort2AudioProcessor* processorPointer,
                                                           juce::AudioProcessorValueTreeState* apvts,
-                                                          const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>* paramMap) :
+                                                          const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>* paramMap,
+                                                          bool enabled, bool HQ) :
     processor(processorPointer) {
 
     DSP = &processor->processorChain;
     leftPreFifo = &DSP->leftPreProcessingFifo;
     leftPostFifo = &DSP->leftPostProcessingFifo;
+
+    isEnabled = enabled;
+    isHQ = HQ;
 
     params.resize(paramIndexes.size());
     for (int i = 0; i < params.size(); i++) {

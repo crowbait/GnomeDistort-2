@@ -7,7 +7,10 @@
 
 namespace GnomeDistort2Controls {
     struct DisplayComponent : juce::Component, juce::AudioProcessorParameter::Listener, juce::Timer {
-        DisplayComponent(GnomeDistort2AudioProcessor*, juce::AudioProcessorValueTreeState*, const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>*);
+        DisplayComponent(GnomeDistort2AudioProcessor*,
+                         juce::AudioProcessorValueTreeState*,
+                         const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>*,
+                         bool enabled, bool HQ);
         ~DisplayComponent();
 
         bool isEnabled = true;
@@ -60,5 +63,7 @@ namespace GnomeDistort2Controls {
 
         juce::Rectangle<int> getRenderArea();
         juce::Rectangle<int> getAnalysisArea();
+
+        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DisplayComponent)
     };
 };

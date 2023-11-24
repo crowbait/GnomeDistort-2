@@ -16,6 +16,7 @@
         <FILE id="BkyTnq" name="FFTDataGenerator.h" compile="0" resource="0"
               file="Source/Helpers/FFTDataGenerator.h"/>
         <FILE id="ck1Fjg" name="Fifo.h" compile="0" resource="0" file="Source/Helpers/Fifo.h"/>
+        <FILE id="oFqVTR" name="Settings.h" compile="0" resource="0" file="Source/Helpers/Settings.h"/>
         <FILE id="iGnSqD" name="SingleChannelSampleFifo.h" compile="0" resource="0"
               file="Source/Helpers/SingleChannelSampleFifo.h"/>
       </GROUP>

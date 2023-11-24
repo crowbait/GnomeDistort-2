@@ -3,6 +3,7 @@
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
 #include "Parameters.h"
+#include "Helpers/Settings.h"
 #include "UI/Display.h"
 #include "UI/PreBandControls.h"
 #include "UI/BandControls.h"
@@ -21,6 +22,8 @@ public:
         IndBandControlsHi,
         IndPostBandControls
     };
+
+    GnomeDistort2Helpers::Settings settings;
 
     void paint(juce::Graphics&) override;
     void resized() override;
