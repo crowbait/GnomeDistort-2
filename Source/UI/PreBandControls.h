@@ -11,15 +11,6 @@ struct PreBandControls : juce::Component {
         HiCutSlopeSelect.setLookAndFeel(nullptr);
     }
 
-    enum componentIndexes {
-        IndLoCut,
-        IndLoCutSlope,
-        IndBandLoMid,
-        IndBandMidHi,
-        IndHiCut,
-        IndHiCutSlope
-    };
-
     // child components public for background drawing in Editor
     GnomeDistort2Controls::SliderLabeledValue LoCutSlider, BandLoMidSlider, BandMidHiSlider, HiCutSlider;
     juce::ComboBox LoCutSlopeSelect, HiCutSlopeSelect;

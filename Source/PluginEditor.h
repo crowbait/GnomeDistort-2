@@ -15,17 +15,6 @@ public:
     GnomeDistort2AudioProcessorEditor(GnomeDistort2AudioProcessor&, juce::AudioProcessorValueTreeState*, const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>*);
     ~GnomeDistort2AudioProcessorEditor() override;
 
-    enum componentIndex {
-        IndDisplay,
-        IndPreBandControls,
-        IndBandControlsLo,
-        IndBandControlsMid,
-        IndBandControlsHi,
-        IndPostBandControls,
-        IndPostGainSlider,
-        IndMixSlider
-    };
-
     GnomeDistort2Helpers::Settings settings;
 
     void paint(juce::Graphics&) override;

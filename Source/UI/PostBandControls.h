@@ -25,11 +25,6 @@ struct PostBandControls : juce::Component {
         WaveshapeFuncSelect.setLookAndFeel(nullptr);
     }
 
-    enum componentIndexes {
-        IndWaveshapeAmt,
-        IndWaveshapeFunc
-    };
-
     GnomeDistort2Controls::SliderLabeledValue WaveshapeAmtSlider;
     juce::ComboBox WaveshapeFuncSelect;
 

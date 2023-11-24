@@ -20,22 +20,6 @@ struct BandControls : juce::Component {
         BtnBypass.setLookAndFeel(nullptr);
     };
 
-    enum componentIndex {
-        IndPeakFreq,
-        IndPeakGain,
-        IndPeakQ,
-        IndPreGain,
-        IndSmearAmt,
-        IndSmearLength,
-        IndWaveshapeAmt,
-        IndWaveshapeFunc,
-        IndWaveshapeDisplay,
-        IndPostGain,
-        IndBtnMute,
-        IndBtnSolo,
-        IndBtnBypass
-    };
-
     // child components public for background drawing in Editor
     GnomeDistort2Controls::SliderLabeledValue PeakFreqSlider, PeakGainSlider, PeakQSlider, PreGainSlider, SmearAmtSlider, SmearLengthSlider, WaveshapeAmtSlider, PostGainSlider;
     GnomeDistort2Controls::DisplayGraph Display;
