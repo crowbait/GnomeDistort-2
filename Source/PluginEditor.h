@@ -21,7 +21,9 @@ public:
         IndBandControlsLo,
         IndBandControlsMid,
         IndBandControlsHi,
-        IndPostBandControls
+        IndPostBandControls,
+        IndPostGainSlider,
+        IndMixSlider
     };
 
     GnomeDistort2Helpers::Settings settings;

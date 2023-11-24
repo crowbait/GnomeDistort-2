@@ -10,6 +10,7 @@ GnomeDistort2AudioProcessorEditor::GnomeDistort2AudioProcessorEditor(GnomeDistor
     BandControlsLo(Band::Lo, apvts, pm, &knobOverlay, &primaryColor, &secondaryColor),
     BandControlsMid(Band::Mid, apvts, pm, &knobOverlay, &primaryColor, &secondaryColor),
     BandControlsHi(Band::Hi, apvts, pm, &knobOverlay, &primaryColor, &secondaryColor),
+    PostBandControl(apvts, pm, &knobOverlay, &primaryColor, &secondaryColor),
 
     PostGainSlider("GAIN", false, &knobOverlay, &primaryColor),
     MixSlider("MIX", false, &knobOverlay, &primaryColor),
