@@ -9,7 +9,12 @@ GnomeDistort2AudioProcessorEditor::GnomeDistort2AudioProcessorEditor(GnomeDistor
     PreBandControl(apvts, pm, &knobOverlay, &primaryColor, &secondaryColor),
     BandControlsLo(Band::Lo, apvts, pm, &knobOverlay, &primaryColor, &secondaryColor),
     BandControlsMid(Band::Mid, apvts, pm, &knobOverlay, &primaryColor, &secondaryColor),
-    BandControlsHi(Band::Hi, apvts, pm, &knobOverlay, &primaryColor, &secondaryColor) {
+    BandControlsHi(Band::Hi, apvts, pm, &knobOverlay, &primaryColor, &secondaryColor),
+
+    PostGainSlider("GAIN", false, &knobOverlay, &primaryColor),
+    MixSlider("MIX", false, &knobOverlay, &primaryColor),
+    AttachPostGainSlider(*apvts, pm->at(GnomeDistort2Parameters::TreeParameter::PostGainGlobal), PostGainSlider),
+    AttachMixSlider(*apvts, pm->at(GnomeDistort2Parameters::TreeParameter::DryWet), MixSlider) {
 
     for (auto* comp : getComponents()) {
         addAndMakeVisible(comp);
@@ -42,8 +47,7 @@ void GnomeDistort2AudioProcessorEditor::resized() {
     auto switchesArea = bounds.removeFromTop(padding);
     bounds.removeFromTop(padding);
 
-    PostBandControl.setBounds(bounds.removeFromRight(bandWidth));
-    bounds.removeFromRight(padding * 0.5f);
+    auto postArea = bounds.removeFromRight(bandWidth);
 
     auto displayArea = bounds.removeFromTop(bounds.getHeight() / 5);
     displayArea.removeFromLeft(padding / 2);
@@ -58,6 +62,12 @@ void GnomeDistort2AudioProcessorEditor::resized() {
     BandControlsMid.setBounds(bounds.removeFromLeft(bandWidth));
     bounds.removeFromLeft(padding);
     BandControlsHi.setBounds(bounds.removeFromLeft(bandWidth));
+
+    postArea.removeFromLeft(padding);
+    PostBandControl.setBounds(postArea.removeFromBottom(BandControlsLo.getBounds().getHeight()));
+    postArea.removeFromBottom(padding);
+    PostGainSlider.setBounds(postArea.removeFromBottom(PreBandControl.getBounds().getHeight()));
+    MixSlider.setBounds(postArea.removeFromTop(DisplayArea.getBounds().getHeight()));
 }
 
 void GnomeDistort2AudioProcessorEditor::checkForUpdates() {

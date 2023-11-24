@@ -14,6 +14,8 @@ struct Display : juce::Component {
         addAndMakeVisible(&displayComp);
     }
 
+    GnomeDistort2Controls::DisplayComponent displayComp;
+
     void paint(juce::Graphics& g) override {
         g.setColour(GnomeDistort2UIConst::COLOR_BG_VERYDARK);
         g.fillAll();
@@ -21,7 +23,4 @@ struct Display : juce::Component {
     void resized() override {
         displayComp.setBounds(getLocalBounds());
     }
-
-private:
-    GnomeDistort2Controls::DisplayComponent displayComp;
 };

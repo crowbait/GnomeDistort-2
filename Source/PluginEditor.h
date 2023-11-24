@@ -8,6 +8,7 @@
 #include "UI/PreBandControls.h"
 #include "UI/BandControls.h"
 #include "UI/PostBandControls.h"
+#include "UI/Controls/SliderLabeledValue.h"
 
 class GnomeDistort2AudioProcessorEditor : public juce::AudioProcessorEditor {
 public:
@@ -33,6 +34,8 @@ private:
     PreBandControls PreBandControl;
     BandControls BandControlsLo, BandControlsMid, BandControlsHi;
     PostBandControls PostBandControl;
+    GnomeDistort2Controls::SliderLabeledValue PostGainSlider, MixSlider;
+    juce::AudioProcessorValueTreeState::SliderAttachment AttachPostGainSlider, AttachMixSlider;
 
     void checkForUpdates();
 
@@ -43,7 +46,9 @@ private:
             &BandControlsLo,
             &BandControlsMid,
             &BandControlsHi,
-            &PostBandControl
+            &PostBandControl,
+            &PostGainSlider,
+            &MixSlider
         };
     }
 
