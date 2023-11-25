@@ -38,6 +38,8 @@
                 file="Source/UI/Controls/SliderLabeledValue.cpp"/>
           <FILE id="q9rmIP" name="SliderLabeledValue.h" compile="0" resource="0"
                 file="Source/UI/Controls/SliderLabeledValue.h"/>
+          <FILE id="arJeKJ" name="TextButton.h" compile="0" resource="0" file="Source/UI/Controls/TextButton.h"/>
+          <FILE id="XTjyFJ" name="TextSwitch.h" compile="0" resource="0" file="Source/UI/Controls/TextSwitch.h"/>
           <FILE id="bjhuJd" name="ToggleButtonLnF.h" compile="0" resource="0"
                 file="Source/UI/Controls/ToggleButtonLnF.h"/>
         </GROUP>

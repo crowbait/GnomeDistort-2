@@ -9,6 +9,7 @@
 #include "UI/BandControls.h"
 #include "UI/PostBandControls.h"
 #include "UI/Controls/SliderLabeledValue.h"
+#include "UI/Controls/TextButton.h"
 
 class GnomeDistort2AudioProcessorEditor : public juce::AudioProcessorEditor {
 public:
@@ -28,10 +29,14 @@ private:
     GnomeDistort2Controls::SliderLabeledValue PostGainSlider, MixSlider;
     juce::AudioProcessorValueTreeState::SliderAttachment AttachPostGainSlider, AttachMixSlider;
 
+    GnomeDistort2Controls::TextButton LinkDonateButton, LinkGithubButton;
+
     void checkForUpdates();
 
     std::vector<juce::Component*> getComponents() {
         return {
+            &LinkDonateButton,
+            &LinkGithubButton,
             &DisplayArea,
             &PreBandControl,
             &BandControlsLo,

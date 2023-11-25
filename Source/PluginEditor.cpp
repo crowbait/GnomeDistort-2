@@ -15,13 +15,23 @@ GnomeDistort2AudioProcessorEditor::GnomeDistort2AudioProcessorEditor(GnomeDistor
     PostGainSlider("GAIN", false, &knobOverlay, &primaryColor),
     MixSlider("MIX", false, &knobOverlay, &primaryColor),
     AttachPostGainSlider(*apvts, pm->at(GnomeDistort2Parameters::TreeParameter::PostGainGlobal), PostGainSlider),
-    AttachMixSlider(*apvts, pm->at(GnomeDistort2Parameters::TreeParameter::DryWet), MixSlider) {
+    AttachMixSlider(*apvts, pm->at(GnomeDistort2Parameters::TreeParameter::DryWet), MixSlider),
+
+    LinkDonateButton("Donate", juce::Colours::white, GnomeDistort2UIConst::TEXT_NORMAL, true),
+    LinkGithubButton("Github", juce::Colours::white, GnomeDistort2UIConst::TEXT_NORMAL, true) {
 
     for (auto* comp : getComponents()) {
         addAndMakeVisible(comp);
     }
 
     knobOverlay = juce::ImageCache::getFromMemory(BinaryData::knob_overlay_128_png, BinaryData::knob_overlay_128_pngSize);
+
+    LinkGithubButton.onClick = []() {
+        juce::URL("https://github.com/crowbait/GnomeDistort").launchInDefaultBrowser();
+    };
+    LinkDonateButton.onClick = []() {
+        juce::URL("https://ko-fi.com/crowbait").launchInDefaultBrowser();
+    };
 
     setSize(960, 720);
     checkForUpdates();
@@ -46,8 +56,11 @@ void GnomeDistort2AudioProcessorEditor::resized() {
     int bandWidth = (bounds.getWidth() - (padding * 2)) * 0.25f; // padding * 2 = 4 times half padding -> space between control columns
 
     auto switchesArea = bounds.removeFromTop(padding);
-    bounds.removeFromTop(padding);
 
+    LinkDonateButton.setBounds(switchesArea.removeFromRight(padding * 2));
+    LinkGithubButton.setBounds(switchesArea.removeFromRight(padding * 2));
+
+    bounds.removeFromTop(padding);
     auto postArea = bounds.removeFromRight(bandWidth);
 
     auto displayArea = bounds.removeFromTop(bounds.getHeight() / 5);
