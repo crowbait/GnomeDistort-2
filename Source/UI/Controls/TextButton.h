@@ -14,7 +14,7 @@ namespace GnomeDistort2Controls {
         juce::Colour color;
 
         void paintButton(juce::Graphics& g, bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown) {
-            g.setColour(color);
+            g.setColour(!shouldDrawButtonAsHighlighted ? color : juce::Colours::white);
             g.setFont(juce::Font(textSize, isBold ? juce::Font::FontStyleFlags::bold : juce::Font::FontStyleFlags::plain));
             g.drawFittedText(label, getLocalBounds(), juce::Justification::centred, 1);
         }

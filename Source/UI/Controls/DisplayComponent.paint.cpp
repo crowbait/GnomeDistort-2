@@ -6,7 +6,6 @@ void GnomeDistort2Controls::DisplayComponent::paint(juce::Graphics& g) {
     using namespace GnomeDistort2UIConst;
 
     auto displayArea = getLocalBounds();
-    auto renderArea = getRenderArea();
     auto analysisArea = getAnalysisArea();
     const int analysisX = analysisArea.getX();
     const int analysisWidth = analysisArea.getWidth();

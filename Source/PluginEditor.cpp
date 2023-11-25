@@ -17,14 +17,33 @@ GnomeDistort2AudioProcessorEditor::GnomeDistort2AudioProcessorEditor(GnomeDistor
     AttachPostGainSlider(*apvts, pm->at(GnomeDistort2Parameters::TreeParameter::PostGainGlobal), PostGainSlider),
     AttachMixSlider(*apvts, pm->at(GnomeDistort2Parameters::TreeParameter::DryWet), MixSlider),
 
-    LinkDonateButton("Donate", juce::Colours::white, GnomeDistort2UIConst::TEXT_NORMAL, true),
-    LinkGithubButton("Github", juce::Colours::white, GnomeDistort2UIConst::TEXT_NORMAL, true) {
+    SwitchDisplayOnButton("ON", "OFF", GnomeDistort2UIConst::TEXT_NORMAL, juce::Colours::white, juce::Colours::grey),
+    SwitchDisplayHQButton("HQ", GnomeDistort2UIConst::TEXT_NORMAL, juce::Colours::white, juce::Colours::grey),
+    LinkDonateButton("Donate", juce::Colours::lightgrey, GnomeDistort2UIConst::TEXT_NORMAL, true),
+    LinkGithubButton("Github", juce::Colours::lightgrey, GnomeDistort2UIConst::TEXT_NORMAL, true) {
 
     for (auto* comp : getComponents()) {
         addAndMakeVisible(comp);
     }
 
     knobOverlay = juce::ImageCache::getFromMemory(BinaryData::knob_overlay_128_png, BinaryData::knob_overlay_128_pngSize);
+
+    auto display = juce::Component::SafePointer<GnomeDistort2Controls::DisplayComponent>(&DisplayArea.displayComp);
+    auto displayOnSwitch = juce::Component::SafePointer<GnomeDistort2Controls::TextSwitch>(&SwitchDisplayOnButton);
+    auto* settingsPtr = &settings;
+    SwitchDisplayOnButton.onClick = [display, displayOnSwitch, settingsPtr]() {
+        display->isEnabled = displayOnSwitch->getToggleState();
+        settingsPtr->displayEnabled = display->isEnabled;
+        settingsPtr->saveSettings();
+    };
+    auto displayHQSwitch = juce::Component::SafePointer<GnomeDistort2Controls::TextSwitch>(&SwitchDisplayHQButton);
+    SwitchDisplayHQButton.onClick = [display, displayHQSwitch, settingsPtr]() {
+        display->isHQ = displayHQSwitch->getToggleState();
+        settingsPtr->displayHQ = display->isHQ;
+        settingsPtr->saveSettings();
+    };
+    SwitchDisplayOnButton.setToggleState(settings.displayEnabled, false);
+    SwitchDisplayHQButton.setToggleState(settings.displayHQ, false);
 
     LinkGithubButton.onClick = []() {
         juce::URL("https://github.com/crowbait/GnomeDistort").launchInDefaultBrowser();
@@ -55,12 +74,16 @@ void GnomeDistort2AudioProcessorEditor::resized() {
 
     int bandWidth = (bounds.getWidth() - (padding * 2)) * 0.25f; // padding * 2 = 4 times half padding -> space between control columns
 
+    bounds.removeFromTop(padding);
     auto switchesArea = bounds.removeFromTop(padding);
-
+    switchesArea.removeFromLeft(padding / 2);
+    auto displaySwitchesArea = switchesArea.removeFromLeft(padding * 2);
+    displaySwitchesArea.removeFromTop(displaySwitchesArea.getHeight() - (padding / 2));
+    SwitchDisplayOnButton.setBounds(displaySwitchesArea.removeFromLeft(padding));
+    SwitchDisplayHQButton.setBounds(displaySwitchesArea.removeFromLeft(padding));
     LinkDonateButton.setBounds(switchesArea.removeFromRight(padding * 2));
     LinkGithubButton.setBounds(switchesArea.removeFromRight(padding * 2));
 
-    bounds.removeFromTop(padding);
     auto postArea = bounds.removeFromRight(bandWidth);
 
     auto displayArea = bounds.removeFromTop(bounds.getHeight() / 5);
