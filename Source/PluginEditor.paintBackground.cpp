@@ -7,6 +7,9 @@ void GnomeDistort2AudioProcessorEditor::paintBackground() {
     const int width = getWidth();
     const int height = getHeight();
 
+    const Point<int> PreBandCorner = PreBandControl.getPosition();
+    const Point<int> PostBandCorner = PostBandControl.getPosition();
+
     background = Image(Image::PixelFormat::RGB, width, height, false);
     Graphics g(background);
 
@@ -25,8 +28,6 @@ void GnomeDistort2AudioProcessorEditor::paintBackground() {
 #pragma region circuit_start+preBand
     circuit.startNewSubPath(0, DisplayArea.getBounds().getCentreY());
     circuit.lineTo(DisplayArea.getX(), DisplayArea.getBounds().getCentreY());
-
-    const Point<int> PreBandCorner = PreBandControl.getPosition();
 
     circuit.startNewSubPath(PreBandControl.getBounds().getCentreX(), DisplayArea.getBottom());
     circuit.lineTo(PreBandControl.getBounds().getCentreX(), PreBandControl.BandLoMidSlider.getBounds().getCentreY() + PreBandCorner.getY());
@@ -59,16 +60,21 @@ void GnomeDistort2AudioProcessorEditor::paintBackground() {
         &BandControlsHi
     };
     for (const auto band : bands) {
+        Path border;
+        border.addRoundedRectangle(band->getBounds().expanded(8, 0), 2.f);
+        g.setColour(CIRCUIT_PRIMARY);
+        g.strokePath(border, PathStrokeType(2));
+
         g.drawImageAt(band->paintBackground(), band->getX(), band->getY(), false);
         circuit.startNewSubPath((band->PostGainSlider.getBounds().getCentre() + band->getPosition()).toFloat());
-        circuit.lineTo((band->PostGainSlider.getBounds().getCentre() + band->getPosition()).getX(), band->getBottom());
+        circuit.lineTo((band->PostGainSlider.getBounds().getCentre() + band->getPosition()).getX(), band->getBottom() + (COMP_PADDING / 2));
     }
 #pragma endregion
 
     // band controls to post band to end
 #pragma region circuit_postband
-    circuit.startNewSubPath(BandControlsLo.PostGainSlider.getBounds().getCentre().getX() + BandControlsLo.getX(), BandControlsLo.getBottom());
-    circuit.lineTo(PostBandControl.WaveshapeAmtSlider.getBounds().getCentre().getX() + PostBandControl.getX(), BandControlsLo.getBottom());
+    circuit.startNewSubPath(BandControlsLo.PostGainSlider.getBounds().getCentre().getX() + BandControlsLo.getX(), BandControlsLo.getBottom() + (COMP_PADDING / 2));
+    circuit.lineTo(PostBandControl.WaveshapeAmtSlider.getBounds().getCentre().getX() + PostBandControl.getX(), BandControlsLo.getBottom() + (COMP_PADDING / 2));
     circuit.lineTo(MixSlider.getBounds().getCentre().toFloat());
     circuit.lineTo(getRight(), MixSlider.getBounds().getCentre().getY());
 #pragma endregion
@@ -77,5 +83,32 @@ void GnomeDistort2AudioProcessorEditor::paintBackground() {
     g.strokePath(circuit, PathStrokeType(CIRCUIT_THICKNESS));
 #pragma endregion
 
+    // draw 3D borders
+#pragma region 3DBorders
+    draw3DCorners(g, DisplayArea.getBounds(), COMP_PADDING * 1.5f, COMP_PADDING);
+    draw3Dknob(g, PreBandControl.LoCutSlider.getSliderBounds(PreBandControl.LoCutSlider.getBounds()) + PreBandCorner, COMP_PADDING / 3);
+    draw3DCorners(g, PreBandControl.LoCutSlopeSelect.getBounds() + PreBandCorner, COMP_PADDING / 3);
+    draw3Dknob(g, PreBandControl.BandLoMidSlider.getSliderBounds(PreBandControl.BandLoMidSlider.getBounds()) + PreBandCorner, COMP_PADDING / 2);
+    draw3Dknob(g, PreBandControl.BandMidHiSlider.getSliderBounds(PreBandControl.BandMidHiSlider.getBounds()) + PreBandCorner, COMP_PADDING / 2);
+    draw3Dknob(g, PreBandControl.HiCutSlider.getSliderBounds(PreBandControl.HiCutSlider.getBounds()) + PreBandCorner, COMP_PADDING / 3);
+    draw3DCorners(g, PreBandControl.HiCutSlopeSelect.getBounds() + PreBandCorner, COMP_PADDING / 3);
 
+    draw3Dknob(g, MixSlider.getSliderBounds(MixSlider.getBounds()), COMP_PADDING / 2);
+    draw3Dknob(g, PostGainSlider.getSliderBounds(PostGainSlider.getBounds()), COMP_PADDING / 2);
+    draw3Dknob(g, PostBandControl.WaveshapeAmtSlider.getSliderBounds(PostBandControl.WaveshapeAmtSlider.getBounds()) + PostBandCorner, COMP_PADDING / 2);
+    draw3DCorners(g, PostBandControl.WaveshapeFuncSelect.getBounds() + PostBandCorner, COMP_PADDING / 3);
+#pragma endregion
+
+    // write version info
+    String version = "v.";
+    version << ProjectInfo::versionString;
+    g.setFont(TEXT_NORMAL);
+    g.setColour(juce::Colours::lightgrey);
+    Rectangle<int> versionBox = Rectangle<int>(
+        COMP_PADDING,
+        getHeight() - TEXT_NORMAL - 8,
+        g.getCurrentFont().getStringWidth(version),
+        TEXT_NORMAL + 8
+    );
+    g.drawFittedText(version, versionBox, Justification::centred, 1);
 }

@@ -18,9 +18,10 @@ namespace GnomeDistort2UIConst {
     inline int SELECT_HEIGHT = 24;
     inline int COMP_PADDING = 12;
 
-    inline float CIRCUIT_THICKNESS = 5.f;
+    inline int CIRCUIT_THICKNESS = 5;
     inline juce::Colour CIRCUIT_PRIMARY = juce::Colour(25u, 25u, 25u);
 
+    //Connect two points with different Y values, creating a step in a horizontal line.
     inline auto connectHorizontal = [](juce::Path& path, const juce::Point<int> start, const juce::Point<int> finish) {
         path.startNewSubPath(start.toFloat());
         const int middle = start.getX() + ((finish.getX() - start.getX()) / 2);
@@ -28,11 +29,82 @@ namespace GnomeDistort2UIConst {
         path.lineTo(middle, finish.getY());
         path.lineTo(finish.toFloat());
     };
+
+    //Connect two points with different X values, creating a step in a vertical line.
     inline auto connectVertical = [](juce::Path& path, const juce::Point<int> start, const juce::Point<int> finish) {
         path.startNewSubPath(start.toFloat());
         const int middle = start.getY() + ((finish.getY() - start.getY()) / 2);
         path.lineTo(start.getX(), middle);
         path.lineTo(finish.getX(), middle);
         path.lineTo(finish.toFloat());
+    };
+
+    //Draw 3D-ish borders around a rectangle.
+    inline auto draw3DCorners = [](juce::Graphics& g, const juce::Rectangle<int> bounds, const int edgeLengthX, int edgeLengthY = -1) {
+        if (edgeLengthY == -1) edgeLengthY = edgeLengthX;
+
+        int left = bounds.getX();
+        int top = bounds.getY();
+        int right = left + bounds.getWidth();
+        int bottom = top + bounds.getHeight();
+
+        juce::Path topEdge;
+        topEdge.startNewSubPath(left, top);
+        topEdge.lineTo(left - edgeLengthX, top - edgeLengthY);
+        topEdge.lineTo(right + edgeLengthX, top - edgeLengthY);
+        topEdge.lineTo(right, top);
+        topEdge.closeSubPath();
+
+        juce::Path rightEdge;
+        rightEdge.startNewSubPath(right, top);
+        rightEdge.lineTo(right + edgeLengthX, top - edgeLengthY);
+        rightEdge.lineTo(right + edgeLengthX, bottom + edgeLengthY);
+        rightEdge.lineTo(right, bottom);
+        rightEdge.closeSubPath();
+
+        juce::Path bottomEdge;
+        bottomEdge.startNewSubPath(left, bottom);
+        bottomEdge.lineTo(left - edgeLengthX, bottom + edgeLengthY);
+        bottomEdge.lineTo(right + edgeLengthX, bottom + edgeLengthY);
+        bottomEdge.lineTo(right, bottom);
+        bottomEdge.closeSubPath();
+
+        juce::Path leftEdge;
+        leftEdge.startNewSubPath(left, top);
+        leftEdge.lineTo(left - edgeLengthX, top - edgeLengthY);
+        leftEdge.lineTo(left - edgeLengthX, bottom + edgeLengthY);
+        leftEdge.lineTo(left, bottom);
+        leftEdge.closeSubPath();
+
+        g.setColour(COLOR_BG_DARK);
+        g.fillPath(topEdge);
+        g.setColour(COLOR_BG_MID);
+        g.fillPath(rightEdge);
+        g.setColour(COLOR_BG_LIGHT);
+        g.fillPath(bottomEdge);
+        g.setColour(COLOR_BG_MIDDARK);
+        g.fillPath(leftEdge);
+    };
+
+    //Draw 3D-ish round border around a knob.
+    inline auto draw3Dknob = [](juce::Graphics& g, juce::Rectangle<int> bounds, const int distance) {
+        bounds.expand(distance, distance);
+        juce::Path outer;
+        const float distRectangleCornerToCircle = (bounds.getWidth() / 2) * (sqrt(2) - 1);
+        outer.addEllipse(bounds.toFloat());
+        juce::ColourGradient darken(
+            juce::Colour(COLOR_BG_DARK.getRed(), COLOR_BG_DARK.getGreen(), COLOR_BG_DARK.getBlue(), 1.f),
+            bounds.getX() + (bounds.getWidth() / 4), bounds.getY(),
+            juce::Colour(COLOR_BG_DARK.getRed(), COLOR_BG_DARK.getGreen(), COLOR_BG_DARK.getBlue(), 0.f),
+            bounds.getRight() - (bounds.getWidth() / 4), bounds.getBottom(), true);
+        g.setGradientFill(darken);
+        g.fillPath(outer);
+        juce::ColourGradient lighten(
+            juce::Colour(COLOR_BG_MID.getRed(), COLOR_BG_MID.getGreen(), COLOR_BG_MID.getBlue(), 1.f),
+            bounds.getRight() - (bounds.getWidth() / 4), bounds.getBottom(),
+            juce::Colour(COLOR_BG_MID.getRed(), COLOR_BG_MID.getGreen(), COLOR_BG_MID.getBlue(), 0.f),
+            bounds.getX() + (bounds.getWidth() / 4), bounds.getY(), true);
+        g.setGradientFill(lighten);
+        g.fillPath(outer);
     };
 }

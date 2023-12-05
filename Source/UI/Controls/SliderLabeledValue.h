@@ -35,6 +35,6 @@ namespace GnomeDistort2Controls {
         juce::String getValueDisplayString() const { return juce::String((float)getValue(), mode == VALUE_NO_DECIMALS ? 0 : 2); }
 
     private:
-        LnFSliderLabeledValue LNF;
+        GnomeDistort2Controls::LnFSliderLabeledValue LNF;
     };
 }

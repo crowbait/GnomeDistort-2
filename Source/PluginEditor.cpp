@@ -76,11 +76,11 @@ void GnomeDistort2AudioProcessorEditor::resized() {
 
     bounds.removeFromTop(padding);
     auto switchesArea = bounds.removeFromTop(padding);
+    switchesArea.setTop(switchesArea.getY() - (padding / 4));
     switchesArea.removeFromLeft(padding / 2);
-    auto displaySwitchesArea = switchesArea.removeFromLeft(padding * 2);
-    displaySwitchesArea.removeFromTop(displaySwitchesArea.getHeight() - (padding / 2));
-    SwitchDisplayOnButton.setBounds(displaySwitchesArea.removeFromLeft(padding));
-    SwitchDisplayHQButton.setBounds(displaySwitchesArea.removeFromLeft(padding));
+    switchesArea.removeFromRight(bandWidth + (padding / 2));
+    SwitchDisplayOnButton.setBounds(switchesArea.removeFromLeft(padding));
+    SwitchDisplayHQButton.setBounds(switchesArea.removeFromLeft(padding));
     LinkDonateButton.setBounds(switchesArea.removeFromRight(padding * 2));
     LinkGithubButton.setBounds(switchesArea.removeFromRight(padding * 2));
 
