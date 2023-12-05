@@ -12,6 +12,14 @@
             file="Assets/knob_overlay_128.png"/>
     </GROUP>
     <GROUP id="{37019FB3-77C2-F5BE-8075-A39A7B85E738}" name="Source">
+      <GROUP id="{5B06DAD9-26F3-22EB-A5C2-2800EED6A580}" name="Processing">
+        <FILE id="KpNwce" name="ConstOptions.h" compile="0" resource="0" file="Source/Processing/ConstOptions.h"/>
+        <FILE id="wpkDPO" name="Parameters.h" compile="0" resource="0" file="Source/Processing/Parameters.h"/>
+        <FILE id="a6CAS3" name="Processing.cpp" compile="1" resource="0" file="Source/Processing/Processing.cpp"/>
+        <FILE id="qR5rux" name="Processing.h" compile="0" resource="0" file="Source/Processing/Processing.h"/>
+        <FILE id="CB16Nr" name="WaveshaperFunctions.h" compile="0" resource="0"
+              file="Source/Processing/WaveshaperFunctions.h"/>
+      </GROUP>
       <GROUP id="{2B0E1941-8ECD-A0C7-911A-B45E86A838BA}" name="Helpers">
         <FILE id="BkyTnq" name="FFTDataGenerator.h" compile="0" resource="0"
               file="Source/Helpers/FFTDataGenerator.h"/>
@@ -55,12 +63,6 @@
               file="Source/UI/PreBandControls.h"/>
         <FILE id="ywVgCK" name="UIConsts.h" compile="0" resource="0" file="Source/UI/UIConsts.h"/>
       </GROUP>
-      <FILE id="Bhyh0v" name="Processing.cpp" compile="1" resource="0" file="Source/Processing.cpp"/>
-      <FILE id="IPv87m" name="WaveshaperFunctions.h" compile="0" resource="0"
-            file="Source/WaveshaperFunctions.h"/>
-      <FILE id="Q2DSLe" name="Processing.h" compile="0" resource="0" file="Source/Processing.h"/>
-      <FILE id="pNypw8" name="Parameters.h" compile="0" resource="0" file="Source/Parameters.h"/>
-      <FILE id="PAfBEI" name="ConstOptions.h" compile="0" resource="0" file="Source/ConstOptions.h"/>
       <FILE id="biyUHQ" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="ifekcP" name="PluginProcessor.h" compile="0" resource="0"

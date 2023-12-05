@@ -2,7 +2,7 @@
 #include <JuceHeader.h>
 #include "Parameters.h"
 #include "WaveshaperFunctions.h"
-#include "Helpers/SingleChannelSampleFifo.h"
+#include "../Helpers/SingleChannelSampleFifo.h"
 
 namespace GnomeDistort2Processing {
     struct Processing {

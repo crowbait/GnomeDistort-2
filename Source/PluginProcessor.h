@@ -8,8 +8,8 @@
 
 #pragma once
 #include <JuceHeader.h>
-#include "Parameters.h"
-#include "Processing.h"
+#include "Processing/Parameters.h"
+#include "Processing/Processing.h"
 
 //==============================================================================
 class GnomeDistort2AudioProcessor : public juce::AudioProcessor

@@ -1,6 +1,6 @@
 #pragma once
 #include <JuceHeader.h>
-#include "../../WaveshaperFunctions.h"
+#include "../../Processing/WaveshaperFunctions.h"
 
 namespace GnomeDistort2Controls {
     struct DisplayGraph : juce::Component, juce::AudioProcessorParameter::Listener {

@@ -1,7 +1,7 @@
 #pragma once
 #include <JuceHeader.h>
 #include "../../PluginProcessor.h"
-#include "../../Parameters.h"
+#include "../../Processing/Parameters.h"
 #include "../../Helpers/SingleChannelSampleFifo.h"
 #include "../../Helpers/FFTDataGenerator.h"
 

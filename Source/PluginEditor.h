@@ -2,7 +2,7 @@
 
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
-#include "Parameters.h"
+#include "Processing/Parameters.h"
 #include "Helpers/Settings.h"
 #include "UI/Display.h"
 #include "UI/PreBandControls.h"
@@ -33,6 +33,7 @@ private:
     GnomeDistort2Controls::TextButton LinkDonateButton, LinkGithubButton;
 
     void checkForUpdates();
+    void paintBackground();
 
     std::vector<juce::Component*> getComponents() {
         return {
