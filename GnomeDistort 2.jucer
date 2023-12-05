@@ -7,11 +7,20 @@
               pluginManufacturerCode="CrBt" pluginCode="GDs2" aaxIdentifier="de.crowbait.gnomedistort2"
               pluginVST3Category="Distortion,Fx" pluginChannelConfigs="{2, 2}">
   <MAINGROUP id="jjautv" name="GnomeDistort 2">
+    <GROUP id="{CFF4FA15-841E-EE08-6BC4-EE2CC5E6D627}" name="Peripherals">
+      <FILE id="qzB2yW" name="CMakeLists.txt" compile="0" resource="1" file="CMakeLists.txt"/>
+      <FILE id="wwVIoz" name="README.md" compile="0" resource="1" file="README.md"/>
+    </GROUP>
     <GROUP id="{DD7B0637-8D4C-833E-5DE4-632D1E92A377}" name="Resources">
+      <FILE id="uUEhEF" name="gnome_dark.png" compile="0" resource="1" file="Assets/gnome_dark.png"/>
+      <FILE id="uF8aCf" name="grundge_overlay.png" compile="0" resource="1"
+            file="Assets/grundge_overlay.png"/>
       <FILE id="Cap02M" name="knob_overlay_128.png" compile="0" resource="1"
             file="Assets/knob_overlay_128.png"/>
     </GROUP>
     <GROUP id="{37019FB3-77C2-F5BE-8075-A39A7B85E738}" name="Source">
+      <FILE id="spFpXU" name="PluginEditor.paintBackground.cpp" compile="1"
+            resource="0" file="Source/PluginEditor.paintBackground.cpp"/>
       <GROUP id="{5B06DAD9-26F3-22EB-A5C2-2800EED6A580}" name="Processing">
         <FILE id="KpNwce" name="ConstOptions.h" compile="0" resource="0" file="Source/Processing/ConstOptions.h"/>
         <FILE id="wpkDPO" name="Parameters.h" compile="0" resource="0" file="Source/Processing/Parameters.h"/>

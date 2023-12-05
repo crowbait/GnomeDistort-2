@@ -61,7 +61,7 @@ GnomeDistort2AudioProcessorEditor::~GnomeDistort2AudioProcessorEditor() {}
 //==============================================================================
 
 void GnomeDistort2AudioProcessorEditor::paint(juce::Graphics& g) {
-
+    g.drawImageAt(background, 0, 0);
 }
 
 void GnomeDistort2AudioProcessorEditor::resized() {
@@ -105,6 +105,8 @@ void GnomeDistort2AudioProcessorEditor::resized() {
     postArea.removeFromBottom(padding);
     PostGainSlider.setBounds(postArea.removeFromBottom(PreBandControl.getBounds().getHeight()));
     MixSlider.setBounds(postArea.removeFromTop(DisplayArea.getBounds().getHeight()));
+
+    paintBackground();
 }
 
 void GnomeDistort2AudioProcessorEditor::checkForUpdates() {

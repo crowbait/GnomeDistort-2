@@ -17,4 +17,7 @@ namespace GnomeDistort2UIConst {
     inline int TEXT_NORMAL = 12;
     inline int SELECT_HEIGHT = 24;
     inline int COMP_PADDING = 12;
+
+    inline float CIRCUIT_THICKNESS = 5.f;
+    inline juce::Colour CIRCUIT_PRIMARY = juce::Colour(55u, 5u, 5u);
 }

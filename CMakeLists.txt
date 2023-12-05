@@ -29,15 +29,16 @@ juce_generate_juce_header(GnomeDistort2)
 
 target_sources(GnomeDistort2
   PRIVATE
-    Source/ConstOptions.h
-    Source/Parameters.h
-    Source/PluginEditor.h
-    Source/PluginEditor.cpp
     Source/PluginProcessor.h
     Source/PluginProcessor.cpp
-    Source/Processing.h
-    Source/Processing.cpp
-    Source/WaveshaperFunctions.h
+    Source/PluginEditor.h
+    Source/PluginEditor.cpp
+    Source/PluginEditor.paintBackground.cpp
+    Source/Processing/ConstOptions.h
+    Source/Processing/Parameters.h
+    Source/Processing/Processing.h
+    Source/Processing/Processing.cpp
+    Source/Processing/WaveshaperFunctions.h
     Source/Helpers/FFTDataGenerator.h
     Source/Helpers/Fifo.h
     Source/Helpers/SingleChannelSampleFifo.h
@@ -68,6 +69,8 @@ target_compile_definitions(GnomeDistort2
 
 juce_add_binary_data(GnomeDistort2_binary SOURCES 
   Assets/knob_overlay_128.png
+  Assets/gnome_dark.png
+  Assets/grundge_overlay.png
 )
 target_compile_options(GnomeDistort2_binary PRIVATE -fPIC)
 
