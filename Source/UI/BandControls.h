@@ -26,7 +26,7 @@ struct BandControls : juce::Component {
     juce::ComboBox WaveshapeFuncSelect;
     juce::TextButton BtnMute{ "M" }, BtnSolo{ "S" }, BtnBypass{ "By" };
 
-    // juce::Image drawBackground(juce::Graphics&) {};
+    juce::Image paintBackground();
 
     void paint(juce::Graphics& g) override {};
     void resized() override;

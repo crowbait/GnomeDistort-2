@@ -19,5 +19,20 @@ namespace GnomeDistort2UIConst {
     inline int COMP_PADDING = 12;
 
     inline float CIRCUIT_THICKNESS = 5.f;
-    inline juce::Colour CIRCUIT_PRIMARY = juce::Colour(55u, 5u, 5u);
+    inline juce::Colour CIRCUIT_PRIMARY = juce::Colour(25u, 25u, 25u);
+
+    inline auto connectHorizontal = [](juce::Path& path, const juce::Point<int> start, const juce::Point<int> finish) {
+        path.startNewSubPath(start.toFloat());
+        const int middle = start.getX() + ((finish.getX() - start.getX()) / 2);
+        path.lineTo(middle, start.getY());
+        path.lineTo(middle, finish.getY());
+        path.lineTo(finish.toFloat());
+    };
+    inline auto connectVertical = [](juce::Path& path, const juce::Point<int> start, const juce::Point<int> finish) {
+        path.startNewSubPath(start.toFloat());
+        const int middle = start.getY() + ((finish.getY() - start.getY()) / 2);
+        path.lineTo(start.getX(), middle);
+        path.lineTo(finish.getX(), middle);
+        path.lineTo(finish.toFloat());
+    };
 }
