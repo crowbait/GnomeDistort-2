@@ -69,8 +69,8 @@ namespace GnomeDistort2Processing {
             } break;
             case Titruff: {
                 return [amount](float x) {
-                    if (x > -0.162f && x < 0.162f) return ((-10.f * x * x + 1) * amount) + (x * (1.f - amount));
-                    return juce::jlimit(-1.f, 1.f, ((-0.5f * x * x + 0.75f) * amount) + (x * (1.f - amount)));
+                    if (x > -0.162f && x < 0.162f) return ((-10.f * x * x) * amount) + (x * (1.f - amount));
+                    return juce::jlimit(-1.f, 1.f, ((-0.5f * x * x - 0.25f) * amount) + (x * (1.f - amount)));
                 }; break;
             case Lopleft:
                 return [amount](float x) { return juce::jlimit(-1.f, 1.f, (-1 * (x + 1) * (x + 1) + 1) * amount + ((1 - amount) * x)); };
