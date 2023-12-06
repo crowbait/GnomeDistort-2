@@ -2,6 +2,15 @@
 #include <JuceHeader.h>
 
 namespace GnomeDistort2Controls {
+    /* takes some bounds (specifically localBounds of component), get a square region of it (so the knob is circular) and applies padding */
+    inline static const juce::Rectangle<int> getSliderBounds(juce::Rectangle<int>& bounds) {
+        auto size = juce::jmin(bounds.getWidth() - 12, bounds.getHeight() - 12);
+        juce::Rectangle<int> r;
+        r.setSize(size, size);
+        r.setCentre(bounds.getCentreX(), bounds.getCentreY());
+        return r;
+    }
+
     struct LnFSliderLabeledValue : juce::LookAndFeel_V4 {
         void drawRotarySlider(juce::Graphics&, int x, int y, int width, int height,
                               float sliderPosProportional, float rotaryStartAngle, float rotaryEndAngle,
@@ -31,7 +40,6 @@ namespace GnomeDistort2Controls {
         juce::Colour* color;
 
         void paint(juce::Graphics&) override;
-        juce::Rectangle<int> getSliderBounds(juce::Rectangle<int>&) const; // const at END of function declares that this function MUST not change class member variables
         juce::String getValueDisplayString() const { return juce::String((float)getValue(), mode == VALUE_NO_DECIMALS ? 0 : 2); }
 
     private:

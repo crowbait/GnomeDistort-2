@@ -87,12 +87,3 @@ void GnomeDistort2Controls::SliderLabeledValue::paint(juce::Graphics& g) {
                                       sliderBounds.getX(), sliderBounds.getY(), sliderBounds.getWidth(), sliderBounds.getHeight(),
                                       valueToProportionOfLength(getValue()), minAngle, maxAngle, *this);
 }
-
-/* takes some bounds (specifically localBounds of component), get a square region of it (so the knob is circular) and applies padding */
-juce::Rectangle<int> GnomeDistort2Controls::SliderLabeledValue::getSliderBounds(juce::Rectangle<int>& bounds) const {
-    auto size = juce::jmin(bounds.getWidth() - 12, bounds.getHeight() - 12);
-    juce::Rectangle<int> r;
-    r.setSize(size, size);
-    r.setCentre(bounds.getCentreX(), bounds.getCentreY());
-    return r;
-}

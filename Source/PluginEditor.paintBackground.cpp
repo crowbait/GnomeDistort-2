@@ -3,6 +3,7 @@
 void GnomeDistort2AudioProcessorEditor::paintBackground() {
     using namespace juce;
     using namespace GnomeDistort2UIConst;
+    using namespace GnomeDistort2Controls;
 
     const int width = getWidth();
     const int height = getHeight();
@@ -124,17 +125,34 @@ void GnomeDistort2AudioProcessorEditor::paintBackground() {
     // draw 3D borders
 #pragma region 3DBorders
     draw3DCorners(g, DisplayArea.getBounds(), COMP_PADDING * 1.5f, COMP_PADDING);
-    draw3Dknob(g, PreBandControl.LoCutSlider.getSliderBounds(PreBandControl.LoCutSlider.getBounds()) + PreBandCorner, COMP_PADDING / 3);
+    draw3Dknob(g, getSliderBounds(PreBandControl.LoCutSlider.getBounds()) + PreBandCorner, COMP_PADDING / 3);
     draw3DCorners(g, PreBandControl.LoCutSlopeSelect.getBounds() + PreBandCorner, COMP_PADDING / 3);
-    draw3Dknob(g, PreBandControl.BandLoMidSlider.getSliderBounds(PreBandControl.BandLoMidSlider.getBounds()) + PreBandCorner, COMP_PADDING / 2);
-    draw3Dknob(g, PreBandControl.BandMidHiSlider.getSliderBounds(PreBandControl.BandMidHiSlider.getBounds()) + PreBandCorner, COMP_PADDING / 2);
-    draw3Dknob(g, PreBandControl.HiCutSlider.getSliderBounds(PreBandControl.HiCutSlider.getBounds()) + PreBandCorner, COMP_PADDING / 3);
+    draw3Dknob(g, getSliderBounds(PreBandControl.BandLoMidSlider.getBounds()) + PreBandCorner, COMP_PADDING / 2);
+    draw3Dknob(g, getSliderBounds(PreBandControl.BandMidHiSlider.getBounds()) + PreBandCorner, COMP_PADDING / 2);
+    draw3Dknob(g, getSliderBounds(PreBandControl.HiCutSlider.getBounds()) + PreBandCorner, COMP_PADDING / 3);
     draw3DCorners(g, PreBandControl.HiCutSlopeSelect.getBounds() + PreBandCorner, COMP_PADDING / 3);
 
-    draw3Dknob(g, MixSlider.getSliderBounds(MixSlider.getBounds()), COMP_PADDING / 2);
-    draw3Dknob(g, PostGainSlider.getSliderBounds(PostGainSlider.getBounds()), COMP_PADDING / 2);
-    draw3Dknob(g, PostBandControl.WaveshapeAmtSlider.getSliderBounds(PostBandControl.WaveshapeAmtSlider.getBounds()) + PostBandCorner, COMP_PADDING / 2);
+    draw3Dknob(g, getSliderBounds(MixSlider.getBounds()), COMP_PADDING / 2);
+    draw3Dknob(g, getSliderBounds(PostGainSlider.getBounds()), COMP_PADDING / 2);
+    draw3Dknob(g, getSliderBounds(PostBandControl.WaveshapeAmtSlider.getBounds()) + PostBandCorner, COMP_PADDING / 2);
     draw3DCorners(g, PostBandControl.WaveshapeFuncSelect.getBounds() + PostBandCorner, COMP_PADDING / 3);
+
+    for (auto band : bands) {
+        Point<int> bandCorner = band->getPosition();
+        // draw3Dknob(g, getSliderBounds(band->PeakGainSlider.getBounds()) + bandCorner, COMP_PADDING / 4);
+        // draw3Dknob(g, getSliderBounds(band->PeakFreqSlider.getBounds()) + bandCorner, COMP_PADDING / 3);
+        // draw3Dknob(g, getSliderBounds(band->PeakQSlider.getBounds()) + bandCorner, COMP_PADDING / 4);
+        draw3Dknob(g, getSliderBounds(band->PreGainSlider.getBounds()) + bandCorner, COMP_PADDING / 3);
+        // draw3Dknob(g, getSliderBounds(band->SmearAmtSlider.getBounds()) + bandCorner, COMP_PADDING / 4);
+        // draw3Dknob(g, getSliderBounds(band->SmearLengthSlider.getBounds()) + bandCorner, COMP_PADDING / 4);
+        draw3Dknob(g, getSliderBounds(band->WaveshapeAmtSlider.getBounds()) + bandCorner, COMP_PADDING / 2);
+        draw3DCorners(g, band->Display.getBounds() + bandCorner, COMP_PADDING / 3);
+        draw3DCorners(g, band->WaveshapeFuncSelect.getBounds() + bandCorner, COMP_PADDING / 3);
+        draw3Dknob(g, getSliderBounds(band->PostGainSlider.getBounds()) + bandCorner, COMP_PADDING / 3);
+        // draw3DCorners(g, band->BtnMute.getBounds() + bandCorner, COMP_PADDING / 4);
+        // draw3DCorners(g, band->BtnSolo.getBounds() + bandCorner, COMP_PADDING / 4);
+        // draw3DCorners(g, band->BtnBypass.getBounds() + bandCorner, COMP_PADDING / 4);
+    }
 #pragma endregion
 
     // write version info
