@@ -84,6 +84,12 @@ namespace GnomeDistort2Processing {
                                                                            (-1 * (x - 1) * (x - 1) + 1)
                                                                            ) * amount + ((1 - amount) * x)); };
                 break;
+            case Lophard:
+                return [amount](float x) { return juce::jlimit(-1.f, 1.f, (x < 0 ?
+                                                                           (-8 * (x + 0.433f) * (x + 0.433f) + 1.5f) :
+                                                                           (-8 * (x - 0.433f) * (x - 0.433f) + 1.5f)
+                                                                           ) * amount + ((1 - amount) * x)); };
+                break;
             }
         }
     }

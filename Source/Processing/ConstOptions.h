@@ -31,7 +31,8 @@ namespace GnomeDistort2Parameters {
             Spiked,
             Titruff,
             Lopleft,
-            Lopdob
+            Lopdob,
+            Lophard
         };
         const juce::StringArray WaveshaperFunctionOptions = {
             "Hard Clip",
@@ -48,7 +49,8 @@ namespace GnomeDistort2Parameters {
             "Spiked",
             "Titruff",
             "Lopleft",
-            "Lopdob"
+            "Lopdob",
+            "Lophard"
         };
     }
 }
