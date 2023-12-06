@@ -26,6 +26,7 @@ namespace GnomeDistort2Parameters {
             Fuzz,
             Hollowing,
             Sin,
+            Square,
             Rash,
             Spiked,
             Titruff
@@ -40,6 +41,7 @@ namespace GnomeDistort2Parameters {
             "Fuzz",
             "Hollowing",
             "Sin",
+            "Square",
             "Rash",
             "Spiked",
             "Titruff"

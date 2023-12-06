@@ -39,6 +39,9 @@ namespace GnomeDistort2Processing {
             case Sin:
                 return [amount](float x) { return juce::jlimit(-1.f, 1.f, 2 * amount * (float)sin(x * 100 * amount) + ((1 - amount) * x)); };
                 break;
+            case Square:
+                return [amount](float x) { return juce::jlimit(-1.f, 1.f, 0.95f * (float)sin(2 * sin(2 * sin(5 * amount * x))) + ((1 - amount) * x)); };
+                break;
             case Rash: {      //  -1           -0.8          -0.6          -0.4          -0.2           0            0.2           0.4           0.6           0.8           1
                 const float noise[] = { 2.22f, 3.21f, 1.38f, 0.21f, 3.66f, 1.51f, 3.41f, 2.14f, 2.09f, 0.31f, 1.15f, 3.15f, 2.58f, 0.91f, 1.18f, 4.29f, 3.24f, 0.11f, 0.05f, 2.11f, 1.77f };
                 return [amount, noise](float x) {
