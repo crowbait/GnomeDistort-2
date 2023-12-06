@@ -22,7 +22,7 @@ namespace GnomeDistort2UIConst {
     inline juce::Colour CIRCUIT_PRIMARY = juce::Colour(25u, 25u, 25u);
 
     //Connect two points with different Y values, creating a step in a horizontal line.
-    inline auto connectHorizontal = [](juce::Path& path, const juce::Point<int> start, const juce::Point<int> finish) {
+    inline auto connectPathHorizontal = [](juce::Path& path, const juce::Point<int> start, const juce::Point<int> finish) {
         path.startNewSubPath(start.toFloat());
         const int middle = start.getX() + ((finish.getX() - start.getX()) / 2);
         path.lineTo(middle, start.getY());
@@ -31,7 +31,7 @@ namespace GnomeDistort2UIConst {
     };
 
     //Connect two points with different X values, creating a step in a vertical line.
-    inline auto connectVertical = [](juce::Path& path, const juce::Point<int> start, const juce::Point<int> finish) {
+    inline auto connectPathVertical = [](juce::Path& path, const juce::Point<int> start, const juce::Point<int> finish) {
         path.startNewSubPath(start.toFloat());
         const int middle = start.getY() + ((finish.getY() - start.getY()) / 2);
         path.lineTo(start.getX(), middle);

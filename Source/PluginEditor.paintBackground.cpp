@@ -9,6 +9,11 @@ void GnomeDistort2AudioProcessorEditor::paintBackground() {
 
     const Point<int> PreBandCorner = PreBandControl.getPosition();
     const Point<int> PostBandCorner = PostBandControl.getPosition();
+    std::vector<BandControls*> bands = {
+        &BandControlsLo,
+        &BandControlsMid,
+        &BandControlsHi
+    };
 
     background = Image(Image::PixelFormat::RGB, width, height, false);
     Graphics g(background);
@@ -35,12 +40,12 @@ void GnomeDistort2AudioProcessorEditor::paintBackground() {
     circuit.lineTo((PreBandControl.BandMidHiSlider.getBounds().getCentre() + PreBandCorner).toFloat());
 
     // band sliders to cutoff frequencies
-    connectHorizontal(circuit, PreBandControl.BandLoMidSlider.getBounds().getCentre() + PreBandCorner, PreBandControl.LoCutSlider.getBounds().getCentre() + PreBandCorner);
-    connectHorizontal(circuit, PreBandControl.BandMidHiSlider.getBounds().getCentre() + PreBandCorner, PreBandControl.HiCutSlider.getBounds().getCentre() + PreBandCorner);
+    connectPathHorizontal(circuit, PreBandControl.BandLoMidSlider.getBounds().getCentre() + PreBandCorner, PreBandControl.LoCutSlider.getBounds().getCentre() + PreBandCorner);
+    connectPathHorizontal(circuit, PreBandControl.BandMidHiSlider.getBounds().getCentre() + PreBandCorner, PreBandControl.HiCutSlider.getBounds().getCentre() + PreBandCorner);
 
     // lo/hi cutoff to bands
-    connectVertical(circuit, PreBandControl.LoCutSlider.getBounds().getCentre() + PreBandCorner, Point<int>(BandControlsLo.getBounds().getCentreX(), BandControlsLo.getY()));
-    connectVertical(circuit, PreBandControl.HiCutSlider.getBounds().getCentre() + PreBandCorner, Point<int>(BandControlsHi.getBounds().getCentreX(), BandControlsHi.getY()));
+    connectPathVertical(circuit, PreBandControl.LoCutSlider.getBounds().getCentre() + PreBandCorner, Point<int>(BandControlsLo.getBounds().getCentreX(), BandControlsLo.getY()));
+    connectPathVertical(circuit, PreBandControl.HiCutSlider.getBounds().getCentre() + PreBandCorner, Point<int>(BandControlsHi.getBounds().getCentreX(), BandControlsHi.getY()));
     // band sliders to mid band
     const int midYBandSlidersMidBand = PreBandCorner.getY() + PreBandControl.BandLoMidSlider.getBottom() + COMP_PADDING;
     circuit.startNewSubPath((PreBandControl.BandLoMidSlider.getBounds().getCentre() + PreBandCorner).toFloat());
@@ -54,18 +59,51 @@ void GnomeDistort2AudioProcessorEditor::paintBackground() {
 
     // band controls
 #pragma region circuit_bands
-    std::vector<BandControls*> bands = {
-        &BandControlsLo,
-        &BandControlsMid,
-        &BandControlsHi
-    };
     for (const auto band : bands) {
-        Path border;
-        border.addRoundedRectangle(band->getBounds().expanded(8, 0), 2.f);
-        g.setColour(CIRCUIT_PRIMARY);
-        g.strokePath(border, PathStrokeType(2));
+        const Point<int> bandCorner = band->getPosition();
 
-        g.drawImageAt(band->paintBackground(), band->getX(), band->getY(), false);
+        // border
+        Path border;
+        Rectangle<int> borderBox = band->getBounds().expanded(8, 0);
+        border.addRoundedRectangle(borderBox, 8.f);
+        g.setColour(CIRCUIT_PRIMARY);
+        g.strokePath(border, PathStrokeType(3));
+
+        // boxes
+        Path box;
+        const Rectangle<int> smearBox(band->SmearAmtSlider.getX() + bandCorner.getX(),
+                                      band->SmearAmtSlider.getY() + bandCorner.getY() + 4,
+                                      band->SmearLengthSlider.getRight() - band->SmearAmtSlider.getX(),
+                                      band->SmearLengthSlider.getBottom() - band->SmearAmtSlider.getY() - 8);
+        box.addRoundedRectangle(smearBox, 4.f);
+        g.fillPath(box);
+
+        // labels
+        g.setFont(TEXT_NORMAL);
+        g.setColour(juce::Colours::lightgrey);
+        g.drawText("SMEAR",
+                   smearBox.getX() + 6,
+                   smearBox.getBottom() - TEXT_NORMAL - 4,
+                   g.getCurrentFont().getStringWidth("SMEAR"),
+                   TEXT_NORMAL, Justification::centred);
+
+        g.setColour(CIRCUIT_PRIMARY);
+
+        // border to pre-gain
+        circuit.startNewSubPath(band->PeakFreqSlider.getBounds().getCentreX() + bandCorner.getX(), borderBox.getY());
+        circuit.lineTo((band->PeakFreqSlider.getBounds().getCentre() + bandCorner).toFloat());
+        connectPathVertical(circuit, band->PeakFreqSlider.getBounds().getCentre() + bandCorner, band->PreGainSlider.getBounds().getCentre() + bandCorner);
+        // peak gain to Q
+        circuit.startNewSubPath((band->PeakGainSlider.getBounds().getCentre() + bandCorner).toFloat());
+        circuit.lineTo((band->PeakQSlider.getBounds().getCentre() + bandCorner).toFloat());
+        // pre-gain to smear to dist to gain
+        circuit.startNewSubPath((band->PreGainSlider.getBounds().getCentre() + bandCorner).toFloat());
+        circuit.lineTo(smearBox.getX(), band->PreGainSlider.getBounds().getCentreY() + bandCorner.getY());
+        circuit.startNewSubPath(band->Display.getBounds().getCentreX() + bandCorner.getX(), smearBox.getBottom());
+        circuit.lineTo((band->Display.getBounds().getCentre() + bandCorner).toFloat());
+        circuit.lineTo((band->WaveshapeAmtSlider.getBounds().getCentre() + bandCorner).toFloat());
+        connectPathVertical(circuit, band->WaveshapeAmtSlider.getBounds().getCentre() + bandCorner, band->PostGainSlider.getBounds().getCentre() + bandCorner);
+
         circuit.startNewSubPath((band->PostGainSlider.getBounds().getCentre() + band->getPosition()).toFloat());
         circuit.lineTo((band->PostGainSlider.getBounds().getCentre() + band->getPosition()).getX(), band->getBottom() + (COMP_PADDING / 2));
     }

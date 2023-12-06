@@ -63,8 +63,6 @@
         <FILE id="q1Va4x" name="BandControls.cpp" compile="1" resource="0"
               file="Source/UI/BandControls.cpp"/>
         <FILE id="h0PYHj" name="BandControls.h" compile="0" resource="0" file="Source/UI/BandControls.h"/>
-        <FILE id="qmVmfd" name="BandControls.paintBackground.cpp" compile="1"
-              resource="0" file="Source/UI/BandControls.paintBackground.cpp"/>
         <FILE id="tlNp2p" name="Display.h" compile="0" resource="0" file="Source/UI/Display.h"/>
         <FILE id="BXR7G1" name="PostBandControls.h" compile="0" resource="0"
               file="Source/UI/PostBandControls.h"/>
