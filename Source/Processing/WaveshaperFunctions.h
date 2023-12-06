@@ -33,9 +33,6 @@ namespace GnomeDistort2Processing {
             case Fuzz:      // x + (a * sin(10a * x))
                 return [amount](float x) { return juce::jlimit(-1.f, 1.f, x + (amount * (float)sin(10 * amount * x))); };
                 break;
-            case Hollowing: // x * (3a * sin(x)) - x - a
-                return [amount](float x) { return juce::jlimit(-1.f, 1.f, x * (3 * amount * (float)sin(x)) - x - amount); };
-                break;
             case Sin:
                 return [amount](float x) { return juce::jlimit(-1.f, 1.f, 2 * amount * (float)sin(x * 100 * amount) + ((1 - amount) * x)); };
                 break;
