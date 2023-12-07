@@ -106,7 +106,7 @@ void GnomeDistort2AudioProcessorEditor::paintBackground() {
         connectPathVertical(circuit, band->WaveshapeAmtSlider.getBounds().getCentre() + bandCorner, band->PostGainSlider.getBounds().getCentre() + bandCorner);
 
         circuit.startNewSubPath((band->PostGainSlider.getBounds().getCentre() + band->getPosition()).toFloat());
-        circuit.lineTo((band->PostGainSlider.getBounds().getCentre() + band->getPosition()).getX(), band->getBottom() + (COMP_PADDING / 2));
+        circuit.lineTo((band->PostGainSlider.getBounds().getCentre() + band->getPosition()).getX(), band->getBottom() + (COMP_PADDING / 2) + (CIRCUIT_THICKNESS / 2));
     }
 #pragma endregion
 

@@ -42,11 +42,13 @@ void PreBandControls::resized() {
     BandMidHiSlider.setBounds(bounds.removeFromLeft(boxWidth));
 
     auto LoSlope = LoCut.removeFromBottom(GnomeDistort2UIConst::SELECT_HEIGHT);
+    LoCut.removeFromBottom(4);
     LoCutSlider.setBounds(LoCut);
     LoSlope.removeFromLeft(padding);
     LoSlope.removeFromRight(padding);
     LoCutSlopeSelect.setBounds(LoSlope);
     auto HiSlope = HiCut.removeFromBottom(GnomeDistort2UIConst::SELECT_HEIGHT);
+    HiCut.removeFromBottom(4);
     HiCutSlider.setBounds(HiCut);
     HiSlope.removeFromLeft(padding);
     HiSlope.removeFromRight(padding);

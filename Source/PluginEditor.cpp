@@ -100,7 +100,7 @@ void GnomeDistort2AudioProcessorEditor::resized() {
 
     bounds.removeFromTop(padding);
     auto switchesArea = bounds.removeFromTop(padding);
-    switchesArea.setTop(switchesArea.getY() - (padding / 4));
+    switchesArea.translate(0, -padding / 4);
     switchesArea.removeFromLeft(padding / 2);
     switchesArea.removeFromRight(bandWidth + (padding / 2));
     SwitchDisplayOnButton.setBounds(switchesArea.removeFromLeft(padding));
