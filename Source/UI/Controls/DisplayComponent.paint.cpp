@@ -13,7 +13,7 @@ void GnomeDistort2Controls::DisplayComponent::paint(juce::Graphics& g) {
     const double outputMin = analysisArea.getBottom();
     const double outputMax = analysisArea.getY();
     const int BandLoMidX = mapFromLog10(DSP->BandMidL.LowerFreqBound, 20.f, 20000.f) * analysisWidth + analysisX;
-    const int BandMidHiX = mapFromLog10(DSP->BandHiL.LowerFreqBound, 20.f, 20000.f) * analysisWidth + analysisX;
+    const int BandMidHiX = mapFromLog10(DSP->BandMidL.UpperFreqBound, 20.f, 20000.f) * analysisWidth + analysisX;
 
     // background
     g.setColour(GnomeDistort2UIConst::COLOR_BG_VERYDARK);
@@ -66,6 +66,40 @@ void GnomeDistort2Controls::DisplayComponent::paint(juce::Graphics& g) {
     LineMidHi.startNewSubPath(BandMidHiX, outputMin);
     LineMidHi.lineTo(BandMidHiX, outputMax);
     g.strokePath(LineMidHi, PathStrokeType(2));
+
+    // if filter params have changed, regenerate new path
+    if (parametersChanged.compareAndSetBool(false, true)) {
+        std::vector<double> magnitudes;
+        magnitudes.resize(analysisWidth);
+        const double sampleRate = processor->getSampleRate();
+
+        for (int i = 0; i < analysisWidth; i++) {
+            double freq = mapToLog10((double)i / (double)analysisWidth, 20.0, 20000.0); // X axis
+            double magnitude = 1.0;                                                     // Y axis
+
+            if (!LoCut.isBypassed<0>()) magnitude *= LoCut.get<0>().coefficients->getMagnitudeForFrequency(freq, sampleRate);
+            if (!LoCut.isBypassed<1>()) magnitude *= LoCut.get<1>().coefficients->getMagnitudeForFrequency(freq, sampleRate);
+            if (!LoCut.isBypassed<2>()) magnitude *= LoCut.get<2>().coefficients->getMagnitudeForFrequency(freq, sampleRate);
+            if (!LoCut.isBypassed<3>()) magnitude *= LoCut.get<3>().coefficients->getMagnitudeForFrequency(freq, sampleRate);
+            if (!HiCut.isBypassed<0>()) magnitude *= HiCut.get<0>().coefficients->getMagnitudeForFrequency(freq, sampleRate);
+            if (!HiCut.isBypassed<1>()) magnitude *= HiCut.get<1>().coefficients->getMagnitudeForFrequency(freq, sampleRate);
+            if (!HiCut.isBypassed<2>()) magnitude *= HiCut.get<2>().coefficients->getMagnitudeForFrequency(freq, sampleRate);
+            if (!HiCut.isBypassed<3>()) magnitude *= HiCut.get<3>().coefficients->getMagnitudeForFrequency(freq, sampleRate);
+
+            if (!DSP->isBypassedLo) magnitude *= PeakLo.coefficients->getMagnitudeForFrequency(freq, sampleRate);
+            if (!DSP->isBypassedMid) magnitude *= PeakMid.coefficients->getMagnitudeForFrequency(freq, sampleRate);
+            if (!DSP->isBypassedHi) magnitude *= PeakHi.coefficients->getMagnitudeForFrequency(freq, sampleRate);
+
+            magnitudes[i] = Decibels::gainToDecibels(magnitude);
+        }
+
+        filterCurve.clear();
+        auto map = [outputMin, outputMax](double input) { return jmap(input, -36.0, 36.0, outputMin, outputMax); };
+        filterCurve.startNewSubPath(analysisArea.getX(), map(magnitudes.front()));
+        for (int i = 1; i < magnitudes.size(); i++) {   // set path for every pixel
+            filterCurve.lineTo(analysisArea.getX() + i, map(magnitudes[i]));
+        }
+    }
 
     // filter curve
     g.setColour(Colours::white);

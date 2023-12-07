@@ -13,6 +13,18 @@ namespace GnomeDistort2Parameters {
         MuteLo, SoloLo, BypassLo, MuteMid, SoloMid, BypassMid, MuteHi, SoloHi, BypassHi,
     };
 
+    inline juce::NormalisableRange<float> CutoffRange = juce::NormalisableRange<float>(20, 20000, 1, 0.25f); // Parameter range (20-20k, step-size 1, skew: <1 fills more of the slider with low range
+    inline juce::NormalisableRange<float> LoMidBandRange = juce::NormalisableRange<float>(20, 999, 1, 0.25f);
+    inline juce::NormalisableRange<float> MidHiBandRange = juce::NormalisableRange<float>(1000, 20000, 1, 0.25f);
+    inline juce::NormalisableRange<float> PeakFreqRange = juce::NormalisableRange<float>(0, 1, 0.01f, 1);    // map to freq range of band
+    inline juce::NormalisableRange<float> PeakGainRange = juce::NormalisableRange<float>(-36, 36, 0.25f, 1);
+    inline juce::NormalisableRange<float> PeakQRange = juce::NormalisableRange<float>(0.1f, 10, 0.05f, 1);
+    inline juce::NormalisableRange<float> PreGainRange = juce::NormalisableRange<float>(-8, 32, 0.5f, 1);
+    inline juce::NormalisableRange<float> SmearAmountRange = juce::NormalisableRange<float>(0, 1, 0.01f, 0.75f);
+    inline juce::NormalisableRange<float> SmearLengthRange = juce::NormalisableRange<float>(0, 1, 0.01f, 0.75f);
+    inline juce::NormalisableRange<float> WaveshapeAmountRange = juce::NormalisableRange<float>(0, 0.990f, 0.01f, 0.75f);
+    inline juce::NormalisableRange<float> PostGainRange = juce::NormalisableRange<float>(-32, 8, 0.5f, 1);
+
     struct Parameters {
         static const std::map<TreeParameter, juce::String> getTreeParameterNames() {
             static const std::map<TreeParameter, juce::String> map = {
@@ -96,24 +108,23 @@ namespace GnomeDistort2Parameters {
             };
         };
 
+
+
         static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout() {
             std::map<TreeParameter, juce::String> Names = getTreeParameterNames();
             juce::AudioProcessorValueTreeState::ParameterLayout layout;
 
             layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::LoCutFreq), "Low-Cut Frequency",                           // Parameter ID, Name
-                                                                   juce::NormalisableRange<float>(20, 20000, 1, 0.25f),  // Parameter range (20-20k, step-size 1, skew: <1 fills more of the slider with low range
-                                                                   20));                                                     // default value
+                                                                   CutoffRange,
+                                                                   20));                                                                              // default value
             layout.add(std::make_unique<juce::AudioParameterChoice>(Names.at(TreeParameter::LoCutSlope), "Low-Cut Slope",                             // Parameter ID, Name
                                                                     GnomeDistort2Parameters::Options::FilterSlopeOptions, 1));                        // Choices StringArray, default index
-            layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::BandFreqLoMid), "Low/Mid-Band Frequency", juce::NormalisableRange<float>(20, 999, 1, 0.5f), 400));
-            layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::BandFreqMidHi), "Mid/High-Band Frequency", juce::NormalisableRange<float>(1000, 20000, 1, 0.25f), 2000));
-            layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::HiCutFreq), "High-Cut Frequency", juce::NormalisableRange<float>(20, 20000, 1, 0.25f), 20000));
+            layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::BandFreqLoMid), "Low/Mid-Band Frequency", LoMidBandRange, 400));
+            layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::BandFreqMidHi), "Mid/High-Band Frequency", MidHiBandRange, 2000));
+            layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::HiCutFreq), "High-Cut Frequency", CutoffRange, 20000));
             layout.add(std::make_unique<juce::AudioParameterChoice>(Names.at(TreeParameter::HiCutSlope), "High-Cut Slope", GnomeDistort2Parameters::Options::FilterSlopeOptions, 1));
 
             // EQ
-            juce::NormalisableRange<float> PeakFreqRange = juce::NormalisableRange<float>(0, 1, 0.01f, 1);    // map to freq range of band
-            juce::NormalisableRange<float> PeakGainRange = juce::NormalisableRange<float>(-36, 36, 0.25f, 1);
-            juce::NormalisableRange<float> PeakQRange = juce::NormalisableRange<float>(0.1f, 10, 0.05f, 1);
             layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::PeakFreqLo), "Low Band Peak Frequency", PeakFreqRange, 0.5f));
             layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::PeakGainLo), "Low Band Peak Gain", PeakGainRange, 0));
             layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::PeakQLo), "Low Band Peak Q", PeakQRange, 1));
@@ -124,11 +135,6 @@ namespace GnomeDistort2Parameters {
             layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::PeakGainHi), "High Band Peak Gain", PeakGainRange, 0));
             layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::PeakQHi), "High Band Peak Q", PeakQRange, 1));
             // Dist
-            juce::NormalisableRange<float> PreGainRange = juce::NormalisableRange<float>(-8, 32, 0.5f, 1);
-            juce::NormalisableRange<float> SmearAmountRange = juce::NormalisableRange<float>(0, 1, 0.01f, 0.75f);
-            juce::NormalisableRange<float> SmearLengthRange = juce::NormalisableRange<float>(0, 1, 0.01f, 0.75f);
-            juce::NormalisableRange<float> WaveshapeAmountRange = juce::NormalisableRange<float>(0, 0.990f, 0.01f, 0.75f);
-            juce::NormalisableRange<float> PostGainRange = juce::NormalisableRange<float>(-32, 8, 0.5f, 1);
             layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::PreGainLo), "Low Band Pre-Gain", PreGainRange, 0));
             layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::SmearAmountLo), "Low Band Smear Amount", SmearAmountRange, 0));
             layout.add(std::make_unique<juce::AudioParameterFloat>(Names.at(TreeParameter::SmearLengthLo), "Low Band Smear Length", SmearLengthRange, 0));

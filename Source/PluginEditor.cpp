@@ -33,6 +33,15 @@ GnomeDistort2AudioProcessorEditor::GnomeDistort2AudioProcessorEditor(GnomeDistor
     auto* settingsPtr = &settings;
     SwitchDisplayOnButton.onClick = [display, displayOnSwitch, settingsPtr]() {
         display->isEnabled = displayOnSwitch->getToggleState();
+        if (display->isEnabled) {
+            display->startTimerHz(30);
+        } else {
+            display->stopTimer();
+            juce::MessageManagerLock mml(juce::Thread::getCurrentThread());
+            if (mml.lockWasGained()) {
+                display->repaint();
+            } else DBG("No Lock");
+        }
         settingsPtr->displayEnabled = display->isEnabled;
         settingsPtr->saveSettings();
     };

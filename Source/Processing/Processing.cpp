@@ -172,29 +172,29 @@ void GnomeDistort2Processing::Processing::GnomeDSP::updateSettings(const GnomeDi
     if (!isBypassedLo) {
         BandLoL.updateSettings(chainSettings.LoBandSettings, sampleRate);
         BandLoR.updateSettings(chainSettings.LoBandSettings, sampleRate);
-        BandLoL.LowerFreqBound = chainSettings.LoCutFreq;
-        BandLoR.LowerFreqBound = chainSettings.LoCutFreq;
-        BandLoL.UpperFreqBound = chainSettings.BandFreqLoMid;
-        BandLoR.UpperFreqBound = chainSettings.BandFreqLoMid;
     }
+    BandLoL.LowerFreqBound = chainSettings.LoCutFreq;
+    BandLoR.LowerFreqBound = chainSettings.LoCutFreq;
+    BandLoL.UpperFreqBound = chainSettings.BandFreqLoMid;
+    BandLoR.UpperFreqBound = chainSettings.BandFreqLoMid;
     isBypassedMid = chainSettings.BypassMid;
     if (!isBypassedMid) {
         BandMidL.updateSettings(chainSettings.MidBandSettings, sampleRate);
         BandMidR.updateSettings(chainSettings.MidBandSettings, sampleRate);
-        BandMidL.LowerFreqBound = chainSettings.BandFreqLoMid;
-        BandMidR.LowerFreqBound = chainSettings.BandFreqLoMid;
-        BandMidL.UpperFreqBound = chainSettings.BandFreqMidHi;
-        BandMidR.UpperFreqBound = chainSettings.BandFreqMidHi;
     }
+    BandMidL.LowerFreqBound = chainSettings.BandFreqLoMid;
+    BandMidR.LowerFreqBound = chainSettings.BandFreqLoMid;
+    BandMidL.UpperFreqBound = chainSettings.BandFreqMidHi;
+    BandMidR.UpperFreqBound = chainSettings.BandFreqMidHi;
     isBypassedHi = chainSettings.BypassHi;
     if (!isBypassedHi) {
         BandHiL.updateSettings(chainSettings.HiBandSettings, sampleRate);
         BandHiR.updateSettings(chainSettings.HiBandSettings, sampleRate);
-        BandHiL.LowerFreqBound = chainSettings.BandFreqMidHi;
-        BandHiR.LowerFreqBound = chainSettings.BandFreqMidHi;
-        BandHiL.UpperFreqBound = chainSettings.HiCutFreq;
-        BandHiR.UpperFreqBound = chainSettings.HiCutFreq;
     }
+    BandHiL.LowerFreqBound = chainSettings.BandFreqMidHi;
+    BandHiR.LowerFreqBound = chainSettings.BandFreqMidHi;
+    BandHiL.UpperFreqBound = chainSettings.HiCutFreq;
+    BandHiR.UpperFreqBound = chainSettings.HiCutFreq;
 
     postBandChainL.get<0>().functionToUse = GetWaveshaperFunction(chainSettings.WaveshapeFunctionGlobal, chainSettings.WaveshapeAmountGlobal);
     postBandChainR.get<0>().functionToUse = GetWaveshaperFunction(chainSettings.WaveshapeFunctionGlobal, chainSettings.WaveshapeAmountGlobal);

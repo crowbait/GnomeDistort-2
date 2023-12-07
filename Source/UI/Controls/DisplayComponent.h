@@ -27,7 +27,10 @@ namespace GnomeDistort2Controls {
     private:
         GnomeDistort2AudioProcessor* processor;
         GnomeDistort2Processing::Processing::GnomeDSP* DSP;
+
         juce::Atomic<bool> parametersChanged{ true };   // set true to draw filter curve on launch
+        GnomeDistort2Processing::Processing::CutFilter LoCut, HiCut;
+        GnomeDistort2Processing::Processing::Filter PeakLo, PeakMid, PeakHi;
 
         const std::vector<GnomeDistort2Parameters::TreeParameter> paramIndexes = {
             GnomeDistort2Parameters::LoCutFreq,
@@ -44,9 +47,13 @@ namespace GnomeDistort2Controls {
             GnomeDistort2Parameters::PeakQMid,
             GnomeDistort2Parameters::PeakFreqHi,
             GnomeDistort2Parameters::PeakGainHi,
-            GnomeDistort2Parameters::PeakQHi
+            GnomeDistort2Parameters::PeakQHi,
+            GnomeDistort2Parameters::BypassLo,
+            GnomeDistort2Parameters::BypassMid,
+            GnomeDistort2Parameters::BypassHi
         };
         std::vector<juce::RangedAudioParameter*> params;
+        std::map<GnomeDistort2Parameters::TreeParameter, float> paramValues;
 
         juce::Image background;
         juce::Path filterCurve;
