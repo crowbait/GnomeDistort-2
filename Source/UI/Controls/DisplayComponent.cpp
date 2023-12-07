@@ -1,16 +1,15 @@
 #include "DisplayComponent.h"
-#include "../UIConsts.h"
 
 GnomeDistort2Controls::DisplayComponent::DisplayComponent(GnomeDistort2AudioProcessor* processorPointer,
                                                           juce::AudioProcessorValueTreeState* apvts,
                                                           const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>* paramMap,
+                                                          GnomeDistort2Theme::Theme* theme,
                                                           bool enabled, bool HQ) :
-    processor(processorPointer) {
+    processor(processorPointer), theme(theme) {
 
     DSP = &processor->processorChain;
     leftPreFifo = &DSP->leftPreProcessingFifo;
     leftPostFifo = &DSP->leftPostProcessingFifo;
-
     isEnabled = enabled;
     isHQ = HQ;
 

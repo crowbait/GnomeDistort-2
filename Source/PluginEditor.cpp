@@ -1,33 +1,35 @@
 #include "PluginEditor.h"
 #include "Helpers/UpdateCheck.h"
+#include "UI/Theme/UIConsts.h"
+#include "UI/Theme/Theme-GnomeDefault.h"
 
 //==============================================================================
 GnomeDistort2AudioProcessorEditor::GnomeDistort2AudioProcessorEditor(GnomeDistort2AudioProcessor& p,
                                                                      juce::AudioProcessorValueTreeState* apvts,
                                                                      const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>* pm)
     : AudioProcessorEditor(&p),
-    DisplayArea(&p, apvts, pm, &settings),
-    PreBandControl(apvts, pm, &knobOverlay, &primaryColor, &secondaryColor),
-    BandControlsLo(Band::Lo, apvts, pm, &knobOverlay, &primaryColor, &secondaryColor),
-    BandControlsMid(Band::Mid, apvts, pm, &knobOverlay, &primaryColor, &secondaryColor),
-    BandControlsHi(Band::Hi, apvts, pm, &knobOverlay, &primaryColor, &secondaryColor),
-    PostBandControl(apvts, pm, &knobOverlay, &primaryColor, &secondaryColor),
+    DisplayArea(&p, apvts, pm, &settings, &theme),
+    PreBandControl(apvts, pm, &theme),
+    BandControlsLo(Band::Lo, apvts, pm, &theme),
+    BandControlsMid(Band::Mid, apvts, pm, &theme),
+    BandControlsHi(Band::Hi, apvts, pm, &theme),
+    PostBandControl(apvts, pm, &theme),
 
-    PostGainSlider("GAIN", false, &knobOverlay, &primaryColor),
-    MixSlider("MIX", false, &knobOverlay, &primaryColor),
+    PostGainSlider("GAIN", false, &theme.COLOR_PRIMARY, &theme),
+    MixSlider("MIX", false, &theme.COLOR_PRIMARY, &theme),
     AttachPostGainSlider(*apvts, pm->at(GnomeDistort2Parameters::TreeParameter::PostGainGlobal), PostGainSlider),
     AttachMixSlider(*apvts, pm->at(GnomeDistort2Parameters::TreeParameter::DryWet), MixSlider),
 
-    SwitchDisplayOnButton("ON", "OFF", GnomeDistort2UIConst::TEXT_NORMAL, juce::Colours::white, juce::Colours::grey),
-    SwitchDisplayHQButton("HQ", GnomeDistort2UIConst::TEXT_NORMAL, juce::Colours::white, juce::Colours::grey),
-    LinkDonateButton("Donate", juce::Colours::lightgrey, GnomeDistort2UIConst::TEXT_NORMAL, true),
-    LinkGithubButton("Github", juce::Colours::lightgrey, GnomeDistort2UIConst::TEXT_NORMAL, true) {
+    SwitchDisplayOnButton("ON", "OFF", GnomeDistort2Theme::TEXT_NORMAL, juce::Colours::white, juce::Colours::grey),
+    SwitchDisplayHQButton("HQ", GnomeDistort2Theme::TEXT_NORMAL, juce::Colours::white, juce::Colours::grey),
+    LinkDonateButton("Donate", juce::Colours::lightgrey, GnomeDistort2Theme::TEXT_NORMAL, true),
+    LinkGithubButton("Github", juce::Colours::lightgrey, GnomeDistort2Theme::TEXT_NORMAL, true) {
+
+    setThemeFromSettings();
 
     for (auto* comp : getComponents()) {
         addAndMakeVisible(comp);
     }
-
-    knobOverlay = juce::ImageCache::getFromMemory(BinaryData::knob_overlay_128_png, BinaryData::knob_overlay_128_pngSize);
 
     auto display = juce::Component::SafePointer<GnomeDistort2Controls::DisplayComponent>(&DisplayArea.displayComp);
     auto displayOnSwitch = juce::Component::SafePointer<GnomeDistort2Controls::TextSwitch>(&SwitchDisplayOnButton);
@@ -131,4 +133,13 @@ void GnomeDistort2AudioProcessorEditor::resized() {
     MixSlider.setBounds(postArea.removeFromTop(DisplayArea.getBounds().getHeight()));
 
     paintBackground();
+}
+
+void GnomeDistort2AudioProcessorEditor::setThemeFromSettings() {
+    theme = GnomeDistort2Theme::getTheme_GnomeDefault();
+    PreBandControl.regenerateLookAndFeel(&theme);
+    BandControlsLo.regenerateLookAndFeel(&theme);
+    BandControlsMid.regenerateLookAndFeel(&theme);
+    BandControlsHi.regenerateLookAndFeel(&theme);
+    PostBandControl.regenerateLookAndFeel(&theme);
 }

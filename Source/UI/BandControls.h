@@ -5,6 +5,7 @@
 #include "Controls/DisplayGraph.h"
 #include "Controls/ComboBoxLnF.h"
 #include "Controls/ToggleButtonLnF.h"
+#include "Theme/Theme.h"
 
 enum Band {
     Lo,
@@ -12,7 +13,7 @@ enum Band {
     Hi
 };
 struct BandControls : juce::Component {
-    BandControls(const Band, juce::AudioProcessorValueTreeState*, const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>*, juce::Image*, juce::Colour*, juce::Colour*);
+    BandControls(const Band, juce::AudioProcessorValueTreeState*, const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>*, GnomeDistort2Theme::Theme*);
     ~BandControls() {
         WaveshapeFuncSelect.setLookAndFeel(nullptr);
         BtnMute.setLookAndFeel(nullptr);
@@ -28,6 +29,10 @@ struct BandControls : juce::Component {
 
     void paint(juce::Graphics& g) override {};
     void resized() override;
+    void regenerateLookAndFeel(GnomeDistort2Theme::Theme* theme) {
+        lnfCombo.setColors(theme);
+        lnfTextToggle.setColors(theme);
+    };
 
 private:
     using APVTS = juce::AudioProcessorValueTreeState;

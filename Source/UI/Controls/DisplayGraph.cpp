@@ -1,11 +1,12 @@
 #include "DisplayGraph.h"
-#include "../UIConsts.h"
 
 GnomeDistort2Controls::DisplayGraph::DisplayGraph(juce::RangedAudioParameter* func, // can't get AudioParameterChoice directly; need to map range to function in parameterValueChanged
                                                   juce::RangedAudioParameter* amt,
-                                                  const int funcIndex, const int amtIndex) :
+                                                  const int funcIndex, const int amtIndex,
+                                                  GnomeDistort2Theme::Theme* theme) :
     funcParamIndex(funcIndex), amtParamIndex(amtIndex),
-    funcParam(func), amtParam(amt) {
+    funcParam(func), amtParam(amt),
+    theme(theme) {
 
     funcParam->addListener(this);
     amtParam->addListener(this);
@@ -28,7 +29,7 @@ void GnomeDistort2Controls::DisplayGraph::paint(juce::Graphics& g) {
     auto mapX = [left, right](int x) {return jmap((float)x, (float)left, (float)right, -1.f, 1.f); };
     auto mapY = [top, bottom](float y) {return jmap(y, -1.f, 1.f, (float)bottom, (float)top); };
 
-    g.setColour(GnomeDistort2UIConst::COLOR_PRIMARY);
+    g.setColour(theme->COLOR_PRIMARY);
     Path graph;
     graph.startNewSubPath(renderArea.getX(), mapY(waveshaperFunction(-1)));
     for (int x = left + 1; x < right; x++) {
@@ -42,7 +43,7 @@ void GnomeDistort2Controls::DisplayGraph::resized() {
 
     background = Image(Image::PixelFormat::RGB, getWidth(), getHeight(), true);
     Graphics g(background);
-    g.setColour(GnomeDistort2UIConst::COLOR_BG_VERYDARK);
+    g.setColour(theme->COLOR_BG_VERYDARK);
     g.fillAll();
     g.setColour(Colours::dimgrey);
     g.drawRoundedRectangle(renderArea.toFloat(), 2.f, 1.f);

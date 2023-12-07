@@ -1,18 +1,21 @@
 #include "BandControls.h"
+#include "Theme/UIConsts.h"
 
 BandControls::BandControls(const Band b,
                            juce::AudioProcessorValueTreeState* apvts,
                            const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>* paramMap,
-                           juce::Image* knobOverlay,
-                           juce::Colour* primaryColor, juce::Colour* secondaryColor) :
-    PeakFreqSlider("FREQ", true, knobOverlay, secondaryColor),
-    PeakGainSlider("GAIN", true, knobOverlay, secondaryColor),
-    PeakQSlider("Q", true, knobOverlay, secondaryColor),
-    PreGainSlider("GAIN", true, knobOverlay, primaryColor),
-    SmearAmtSlider("AMT", true, knobOverlay, secondaryColor, GnomeDistort2Controls::SliderLabeledValue::NO_VALUE),
-    SmearLengthSlider("LNGTH", true, knobOverlay, secondaryColor, GnomeDistort2Controls::SliderLabeledValue::NO_VALUE),
-    WaveshapeAmtSlider("DIST", false, knobOverlay, primaryColor),
-    PostGainSlider("GAIN", true, knobOverlay, primaryColor),
+                           GnomeDistort2Theme::Theme* theme) :
+    PeakFreqSlider("FREQ", true, &theme->COLOR_SECONDARY, theme),
+    PeakGainSlider("GAIN", true, &theme->COLOR_SECONDARY, theme),
+    PeakQSlider("Q", true, &theme->COLOR_SECONDARY, theme),
+    PreGainSlider("GAIN", true, &theme->COLOR_PRIMARY, theme),
+    SmearAmtSlider("AMT", true, &theme->COLOR_SECONDARY, theme, GnomeDistort2Controls::SliderLabeledValue::NO_VALUE),
+    SmearLengthSlider("LNGTH", true, &theme->COLOR_SECONDARY, theme, GnomeDistort2Controls::SliderLabeledValue::NO_VALUE),
+    WaveshapeAmtSlider("DIST", false, &theme->COLOR_PRIMARY, theme),
+    PostGainSlider("GAIN", true, &theme->COLOR_PRIMARY, theme),
+
+    lnfCombo(theme),
+    lnfTextToggle(theme),
 
     Display(apvts->getParameter(paramMap->at(b == Lo ? GnomeDistort2Parameters::TreeParameter::WaveshapeFunctionLo :
                                              b == Mid ? GnomeDistort2Parameters::TreeParameter::WaveshapeFunctionMid :
@@ -25,7 +28,7 @@ BandControls::BandControls(const Band b,
              GnomeDistort2Parameters::TreeParameter::WaveshapeFunctionHi),
             (b == Lo ? GnomeDistort2Parameters::TreeParameter::WaveshapeAmountLo :
              b == Mid ? GnomeDistort2Parameters::TreeParameter::WaveshapeAmountMid :
-             GnomeDistort2Parameters::TreeParameter::WaveshapeAmountHi)),
+             GnomeDistort2Parameters::TreeParameter::WaveshapeAmountHi), theme),
 
     AttachPeakFreqSlider(*apvts, paramMap->at(b == Lo ? GnomeDistort2Parameters::TreeParameter::PeakFreqLo :
                                               b == Mid ? GnomeDistort2Parameters::TreeParameter::PeakFreqMid :
@@ -89,7 +92,7 @@ BandControls::BandControls(const Band b,
 
 void BandControls::resized() {
     auto bounds = getLocalBounds();
-    const int padding = GnomeDistort2UIConst::COMP_PADDING;
+    const int padding = GnomeDistort2Theme::COMP_PADDING;
     const int thirdsWidth = bounds.getWidth() / 3;
     const int fifthHeight = bounds.getHeight() / 5;
 
@@ -117,7 +120,7 @@ void BandControls::resized() {
     SmearLengthSlider.setBounds(smearLength);
 
     auto distArea = bounds.removeFromTop(fifthHeight * 2);
-    auto funcSelect = distArea.removeFromBottom(GnomeDistort2UIConst::SELECT_HEIGHT + padding);
+    auto funcSelect = distArea.removeFromBottom(GnomeDistort2Theme::SELECT_HEIGHT + padding);
     auto display = distArea.removeFromRight(distArea.getHeight() - padding * 2);
     WaveshapeAmtSlider.setBounds(distArea);
     display.removeFromRight(padding + (padding / 1.5f));

@@ -1,9 +1,9 @@
 #include "DisplayComponent.h"
-#include "../UIConsts.h"
+#include "../Theme/UIConsts.h"
 
 void GnomeDistort2Controls::DisplayComponent::resized() {
     using namespace juce;
-    using namespace GnomeDistort2UIConst;
+    using namespace GnomeDistort2Theme;
 
     auto bounds = getAnalysisArea();
     int left = bounds.getX();
@@ -15,7 +15,7 @@ void GnomeDistort2Controls::DisplayComponent::resized() {
     background = Image(Image::PixelFormat::RGB, getWidth(), getHeight(), true);
     Graphics g(background);
 
-    g.setColour(COLOR_BG_VERYDARK);
+    g.setColour(theme->COLOR_BG_VERYDARK);
     g.fillRect(getLocalBounds().toFloat());
 
     g.setColour(Colours::dimgrey);
@@ -32,7 +32,7 @@ void GnomeDistort2Controls::DisplayComponent::resized() {
         float normalizedX = mapFromLog10(f, 20.f, 20000.f);  // same as in drawing filter response curve
         xs.add(left + width * normalizedX);
     }
-    g.setColour(COLOR_BG_MIDDARK);
+    g.setColour(theme->COLOR_BG_MIDDARK);
     for (float x : xs) {
         g.drawVerticalLine(x, top, bottom);
     }
@@ -66,20 +66,20 @@ void GnomeDistort2Controls::DisplayComponent::resized() {
     for (float gdB : gains) {
         auto normalizedY = jmap(gdB, -36.f, 36.f, (float)bottom, (float)top);
         ys.add(normalizedY);
-        g.setColour(gdB == 0.f ? Colours::dimgrey : COLOR_BG_MIDDARK);
+        g.setColour(gdB == 0.f ? Colours::dimgrey : theme->COLOR_BG_MIDDARK);
         g.drawHorizontalLine(normalizedY, left, right);
 
         String str;
         str << gdB;
         str << "dB";
         Rectangle<int> r;
-        r.setSize(g.getCurrentFont().getStringWidth(str), GnomeDistort2UIConst::TEXT_TINY);
+        r.setSize(g.getCurrentFont().getStringWidth(str), GnomeDistort2Theme::TEXT_TINY);
         r.setCentre(0, normalizedY);
         r.setX(2);
         g.setColour(Colours::dimgrey);
         g.drawFittedText(str, r, Justification::centred, 1);
     }
 
-    g.setColour(COLOR_PRIMARY);
+    g.setColour(theme->COLOR_PRIMARY);
     g.drawRoundedRectangle(bounds.toFloat(), 2.f, 1.f);
 }

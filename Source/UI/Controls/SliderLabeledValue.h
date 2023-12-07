@@ -1,5 +1,6 @@
 #pragma once
 #include <JuceHeader.h>
+#include "../Theme/Theme.h"
 
 namespace GnomeDistort2Controls {
     /* takes some bounds (specifically localBounds of component), get a square region of it (so the knob is circular) and applies padding */
@@ -24,9 +25,9 @@ namespace GnomeDistort2Controls {
             VALUE_NO_DECIMALS
         };
 
-        SliderLabeledValue(const juce::String& label, const bool smallText, juce::Image* knobOverlay, juce::Colour* color, DisplayMode mode = DEFAULT) :
+        SliderLabeledValue(const juce::String& label, const bool smallText, const juce::Colour* color, GnomeDistort2Theme::Theme* theme, DisplayMode mode = DEFAULT) :
             juce::Slider(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag, juce::Slider::TextEntryBoxPosition::NoTextBox),
-            label(label), isSmallText(smallText), overlay(knobOverlay), color(color), mode(mode) {
+            label(label), isSmallText(smallText), color(color), mode(mode), theme(theme) {
             setLookAndFeel(&LNF);
         }
         ~SliderLabeledValue() {
@@ -36,8 +37,8 @@ namespace GnomeDistort2Controls {
         juce::String label;
         DisplayMode mode;
         bool isSmallText;
-        juce::Image* overlay;
-        juce::Colour* color;
+        GnomeDistort2Theme::Theme* theme;
+        const juce::Colour* color;
 
         void paint(juce::Graphics&) override;
         juce::String getValueDisplayString() const { return juce::String((float)getValue(), mode == VALUE_NO_DECIMALS ? 0 : 2); }

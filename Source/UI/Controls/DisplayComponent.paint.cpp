@@ -1,9 +1,9 @@
 #include "DisplayComponent.h"
-#include "../UIConsts.h"
+#include "../Theme/UIConsts.h"
 
 void GnomeDistort2Controls::DisplayComponent::paint(juce::Graphics& g) {
     using namespace juce;
-    using namespace GnomeDistort2UIConst;
+    using namespace GnomeDistort2Theme;
 
     auto displayArea = getLocalBounds();
     auto analysisArea = getAnalysisArea();
@@ -16,7 +16,7 @@ void GnomeDistort2Controls::DisplayComponent::paint(juce::Graphics& g) {
     const int BandMidHiX = mapFromLog10(DSP->BandMidL.UpperFreqBound, 20.f, 20000.f) * analysisWidth + analysisX;
 
     // background
-    g.setColour(GnomeDistort2UIConst::COLOR_BG_VERYDARK);
+    g.setColour(theme->COLOR_BG_VERYDARK);
     g.fillRect(displayArea.toFloat());
     g.drawImage(background, displayArea.toFloat());
 
@@ -32,26 +32,26 @@ void GnomeDistort2Controls::DisplayComponent::paint(juce::Graphics& g) {
         const float MidDist = processor->chainSettings.MidBandSettings.WaveshapeAmount;
         const float HiDist = processor->chainSettings.HiBandSettings.WaveshapeAmount;
 
-        g.setColour(Colour((uint8)COLOR_PRIMARY.getRed(),
-                           (uint8)std::floor(jmap(LoDist, (float)COLOR_SECONDARY.getGreen(), (float)COLOR_PRIMARY.getGreen())),
-                           (uint8)std::floor(jmap(LoDist, (float)COLOR_SECONDARY.getBlue(), (float)COLOR_PRIMARY.getBlue())), 0.6f));
+        g.setColour(Colour((uint8)std::floor(jmap(LoDist, (float)theme->COLOR_SECONDARY.getRed(), (float)theme->COLOR_PRIMARY.getRed())),
+                           (uint8)std::floor(jmap(LoDist, (float)theme->COLOR_SECONDARY.getGreen(), (float)theme->COLOR_PRIMARY.getGreen())),
+                           (uint8)std::floor(jmap(LoDist, (float)theme->COLOR_SECONDARY.getBlue(), (float)theme->COLOR_PRIMARY.getBlue())), 0.6f));
         g.fillRect(LoBand.toFloat());
-        g.setColour(Colour((uint8)COLOR_PRIMARY.getRed(),
-                           (uint8)std::floor(jmap(MidDist, (float)COLOR_SECONDARY.getGreen(), (float)COLOR_PRIMARY.getGreen())),
-                           (uint8)std::floor(jmap(MidDist, (float)COLOR_SECONDARY.getBlue(), (float)COLOR_PRIMARY.getBlue())), 0.6f));
+        g.setColour(Colour((uint8)std::floor(jmap(MidDist, (float)theme->COLOR_SECONDARY.getRed(), (float)theme->COLOR_PRIMARY.getRed())),
+                           (uint8)std::floor(jmap(MidDist, (float)theme->COLOR_SECONDARY.getGreen(), (float)theme->COLOR_PRIMARY.getGreen())),
+                           (uint8)std::floor(jmap(MidDist, (float)theme->COLOR_SECONDARY.getBlue(), (float)theme->COLOR_PRIMARY.getBlue())), 0.6f));
         g.fillRect(MidBand.toFloat());
-        g.setColour(Colour((uint8)COLOR_PRIMARY.getRed(),
-                           (uint8)std::floor(jmap(HiDist, (float)COLOR_SECONDARY.getGreen(), (float)COLOR_PRIMARY.getGreen())),
-                           (uint8)std::floor(jmap(HiDist, (float)COLOR_SECONDARY.getBlue(), (float)COLOR_PRIMARY.getBlue())), 0.6f));
+        g.setColour(Colour((uint8)std::floor(jmap(HiDist, (float)theme->COLOR_SECONDARY.getRed(), (float)theme->COLOR_PRIMARY.getRed())),
+                           (uint8)std::floor(jmap(HiDist, (float)theme->COLOR_SECONDARY.getGreen(), (float)theme->COLOR_PRIMARY.getGreen())),
+                           (uint8)std::floor(jmap(HiDist, (float)theme->COLOR_SECONDARY.getBlue(), (float)theme->COLOR_PRIMARY.getBlue())), 0.6f));
         g.fillRect(HiBand.toFloat());
     }
 
     // oscilloscope if not disabled
     if (isEnabled) {
-        g.setColour(COLOR_SECONDARY);
+        g.setColour(theme->COLOR_SECONDARY);
         audioCurvePre.applyTransform(AffineTransform().translation(analysisX, analysisArea.getY()));
         g.strokePath(audioCurvePre, PathStrokeType(2));
-        g.setColour(COLOR_PRIMARY);
+        g.setColour(theme->COLOR_PRIMARY);
         audioCurvePost.applyTransform(AffineTransform().translation(analysisX, analysisArea.getY()));
         g.strokePath(audioCurvePost, PathStrokeType(2));
     }

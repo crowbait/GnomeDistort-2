@@ -1,10 +1,11 @@
 #pragma once
 #include <JuceHeader.h>
 #include "../../Processing/WaveshaperFunctions.h"
+#include "../Theme/Theme.h"
 
 namespace GnomeDistort2Controls {
     struct DisplayGraph : juce::Component, juce::AudioProcessorParameter::Listener {
-        DisplayGraph(juce::RangedAudioParameter* func, juce::RangedAudioParameter* amt, const int funcIndex, const int amtIndex);
+        DisplayGraph(juce::RangedAudioParameter* func, juce::RangedAudioParameter* amt, const int funcIndex, const int amtIndex, GnomeDistort2Theme::Theme* theme);
         ~DisplayGraph();
 
         void paint(juce::Graphics& g) override;
@@ -20,6 +21,8 @@ namespace GnomeDistort2Controls {
         GnomeDistort2Parameters::Options::WaveshaperFunction func = GnomeDistort2Parameters::Options::WaveshaperFunction::HardClip;
         float amount = 0.f;
         std::function<float(float)> waveshaperFunction = GnomeDistort2Processing::GetWaveshaperFunction(func, amount);
+
+        GnomeDistort2Theme::Theme* theme;
 
         juce::Rectangle<int> getRenderArea();
     };

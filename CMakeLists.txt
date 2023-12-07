@@ -50,7 +50,6 @@ target_sources(GnomeDistort2
     Source/UI/PostBandControls.h
     Source/UI/PreBandControls.h
     Source/UI/PreBandControls.cpp
-    Source/UI/UIConsts.h
     Source/UI/Controls/ComboBoxLnF.h
     Source/UI/Controls/DisplayComponent.h
     Source/UI/Controls/DisplayComponent.cpp
@@ -63,6 +62,9 @@ target_sources(GnomeDistort2
     Source/UI/Controls/TextButton.h
     Source/UI/Controls/TextSwitch.h
     Source/UI/Controls/ToggleButtonLnF.h
+    Source/UI/Theme/Theme.h
+    Source/UI/Theme/Theme-GnomeDefault.h
+    Source/UI/Theme/UIConsts.h
 )
 
 target_compile_definitions(GnomeDistort2

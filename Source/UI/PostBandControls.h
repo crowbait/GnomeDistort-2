@@ -1,15 +1,16 @@
 #pragma once
 #include <JuceHeader.h>
-
 #include "Controls/SliderLabeledValue.h"
 #include "Controls/ComboBoxLnF.h"
+#include "Theme/Theme.h"
+#include "Theme/UIConsts.h"
 
 struct PostBandControls : juce::Component {
     PostBandControls(juce::AudioProcessorValueTreeState* apvts,
                      const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>* paramMap,
-                     juce::Image* knobOverlay,
-                     juce::Colour* primaryColor, juce::Colour* secondaryColor) :
-        WaveshapeAmtSlider("DIST", false, knobOverlay, primaryColor),
+                     GnomeDistort2Theme::Theme* theme) :
+        WaveshapeAmtSlider("DIST", false, &theme->COLOR_PRIMARY, theme),
+        lnfCombo(theme),
         AttachWaveshapeAmtSlider(*apvts, paramMap->at(GnomeDistort2Parameters::TreeParameter::WaveshapeAmountGlobal), WaveshapeAmtSlider),
         AttachWaveshapeFuncSelect(*apvts, paramMap->at(GnomeDistort2Parameters::WaveshapeFunctionGlobal), WaveshapeFuncSelect) {
 
@@ -31,11 +32,11 @@ struct PostBandControls : juce::Component {
     void paint(juce::Graphics& g) override {}
     void resized() override {
         auto bounds = getLocalBounds();
-        const int padding = GnomeDistort2UIConst::COMP_PADDING;
+        const int padding = GnomeDistort2Theme::COMP_PADDING;
 
         bounds.removeFromTop((getHeight() - getWidth()) / 2);
         auto distArea = bounds.removeFromTop(getWidth());
-        auto funcSelect = distArea.removeFromBottom(GnomeDistort2UIConst::SELECT_HEIGHT + padding);
+        auto funcSelect = distArea.removeFromBottom(GnomeDistort2Theme::SELECT_HEIGHT + padding);
         distArea.expand(-2 * padding, 0);
         distArea.removeFromTop(padding);
         WaveshapeAmtSlider.setBounds(distArea);
@@ -46,6 +47,9 @@ struct PostBandControls : juce::Component {
         funcSelect.removeFromBottom(padding / 2);
         WaveshapeFuncSelect.setBounds(funcSelect);
     }
+    void regenerateLookAndFeel(GnomeDistort2Theme::Theme* theme) {
+        lnfCombo.setColors(theme);
+    };
 
 private:
     using APVTS = juce::AudioProcessorValueTreeState;

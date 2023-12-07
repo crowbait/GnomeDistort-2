@@ -40,6 +40,12 @@
         <FILE id="GmUPBk" name="UpdateCheck.h" compile="0" resource="0" file="Source/Helpers/UpdateCheck.h"/>
       </GROUP>
       <GROUP id="{F04FB702-04D1-3718-FA9E-035CE47FB04B}" name="UI">
+        <GROUP id="{2302676A-5215-8182-1F2E-90293D6305C4}" name="Theme">
+          <FILE id="XNJwo0" name="Theme-GnomeDefault.h" compile="0" resource="0"
+                file="Source/UI/Theme/Theme-GnomeDefault.h"/>
+          <FILE id="saC4BE" name="Theme.h" compile="0" resource="0" file="Source/UI/Theme/Theme.h"/>
+          <FILE id="IbmI2M" name="UIConsts.h" compile="0" resource="0" file="Source/UI/Theme/UIConsts.h"/>
+        </GROUP>
         <GROUP id="{A3CB6517-1173-ECFE-E54A-676F46DD9BC4}" name="Controls">
           <FILE id="jUVqBq" name="ComboBoxLnF.h" compile="0" resource="0" file="Source/UI/Controls/ComboBoxLnF.h"/>
           <FILE id="yVIoLm" name="DisplayComponent.cpp" compile="1" resource="0"
@@ -72,7 +78,6 @@
               file="Source/UI/PreBandControls.cpp"/>
         <FILE id="FsXJO6" name="PreBandControls.h" compile="0" resource="0"
               file="Source/UI/PreBandControls.h"/>
-        <FILE id="ywVgCK" name="UIConsts.h" compile="0" resource="0" file="Source/UI/UIConsts.h"/>
       </GROUP>
       <FILE id="biyUHQ" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>

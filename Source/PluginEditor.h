@@ -11,6 +11,7 @@
 #include "UI/Controls/SliderLabeledValue.h"
 #include "UI/Controls/TextButton.h"
 #include "UI/Controls/TextSwitch.h"
+#include "UI/Theme/Theme.h"
 
 class GnomeDistort2AudioProcessorEditor : public juce::AudioProcessorEditor {
 public:
@@ -21,6 +22,8 @@ public:
 
     void paint(juce::Graphics&) override;
     void resized() override;
+
+    GnomeDistort2Theme::Theme theme;
 
 private:
     Display DisplayArea;
@@ -33,6 +36,7 @@ private:
     GnomeDistort2Controls::TextButton LinkDonateButton, LinkGithubButton;
 
     void paintBackground();
+    void setThemeFromSettings();
 
     std::vector<juce::Component*> getComponents() {
         return {
@@ -52,8 +56,6 @@ private:
     }
 
     juce::Image background;
-    juce::Image knobOverlay;
-    juce::Colour primaryColor = GnomeDistort2UIConst::COLOR_PRIMARY, secondaryColor = GnomeDistort2UIConst::COLOR_SECONDARY;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(GnomeDistort2AudioProcessorEditor)
 };

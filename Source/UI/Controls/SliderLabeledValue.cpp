@@ -1,5 +1,5 @@
 #include "SliderLabeledValue.h"
-#include "../UIConsts.h"
+#include "../Theme/UIConsts.h"
 
 void GnomeDistort2Controls::LnFSliderLabeledValue::drawRotarySlider(juce::Graphics& g,
                                                                     int x, int y, int width, int height,
@@ -9,13 +9,13 @@ void GnomeDistort2Controls::LnFSliderLabeledValue::drawRotarySlider(juce::Graphi
     Point<float> center = bounds.getCentre();
 
     if (auto* sldr = dynamic_cast<SliderLabeledValue*>(&slider)) {
-        const int textHeight = sldr->isSmallText ? GnomeDistort2UIConst::TEXT_SMALL : GnomeDistort2UIConst::TEXT_NORMAL;
+        const int textHeight = sldr->isSmallText ? GnomeDistort2Theme::TEXT_SMALL : GnomeDistort2Theme::TEXT_NORMAL;
 
         // knob body
         g.setColour(*sldr->color);
         g.fillEllipse(bounds.toFloat());
 
-        g.drawImage(*sldr->overlay, bounds, RectanglePlacement::stretchToFit);
+        g.drawImage(sldr->theme->KnobOverlay, bounds, RectanglePlacement::stretchToFit);
 
         // label
         Rectangle<float> labelboxRect;
@@ -27,7 +27,7 @@ void GnomeDistort2Controls::LnFSliderLabeledValue::drawRotarySlider(juce::Graphi
         labelboxP.addRoundedRectangle(labelboxRect, 2.f);
         g.setColour(Colours::darkgrey);
         g.strokePath(labelboxP, PathStrokeType(1));
-        g.setColour(GnomeDistort2UIConst::COLOR_BG_VERYDARK);
+        g.setColour(sldr->theme->COLOR_BG_VERYDARK);
         g.fillPath(labelboxP);
 
         g.setColour(Colours::lightgrey);
@@ -43,7 +43,7 @@ void GnomeDistort2Controls::LnFSliderLabeledValue::drawRotarySlider(juce::Graphi
             valueboxP.addRoundedRectangle(valueboxRect, 2.f);
             g.setColour(Colours::darkgrey);
             g.strokePath(valueboxP, PathStrokeType(1));
-            g.setColour(GnomeDistort2UIConst::COLOR_BG_VERYDARK);
+            g.setColour(sldr->theme->COLOR_BG_VERYDARK);
             g.fillPath(valueboxP);
 
             g.setColour(Colours::lightgrey);
@@ -63,7 +63,7 @@ void GnomeDistort2Controls::LnFSliderLabeledValue::drawRotarySlider(juce::Graphi
         indicatorPath.applyTransform(AffineTransform().rotated(sliderAngRad, center.getX(), center.getY()));
         g.setColour(Colours::lightgrey);
         g.fillPath(indicatorPath);
-        g.setColour(GnomeDistort2UIConst::COLOR_BG_VERYDARK);
+        g.setColour(sldr->theme->COLOR_BG_VERYDARK);
         g.strokePath(indicatorPath, PathStrokeType(1));
     } else jassertfalse;    // catch calls to this function which are not from a matching slider
 }

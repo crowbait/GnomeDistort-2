@@ -1,13 +1,15 @@
 #include "PreBandControls.h"
+#include "Theme/UIConsts.h"
 
 PreBandControls::PreBandControls(juce::AudioProcessorValueTreeState* apvts,
                                  const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>* paramMap,
-                                 juce::Image* knobOverlay,
-                                 juce::Colour* primaryColor, juce::Colour* secondaryColor) :
-    LoCutSlider("LOCUT", false, knobOverlay, primaryColor, GnomeDistort2Controls::SliderLabeledValue::VALUE_NO_DECIMALS),
-    BandLoMidSlider("BAND", false, knobOverlay, primaryColor, GnomeDistort2Controls::SliderLabeledValue::VALUE_NO_DECIMALS),
-    BandMidHiSlider("BAND", false, knobOverlay, primaryColor, GnomeDistort2Controls::SliderLabeledValue::VALUE_NO_DECIMALS),
-    HiCutSlider("HICUT", false, knobOverlay, primaryColor, GnomeDistort2Controls::SliderLabeledValue::VALUE_NO_DECIMALS),
+                                 GnomeDistort2Theme::Theme* theme) :
+    LoCutSlider("LOCUT", false, &theme->COLOR_PRIMARY, theme, GnomeDistort2Controls::SliderLabeledValue::VALUE_NO_DECIMALS),
+    BandLoMidSlider("BAND", false, &theme->COLOR_PRIMARY, theme, GnomeDistort2Controls::SliderLabeledValue::VALUE_NO_DECIMALS),
+    BandMidHiSlider("BAND", false, &theme->COLOR_PRIMARY, theme, GnomeDistort2Controls::SliderLabeledValue::VALUE_NO_DECIMALS),
+    HiCutSlider("HICUT", false, &theme->COLOR_PRIMARY, theme, GnomeDistort2Controls::SliderLabeledValue::VALUE_NO_DECIMALS),
+
+    lnfCombo(theme),
 
     AttachLoCutSlider(*apvts, paramMap->at(GnomeDistort2Parameters::TreeParameter::LoCutFreq), LoCutSlider),
     AttachBandLoMidSlider(*apvts, paramMap->at(GnomeDistort2Parameters::TreeParameter::BandFreqLoMid), BandLoMidSlider),
@@ -30,7 +32,7 @@ PreBandControls::PreBandControls(juce::AudioProcessorValueTreeState* apvts,
 
 void PreBandControls::resized() {
     auto bounds = getLocalBounds();
-    const int padding = GnomeDistort2UIConst::COMP_PADDING;
+    const int padding = GnomeDistort2Theme::COMP_PADDING;
 
     const int boxWidth = bounds.getHeight();
     auto LoCut = bounds.removeFromLeft(boxWidth);
@@ -41,13 +43,13 @@ void PreBandControls::resized() {
     bounds.removeFromLeft((bounds.getWidth() - boxWidth) / 2);
     BandMidHiSlider.setBounds(bounds.removeFromLeft(boxWidth));
 
-    auto LoSlope = LoCut.removeFromBottom(GnomeDistort2UIConst::SELECT_HEIGHT);
+    auto LoSlope = LoCut.removeFromBottom(GnomeDistort2Theme::SELECT_HEIGHT);
     LoCut.removeFromBottom(4);
     LoCutSlider.setBounds(LoCut);
     LoSlope.removeFromLeft(padding);
     LoSlope.removeFromRight(padding);
     LoCutSlopeSelect.setBounds(LoSlope);
-    auto HiSlope = HiCut.removeFromBottom(GnomeDistort2UIConst::SELECT_HEIGHT);
+    auto HiSlope = HiCut.removeFromBottom(GnomeDistort2Theme::SELECT_HEIGHT);
     HiCut.removeFromBottom(4);
     HiCutSlider.setBounds(HiCut);
     HiSlope.removeFromLeft(padding);

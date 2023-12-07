@@ -2,22 +2,26 @@
 #include <JuceHeader.h>
 #include "../Helpers/Settings.h"
 #include "Controls/DisplayComponent.h"
-#include "UIConsts.h"
+#include "Theme/Theme.h"
 
 struct Display : juce::Component {
     Display(GnomeDistort2AudioProcessor* processor,
             juce::AudioProcessorValueTreeState* apvts,
             const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>* paramMap,
-            GnomeDistort2Helpers::Settings* settings) :
-        displayComp(processor, apvts, paramMap, settings->displayEnabled, settings->displayHQ) {
+            GnomeDistort2Helpers::Settings* settings,
+            GnomeDistort2Theme::Theme* theme) :
+        displayComp(processor, apvts, paramMap, theme, settings->displayEnabled, settings->displayHQ),
+        theme(theme) {
 
         addAndMakeVisible(&displayComp);
     }
 
     GnomeDistort2Controls::DisplayComponent displayComp;
 
+    GnomeDistort2Theme::Theme* theme;
+
     void paint(juce::Graphics& g) override {
-        g.setColour(GnomeDistort2UIConst::COLOR_BG_VERYDARK);
+        g.setColour(theme->COLOR_BG_VERYDARK);
         g.fillAll();
     }
     void resized() override {
