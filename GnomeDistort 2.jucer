@@ -36,6 +36,7 @@
         <FILE id="oFqVTR" name="Settings.h" compile="0" resource="0" file="Source/Helpers/Settings.h"/>
         <FILE id="iGnSqD" name="SingleChannelSampleFifo.h" compile="0" resource="0"
               file="Source/Helpers/SingleChannelSampleFifo.h"/>
+        <FILE id="GmUPBk" name="UpdateCheck.h" compile="0" resource="0" file="Source/Helpers/UpdateCheck.h"/>
       </GROUP>
       <GROUP id="{F04FB702-04D1-3718-FA9E-035CE47FB04B}" name="UI">
         <GROUP id="{A3CB6517-1173-ECFE-E54A-676F46DD9BC4}" name="Controls">

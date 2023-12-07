@@ -43,6 +43,7 @@ target_sources(GnomeDistort2
     Source/Helpers/Fifo.h
     Source/Helpers/Settings.h
     Source/Helpers/SingleChannelSampleFifo.h
+    Source/Helpers/UpdateCheck.h
     Source/UI/BandControls.h
     Source/UI/BandControls.cpp
     Source/UI/Display.h

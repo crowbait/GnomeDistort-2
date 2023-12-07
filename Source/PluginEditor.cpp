@@ -1,4 +1,5 @@
 #include "PluginEditor.h"
+#include "Helpers/UpdateCheck.h"
 
 //==============================================================================
 GnomeDistort2AudioProcessorEditor::GnomeDistort2AudioProcessorEditor(GnomeDistort2AudioProcessor& p,
@@ -62,7 +63,21 @@ GnomeDistort2AudioProcessorEditor::GnomeDistort2AudioProcessorEditor(GnomeDistor
     };
 
     setSize(960, 720);
-    checkForUpdates();
+
+    juce::String newVersion = GnomeDistort2Helpers::checkForUpdate(juce::URL("https://api.github.com/repos/crowbait/GnomeDistort-2/releases/latest"),
+                                                                   settings.lastUpdateCheck, &settings);
+    if (newVersion != "") {
+        juce::AlertWindow::showAsync(
+            juce::MessageBoxOptions()
+            .makeOptionsOkCancel(juce::MessageBoxIconType::InfoIcon,
+                                 "GnomeDistort 2: Update available",
+                                 "A new update is available: " + newVersion + juce::newLine +
+                                 "You have version " + ProjectInfo::versionString + " installed." + juce::newLine,
+                                 "Download", "Maybe later"),
+            [](int res) { // res: 1 = Download, 0 = Maybe later
+            if (res == 1) juce::URL("https://github.com/crowbait/GnomeDistort/releases").launchInDefaultBrowser();
+        });
+    }
 }
 
 GnomeDistort2AudioProcessorEditor::~GnomeDistort2AudioProcessorEditor() {}
@@ -116,46 +131,4 @@ void GnomeDistort2AudioProcessorEditor::resized() {
     MixSlider.setBounds(postArea.removeFromTop(DisplayArea.getBounds().getHeight()));
 
     paintBackground();
-}
-
-void GnomeDistort2AudioProcessorEditor::checkForUpdates() {
-    using namespace juce;
-    const URL url = URL("https://api.github.com/repos/crowbait/GnomeDistort-2/releases/latest");
-    StringPairArray responseHeaders;
-    int statusCode = 0;
-    String response;
-
-    DBG("Last check: " + settings.lastUpdateCheck.toISO8601(true));
-    Time now = Time().getCurrentTime();
-    if (settings.lastUpdateCheck.toMilliseconds() < now.toMilliseconds() - (24 * 60 * 60 * 1000)) {   // lastcheck < (now - 24h)
-        DBG("Checking for update");
-        settings.lastUpdateCheck = now;
-        settings.saveSettings();
-
-        std::unique_ptr<InputStream> stream(url.createInputStream(false, nullptr, nullptr, String(),
-                                                                  750, // timeout in ms
-                                                                  &responseHeaders, &statusCode));
-        if (stream != nullptr) {
-            response = stream->readEntireStreamAsString();
-            DBG(response);
-            var json = JSON::parse(response);
-            String versionString = json.getProperty("tag_name", "Error").toString();
-            if (versionString != ProjectInfo::versionString) {
-                AlertWindow::showAsync(
-                    MessageBoxOptions()
-                    .makeOptionsOkCancel(MessageBoxIconType::InfoIcon,
-                                         "Update available",
-                                         "A new update is available: " + versionString + newLine +
-                                         "You have version " + ProjectInfo::versionString + " installed." + newLine,
-                                         "Download", "Maybe later"),
-                    [](int res) { // res: 1 = Download, 0 = Maybe later
-                    if (res == 1) URL("https://github.com/crowbait/GnomeDistort/releases").launchInDefaultBrowser();
-                });
-            } else DBG("No update available");
-            return;
-        }
-        if (statusCode != 0 && statusCode != 200) {
-            DBG("Failed to connect, status " + String(statusCode));
-        } else DBG("Failed to connect.");
-    } else DBG("Already checked for update today.");
 }

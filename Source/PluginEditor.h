@@ -32,7 +32,6 @@ private:
     GnomeDistort2Controls::TextSwitch SwitchDisplayOnButton, SwitchDisplayHQButton;
     GnomeDistort2Controls::TextButton LinkDonateButton, LinkGithubButton;
 
-    void checkForUpdates();
     void paintBackground();
 
     std::vector<juce::Component*> getComponents() {
