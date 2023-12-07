@@ -21,6 +21,13 @@ void GnomeDistort2AudioProcessorEditor::paintBackground() {
 
     g.setColour(COLOR_BG);
     g.fillRect(getLocalBounds());
+
+    Rectangle<int> logoBox(SwitchDisplayHQButton.getRight(), 8, 1, 1);
+    logoBox.setBottom(SwitchDisplayHQButton.getBottom() - 8);
+    logoBox.setRight(LinkGithubButton.getX());
+    g.drawImageWithin(ImageCache::getFromMemory(BinaryData::logo_small_png, BinaryData::logo_small_pngSize),
+                      logoBox.getX(), logoBox.getY(), logoBox.getWidth(), logoBox.getHeight(),
+                      RectanglePlacement::centred);
     g.drawImageWithin(ImageCache::getFromMemory(BinaryData::grundge_overlay_png, BinaryData::grundge_overlay_pngSize),
                       0, 0, width, height, RectanglePlacement::fillDestination);
     Image gnome = ImageCache::getFromMemory(BinaryData::gnome_dark_png, BinaryData::gnome_dark_pngSize);
