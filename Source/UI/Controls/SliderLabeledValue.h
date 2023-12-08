@@ -24,10 +24,14 @@ namespace GnomeDistort2Controls {
             NO_VALUE,
             VALUE_NO_DECIMALS
         };
+        enum Color {
+            PRIMARY,
+            SECONDARY
+        };
 
-        SliderLabeledValue(const juce::String& label, const bool smallText, const juce::Colour* color, const GnomeDistort2Theme::Theme* theme, DisplayMode mode = DEFAULT) :
+        SliderLabeledValue(const juce::String& label, const bool smallText, const GnomeDistort2Theme::Theme* theme, Color color, DisplayMode mode = DEFAULT) :
             juce::Slider(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag, juce::Slider::TextEntryBoxPosition::NoTextBox),
-            label(label), isSmallText(smallText), color(color), mode(mode), theme(theme) {
+            label(label), isSmallText(smallText), mode(mode), color(color), theme(theme) {
             setLookAndFeel(&LNF);
         }
         ~SliderLabeledValue() {
@@ -36,9 +40,9 @@ namespace GnomeDistort2Controls {
 
         juce::String label;
         DisplayMode mode;
+        Color color;
         bool isSmallText;
         const GnomeDistort2Theme::Theme* theme;
-        const juce::Colour* color;
 
         void paint(juce::Graphics&) override;
         juce::String getValueDisplayString() const { return juce::String((float)getValue(), mode == VALUE_NO_DECIMALS ? 0 : 2); }

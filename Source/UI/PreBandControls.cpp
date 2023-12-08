@@ -4,10 +4,10 @@
 PreBandControls::PreBandControls(juce::AudioProcessorValueTreeState* apvts,
                                  const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>* paramMap,
                                  const GnomeDistort2Theme::Theme* theme) :
-    LoCutSlider("LOCUT", false, &theme->COLOR_PRIMARY, theme, GnomeDistort2Controls::SliderLabeledValue::VALUE_NO_DECIMALS),
-    BandLoMidSlider("BAND", false, &theme->COLOR_PRIMARY, theme, GnomeDistort2Controls::SliderLabeledValue::VALUE_NO_DECIMALS),
-    BandMidHiSlider("BAND", false, &theme->COLOR_PRIMARY, theme, GnomeDistort2Controls::SliderLabeledValue::VALUE_NO_DECIMALS),
-    HiCutSlider("HICUT", false, &theme->COLOR_PRIMARY, theme, GnomeDistort2Controls::SliderLabeledValue::VALUE_NO_DECIMALS),
+    LoCutSlider("LOCUT", false, theme, GnomeDistort2Controls::SliderLabeledValue::PRIMARY, GnomeDistort2Controls::SliderLabeledValue::VALUE_NO_DECIMALS),
+    BandLoMidSlider("BAND", false, theme, GnomeDistort2Controls::SliderLabeledValue::PRIMARY, GnomeDistort2Controls::SliderLabeledValue::VALUE_NO_DECIMALS),
+    BandMidHiSlider("BAND", false, theme, GnomeDistort2Controls::SliderLabeledValue::PRIMARY, GnomeDistort2Controls::SliderLabeledValue::VALUE_NO_DECIMALS),
+    HiCutSlider("HICUT", false, theme, GnomeDistort2Controls::SliderLabeledValue::PRIMARY, GnomeDistort2Controls::SliderLabeledValue::VALUE_NO_DECIMALS),
 
     lnfCombo(theme),
 

@@ -1,5 +1,6 @@
 #pragma once
 #include <JuceHeader.h>
+#include "../UI/Theme/Theme.h"
 
 namespace GnomeDistort2Helpers {
     // manages application-level settings
@@ -11,6 +12,7 @@ namespace GnomeDistort2Helpers {
         juce::Time lastUpdateCheck = juce::Time().getCurrentTime();
         bool displayEnabled = true;
         bool displayHQ = true;
+        GnomeDistort2Theme::Themes theme = GnomeDistort2Theme::GnomeDefault;
 
         void loadSettings() {
             auto map = getLineTexts();
@@ -22,10 +24,10 @@ namespace GnomeDistort2Helpers {
                         return lines[pos].replace(map.at(pos), "");
                     return juce::String("errval");
                 };
-                lastUpdateCheck = juce::Time::fromISO8601(getValue(PosLastUpdateCheck));
-                DBG(getValue(PosDisplayEnabled));
+                if (getValue(PosLastUpdateCheck) != "errval") lastUpdateCheck = juce::Time::fromISO8601(getValue(PosLastUpdateCheck));
                 displayEnabled = getValue(PosDisplayEnabled) == "TRUE";
                 displayHQ = getValue(PosDisplayHQ) == "TRUE";
+                if (getValue(PosTheme) != "errval") theme = (GnomeDistort2Theme::Themes)getValue(PosTheme).getIntValue();
             } else {
                 saveSettings();
             }
@@ -44,6 +46,7 @@ namespace GnomeDistort2Helpers {
             addValue(PosLastUpdateCheck, lastUpdateCheck.toISO8601(true));
             addBoolValue(PosDisplayEnabled, displayEnabled);
             addBoolValue(PosDisplayHQ, displayHQ);
+            addValue(PosTheme, juce::String(theme));
 
             file.saveLines(&lines);
         }
@@ -70,7 +73,7 @@ namespace GnomeDistort2Helpers {
                     return false;
                 }
                 juce::String out = "";
-                for (auto line : *lines) {
+                for (juce::String line : *lines) {
                     out << line << '\n';
                 }
                 file.replaceWithText(out);
@@ -86,7 +89,8 @@ namespace GnomeDistort2Helpers {
         enum LinePosition {
             PosLastUpdateCheck,
             PosDisplayEnabled,
-            PosDisplayHQ
+            PosDisplayHQ,
+            PosTheme
         };
         const juce::String lineDivide = "=";
         const std::map<LinePosition, juce::String> getLineTexts() {
@@ -99,7 +103,8 @@ namespace GnomeDistort2Helpers {
                 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 {PosLastUpdateCheck, "LastUpdateCheck" + lineDivide},
                 {PosDisplayEnabled, "DisplayOn" + lineDivide},
-                {PosDisplayHQ, "DisplayHQ" + lineDivide}
+                {PosDisplayHQ, "DisplayHQ" + lineDivide},
+                {PosTheme, "Theme" + lineDivide}
             };
         };
 

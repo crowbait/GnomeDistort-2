@@ -8,14 +8,13 @@ namespace GnomeDistort2Controls {
             setColors(theme);
         }
         void setColors(const GnomeDistort2Theme::Theme* theme) {
-            setColour(juce::ComboBox::ColourIds::backgroundColourId, theme->COLOR_BG_DARK);
-            setColour(juce::ComboBox::ColourIds::textColourId, theme->COLOR_TEXT);
-            setColour(juce::ComboBox::ColourIds::outlineColourId, theme->COLOR_BG_VERYDARK);
-            setColour(juce::ComboBox::ColourIds::arrowColourId, theme->COLOR_BG_LIGHT);
+            setColour(juce::ComboBox::ColourIds::backgroundColourId, theme->COLOR_GRAPH_BG);
+            setColour(juce::ComboBox::ColourIds::textColourId, theme->COLOR_TEXT_PRIMARY);
+            setColour(juce::ComboBox::ColourIds::outlineColourId, theme->COLOR_GRAPH_SECONDARY);
             setColour(juce::ComboBox::ColourIds::arrowColourId, theme->COLOR_PRIMARY);
-            setColour(juce::PopupMenu::ColourIds::backgroundColourId, theme->COLOR_BG_MIDDARK);
-            setColour(juce::PopupMenu::ColourIds::textColourId, theme->COLOR_TEXT);
-            setColour(juce::PopupMenu::ColourIds::highlightedBackgroundColourId, theme->COLOR_BG_DARK);
+            setColour(juce::PopupMenu::ColourIds::backgroundColourId, theme->COLOR_BG_AREAS);
+            setColour(juce::PopupMenu::ColourIds::textColourId, theme->COLOR_TEXT_PRIMARY);
+            setColour(juce::PopupMenu::ColourIds::highlightedBackgroundColourId, theme->COLOR_GRAPH_BG);
         }
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(LnFComboBox)

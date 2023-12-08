@@ -29,8 +29,8 @@ void GnomeDistort2AudioProcessorEditor::paintBackground() {
     g.drawImageWithin(ImageCache::getFromMemory(BinaryData::logo_small_png, BinaryData::logo_small_pngSize),
                       logoBox.getX(), logoBox.getY(), logoBox.getWidth(), logoBox.getHeight(),
                       RectanglePlacement::centred);
-    g.drawImageWithin(ImageCache::getFromMemory(BinaryData::grundge_overlay_png, BinaryData::grundge_overlay_pngSize),
-                      0, 0, width, height, RectanglePlacement::fillDestination);
+    if (theme.shouldDrawOverlay) g.drawImageWithin(ImageCache::getFromMemory(BinaryData::grundge_overlay_png, BinaryData::grundge_overlay_pngSize),
+                                                   0, 0, width, height, RectanglePlacement::fillDestination);
     Image gnome = ImageCache::getFromMemory(BinaryData::gnome_dark_png, BinaryData::gnome_dark_pngSize);
     g.drawImageAt(gnome, width - gnome.getWidth(), height - gnome.getHeight());
 
@@ -75,28 +75,27 @@ void GnomeDistort2AudioProcessorEditor::paintBackground() {
         Path border;
         Rectangle<int> borderBox = band->getBounds().expanded(8, 0);
         border.addRoundedRectangle(borderBox, 8.f);
-        g.setColour(theme.CIRCUIT_PRIMARY);
+        g.setColour(theme.COLOR_BG_AREAS);
         g.strokePath(border, PathStrokeType(3));
 
         // boxes
         Path box;
         const Rectangle<int> smearBox(band->SmearAmtSlider.getX() + bandCorner.getX(),
                                       band->SmearAmtSlider.getY() + bandCorner.getY() + 4,
-                                      band->SmearLengthSlider.getRight() - band->SmearAmtSlider.getX(),
+                                      band->SmearLengthSlider.getRight() - band->SmearAmtSlider.getX() - 2,
                                       band->SmearLengthSlider.getBottom() - band->SmearAmtSlider.getY() - 8);
         box.addRoundedRectangle(smearBox, 4.f);
+        g.setColour(theme.COLOR_BG_AREAS);
         g.fillPath(box);
 
         // labels
         g.setFont(TEXT_NORMAL);
-        g.setColour(juce::Colours::lightgrey);
+        g.setColour(theme.COLOR_TEXT_SECONDARY);
         g.drawText("SMEAR",
                    smearBox.getX() + 6,
                    smearBox.getBottom() - TEXT_NORMAL - 4,
                    g.getCurrentFont().getStringWidth("SMEAR"),
                    TEXT_NORMAL, Justification::centred);
-
-        g.setColour(theme.CIRCUIT_PRIMARY);
 
         // border to pre-gain
         circuit.startNewSubPath(band->PeakFreqSlider.getBounds().getCentreX() + bandCorner.getX(), borderBox.getY());
@@ -126,7 +125,7 @@ void GnomeDistort2AudioProcessorEditor::paintBackground() {
     circuit.lineTo(getRight(), MixSlider.getBounds().getCentre().getY());
 #pragma endregion
 
-    g.setColour(theme.CIRCUIT_PRIMARY);
+    g.setColour(theme.COLOR_CIRCUIT_PRIMARY);
     g.strokePath(circuit, PathStrokeType(CIRCUIT_THICKNESS));
 #pragma endregion
 
@@ -169,7 +168,7 @@ void GnomeDistort2AudioProcessorEditor::paintBackground() {
     String version = "v.";
     version << ProjectInfo::versionString;
     g.setFont(TEXT_NORMAL);
-    g.setColour(juce::Colours::lightgrey);
+    g.setColour(theme.COLOR_TEXT_SECONDARY);
     Rectangle<int> versionBox = Rectangle<int>(
         COMP_PADDING,
         getHeight() - TEXT_NORMAL - 8,

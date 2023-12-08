@@ -18,6 +18,7 @@ namespace GnomeDistort2Controls {
         bool isEnabled = true;
         bool isHQ = true;
         juce::Atomic<bool> qualityChanged{ true };
+        juce::Atomic<bool> parametersChanged{ true };   // set true to draw filter curve on launch
 
         void timerCallback() override;
         void parameterValueChanged(int parameterIndex, float newValue) override;
@@ -29,8 +30,6 @@ namespace GnomeDistort2Controls {
     private:
         GnomeDistort2AudioProcessor* processor;
         GnomeDistort2Processing::Processing::GnomeDSP* DSP;
-
-        juce::Atomic<bool> parametersChanged{ true };   // set true to draw filter curve on launch
         GnomeDistort2Processing::Processing::CutFilter LoCut, HiCut;
         GnomeDistort2Processing::Processing::Filter PeakLo, PeakMid, PeakHi;
 
@@ -72,7 +71,7 @@ namespace GnomeDistort2Controls {
         void generatePathFromBuffer(GnomeDistort2Helpers::SingleChannelSampleFifo<juce::AudioBuffer<float>>*, GnomeDistort2Helpers::FFTDataGenerator<std::vector<float>>*,
                                     juce::AudioBuffer<float>*, GnomeDistort2Helpers::AnalyzerPathGenerator<juce::Path>*, juce::Path*);
 
-        juce::Rectangle<int> getRenderArea();
+        juce::Rectangle<int> getRenderArea() const;
         juce::Rectangle<int> getAnalysisArea();
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DisplayComponent)

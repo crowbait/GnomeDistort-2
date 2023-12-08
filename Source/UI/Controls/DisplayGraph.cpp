@@ -8,6 +8,8 @@ GnomeDistort2Controls::DisplayGraph::DisplayGraph(juce::RangedAudioParameter* fu
     funcParam(func), amtParam(amt),
     theme(theme) {
 
+    setOpaque(true);
+
     funcParam->addListener(this);
     amtParam->addListener(this);
 }
@@ -43,9 +45,9 @@ void GnomeDistort2Controls::DisplayGraph::resized() {
 
     background = Image(Image::PixelFormat::RGB, getWidth(), getHeight(), true);
     Graphics g(background);
-    g.setColour(theme->COLOR_BG_VERYDARK);
+    g.setColour(theme->COLOR_GRAPH_BG);
     g.fillAll();
-    g.setColour(Colours::dimgrey);
+    g.setColour(theme->COLOR_GRAPH_MARKINGS);
     g.drawRoundedRectangle(renderArea.toFloat(), 2.f, 1.f);
     g.drawHorizontalLine(renderArea.getY() + (renderArea.getHeight() / 2), renderArea.getX(), renderArea.getRight());
     g.drawVerticalLine(renderArea.getX() + (renderArea.getWidth() / 2), renderArea.getY(), renderArea.getBottom());

@@ -16,8 +16,6 @@ void GnomeDistort2Controls::DisplayComponent::paint(juce::Graphics& g) {
     const int BandMidHiX = mapFromLog10(DSP->BandMidL.UpperFreqBound, 20.f, 20000.f) * analysisWidth + analysisX;
 
     // background
-    g.setColour(theme->COLOR_BG_VERYDARK);
-    g.fillRect(displayArea.toFloat());
     g.drawImage(background, displayArea.toFloat());
 
     // band amplitudes if not disabled
@@ -32,32 +30,32 @@ void GnomeDistort2Controls::DisplayComponent::paint(juce::Graphics& g) {
         const float MidDist = processor->chainSettings.MidBandSettings.WaveshapeAmount;
         const float HiDist = processor->chainSettings.HiBandSettings.WaveshapeAmount;
 
-        g.setColour(Colour((uint8)std::floor(jmap(LoDist, (float)theme->COLOR_SECONDARY.getRed(), (float)theme->COLOR_PRIMARY.getRed())),
-                           (uint8)std::floor(jmap(LoDist, (float)theme->COLOR_SECONDARY.getGreen(), (float)theme->COLOR_PRIMARY.getGreen())),
-                           (uint8)std::floor(jmap(LoDist, (float)theme->COLOR_SECONDARY.getBlue(), (float)theme->COLOR_PRIMARY.getBlue())), 0.6f));
+        g.setColour(Colour((uint8)std::floor(jmap(LoDist, (float)theme->COLOR_GRAPH_SECONDARY.getRed(), (float)theme->COLOR_GRAPH_PRIMARY.getRed())),
+                           (uint8)std::floor(jmap(LoDist, (float)theme->COLOR_GRAPH_SECONDARY.getGreen(), (float)theme->COLOR_GRAPH_PRIMARY.getGreen())),
+                           (uint8)std::floor(jmap(LoDist, (float)theme->COLOR_GRAPH_SECONDARY.getBlue(), (float)theme->COLOR_GRAPH_PRIMARY.getBlue())), 0.6f));
         g.fillRect(LoBand.toFloat());
-        g.setColour(Colour((uint8)std::floor(jmap(MidDist, (float)theme->COLOR_SECONDARY.getRed(), (float)theme->COLOR_PRIMARY.getRed())),
-                           (uint8)std::floor(jmap(MidDist, (float)theme->COLOR_SECONDARY.getGreen(), (float)theme->COLOR_PRIMARY.getGreen())),
-                           (uint8)std::floor(jmap(MidDist, (float)theme->COLOR_SECONDARY.getBlue(), (float)theme->COLOR_PRIMARY.getBlue())), 0.6f));
+        g.setColour(Colour((uint8)std::floor(jmap(MidDist, (float)theme->COLOR_GRAPH_SECONDARY.getRed(), (float)theme->COLOR_GRAPH_PRIMARY.getRed())),
+                           (uint8)std::floor(jmap(MidDist, (float)theme->COLOR_GRAPH_SECONDARY.getGreen(), (float)theme->COLOR_GRAPH_PRIMARY.getGreen())),
+                           (uint8)std::floor(jmap(MidDist, (float)theme->COLOR_GRAPH_SECONDARY.getBlue(), (float)theme->COLOR_GRAPH_PRIMARY.getBlue())), 0.6f));
         g.fillRect(MidBand.toFloat());
-        g.setColour(Colour((uint8)std::floor(jmap(HiDist, (float)theme->COLOR_SECONDARY.getRed(), (float)theme->COLOR_PRIMARY.getRed())),
-                           (uint8)std::floor(jmap(HiDist, (float)theme->COLOR_SECONDARY.getGreen(), (float)theme->COLOR_PRIMARY.getGreen())),
-                           (uint8)std::floor(jmap(HiDist, (float)theme->COLOR_SECONDARY.getBlue(), (float)theme->COLOR_PRIMARY.getBlue())), 0.6f));
+        g.setColour(Colour((uint8)std::floor(jmap(HiDist, (float)theme->COLOR_GRAPH_SECONDARY.getRed(), (float)theme->COLOR_GRAPH_PRIMARY.getRed())),
+                           (uint8)std::floor(jmap(HiDist, (float)theme->COLOR_GRAPH_SECONDARY.getGreen(), (float)theme->COLOR_GRAPH_PRIMARY.getGreen())),
+                           (uint8)std::floor(jmap(HiDist, (float)theme->COLOR_GRAPH_SECONDARY.getBlue(), (float)theme->COLOR_GRAPH_PRIMARY.getBlue())), 0.6f));
         g.fillRect(HiBand.toFloat());
     }
 
     // oscilloscope if not disabled
     if (isEnabled) {
-        g.setColour(theme->COLOR_SECONDARY);
+        g.setColour(theme->COLOR_GRAPH_SECONDARY);
         audioCurvePre.applyTransform(AffineTransform().translation(analysisX, analysisArea.getY()));
         g.strokePath(audioCurvePre, PathStrokeType(2));
-        g.setColour(theme->COLOR_PRIMARY);
+        g.setColour(theme->COLOR_GRAPH_PRIMARY);
         audioCurvePost.applyTransform(AffineTransform().translation(analysisX, analysisArea.getY()));
         g.strokePath(audioCurvePost, PathStrokeType(2));
     }
 
     // band dividers
-    g.setColour(Colours::white);
+    g.setColour(theme->COLOR_GRAPH_FOREGROUND);
     Path LineLoMid;
     LineLoMid.startNewSubPath(BandLoMidX, outputMin);
     LineLoMid.lineTo(BandLoMidX, outputMax);
@@ -102,6 +100,6 @@ void GnomeDistort2Controls::DisplayComponent::paint(juce::Graphics& g) {
     }
 
     // filter curve
-    g.setColour(Colours::white);
+    g.setColour(theme->COLOR_GRAPH_FOREGROUND);
     g.strokePath(filterCurve, PathStrokeType(2));
 }

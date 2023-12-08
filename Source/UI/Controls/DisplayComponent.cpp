@@ -13,6 +13,8 @@ GnomeDistort2Controls::DisplayComponent::DisplayComponent(GnomeDistort2AudioProc
     isEnabled = enabled;
     isHQ = HQ;
 
+    setOpaque(true);
+
     params.resize(paramIndexes.size());
     for (int i = 0; i < params.size(); i++) {
         params[i] = apvts->getParameter(paramMap->at(paramIndexes[i]));
@@ -136,7 +138,7 @@ void GnomeDistort2Controls::DisplayComponent::timerCallback() {
     }
 }
 
-juce::Rectangle<int> GnomeDistort2Controls::DisplayComponent::getRenderArea() {
+juce::Rectangle<int> GnomeDistort2Controls::DisplayComponent::getRenderArea() const {
     auto bounds = getLocalBounds();
     bounds.removeFromLeft(24);
     bounds.removeFromRight(8);

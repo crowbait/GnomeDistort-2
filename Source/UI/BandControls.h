@@ -29,10 +29,13 @@ struct BandControls : juce::Component {
 
     void paint(juce::Graphics& g) override {};
     void resized() override;
-    void applyTheme(const GnomeDistort2Theme::Theme* theme) {
+    void applyTheme(const GnomeDistort2Theme::Theme* theme, bool redraw) {
         lnfCombo.setColors(theme);
         lnfTextToggle.setColors(theme);
-        Display.resized();
+        if (redraw) {
+            Display.resized();
+            Display.repaint();
+        }
     };
 
 private:

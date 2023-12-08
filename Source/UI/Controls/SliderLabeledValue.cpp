@@ -12,7 +12,7 @@ void GnomeDistort2Controls::LnFSliderLabeledValue::drawRotarySlider(juce::Graphi
         const int textHeight = sldr->isSmallText ? GnomeDistort2Theme::TEXT_SMALL : GnomeDistort2Theme::TEXT_NORMAL;
 
         // knob body
-        g.setColour(*sldr->color);
+        g.setColour(sldr->theme->COLOR_PRIMARY);
         g.fillEllipse(bounds.toFloat());
 
         g.drawImage(sldr->theme->KnobOverlay, bounds, RectanglePlacement::stretchToFit);
@@ -25,12 +25,12 @@ void GnomeDistort2Controls::LnFSliderLabeledValue::drawRotarySlider(juce::Graphi
         labelboxRect.setSize(g.getCurrentFont().getStringWidth(labeltext) + (sldr->isSmallText ? 2 : 4), textHeight + (sldr->isSmallText ? 1 : 2));
         labelboxRect.setCentre(center.getX(), center.getY() - bounds.getHeight() * 0.2f);
         labelboxP.addRoundedRectangle(labelboxRect, 2.f);
-        g.setColour(Colours::darkgrey);
+        g.setColour(sldr->theme->COLOR_GRAPH_SECONDARY);
         g.strokePath(labelboxP, PathStrokeType(1));
-        g.setColour(sldr->theme->COLOR_BG_VERYDARK);
+        g.setColour(sldr->theme->COLOR_GRAPH_BG);
         g.fillPath(labelboxP);
 
-        g.setColour(Colours::lightgrey);
+        g.setColour(sldr->theme->COLOR_TEXT_SECONDARY);
         g.drawFittedText(labeltext, labelboxRect.toNearestInt(), Justification::centred, 1);
 
         // value box
@@ -41,12 +41,12 @@ void GnomeDistort2Controls::LnFSliderLabeledValue::drawRotarySlider(juce::Graphi
             valueboxRect.setSize(strWidthValue + (sldr->isSmallText ? 2 : 4), textHeight + (sldr->isSmallText ? 1 : 2));
             valueboxRect.setCentre(center.getX(), center.getY() + bounds.getHeight() * 0.25f);
             valueboxP.addRoundedRectangle(valueboxRect, 2.f);
-            g.setColour(Colours::darkgrey);
+            g.setColour(sldr->theme->COLOR_GRAPH_SECONDARY);
             g.strokePath(valueboxP, PathStrokeType(1));
-            g.setColour(sldr->theme->COLOR_BG_VERYDARK);
+            g.setColour(sldr->theme->COLOR_GRAPH_BG);
             g.fillPath(valueboxP);
 
-            g.setColour(Colours::lightgrey);
+            g.setColour(sldr->theme->COLOR_TEXT_SECONDARY);
             g.drawFittedText(sldr->getValueDisplayString(), valueboxRect.toNearestInt(), Justification::centred, 1);
         }
 
@@ -61,9 +61,9 @@ void GnomeDistort2Controls::LnFSliderLabeledValue::drawRotarySlider(juce::Graphi
         jassert(rotaryStartAngle < rotaryEndAngle);
         float sliderAngRad = jmap(sliderPosProportional, 0.f, 1.f, rotaryStartAngle, rotaryEndAngle);
         indicatorPath.applyTransform(AffineTransform().rotated(sliderAngRad, center.getX(), center.getY()));
-        g.setColour(Colours::lightgrey);
+        g.setColour(sldr->theme->COLOR_KNOB_INDICATOR_IN);
         g.fillPath(indicatorPath);
-        g.setColour(sldr->theme->COLOR_BG_VERYDARK);
+        g.setColour(sldr->theme->COLOR_KNOB_INDICATOR_OUT);
         g.strokePath(indicatorPath, PathStrokeType(1));
     } else jassertfalse;    // catch calls to this function which are not from a matching slider
 }

@@ -8,9 +8,9 @@ namespace GnomeDistort2Controls {
             setColors(theme);
         }
         void setColors(const GnomeDistort2Theme::Theme* theme) {
-            setColour(juce::TextButton::ColourIds::buttonColourId, theme->COLOR_BG_DARK);
-            setColour(juce::TextButton::ColourIds::buttonOnColourId, theme->COLOR_BG_VERYDARK);
-            setColour(juce::TextButton::ColourIds::textColourOffId, theme->COLOR_TEXT);
+            setColour(juce::TextButton::ColourIds::buttonColourId, theme->COLOR_BG_AREAS);
+            setColour(juce::TextButton::ColourIds::buttonOnColourId, theme->COLOR_GRAPH_BG);
+            setColour(juce::TextButton::ColourIds::textColourOffId, theme->COLOR_TEXT_PRIMARY);
             setColour(juce::TextButton::ColourIds::textColourOnId, theme->COLOR_PRIMARY);
         }
 

@@ -15,10 +15,9 @@ void GnomeDistort2Controls::DisplayComponent::resized() {
     background = Image(Image::PixelFormat::RGB, getWidth(), getHeight(), true);
     Graphics g(background);
 
-    g.setColour(theme->COLOR_BG_VERYDARK);
+    g.setColour(theme->COLOR_GRAPH_BG);
     g.fillRect(getLocalBounds().toFloat());
 
-    g.setColour(Colours::dimgrey);
     g.setFont(TEXT_TINY);
 
     // draw frequencies
@@ -32,11 +31,11 @@ void GnomeDistort2Controls::DisplayComponent::resized() {
         float normalizedX = mapFromLog10(f, 20.f, 20000.f);  // same as in drawing filter response curve
         xs.add(left + width * normalizedX);
     }
-    g.setColour(theme->COLOR_BG_MIDDARK);
+    g.setColour(theme->COLOR_GRAPH_MARKINGS_DIM);
     for (float x : xs) {
         g.drawVerticalLine(x, top, bottom);
     }
-    g.setColour(Colours::dimgrey);
+    g.setColour(theme->COLOR_GRAPH_MARKINGS);
     for (int i = 0; i < freqs.size(); i++) {
         float f = freqs[i];
         float x = xs[i];
@@ -66,7 +65,7 @@ void GnomeDistort2Controls::DisplayComponent::resized() {
     for (float gdB : gains) {
         auto normalizedY = jmap(gdB, -36.f, 36.f, (float)bottom, (float)top);
         ys.add(normalizedY);
-        g.setColour(gdB == 0.f ? Colours::dimgrey : theme->COLOR_BG_MIDDARK);
+        g.setColour(gdB == 0.f ? theme->COLOR_GRAPH_MARKINGS : theme->COLOR_GRAPH_MARKINGS_DIM);
         g.drawHorizontalLine(normalizedY, left, right);
 
         String str;
@@ -76,7 +75,7 @@ void GnomeDistort2Controls::DisplayComponent::resized() {
         r.setSize(g.getCurrentFont().getStringWidth(str), GnomeDistort2Theme::TEXT_TINY);
         r.setCentre(0, normalizedY);
         r.setX(2);
-        g.setColour(Colours::dimgrey);
+        g.setColour(theme->COLOR_GRAPH_MARKINGS);
         g.drawFittedText(str, r, Justification::centred, 1);
     }
 

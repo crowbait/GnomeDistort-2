@@ -9,25 +9,33 @@ namespace GnomeDistort2Theme {
         r.reduced3DBorders = true;
 
         r.COLOR_BG = juce::Colour(50u, 50u, 50u);
-        r.COLOR_BG_VERYDARK = juce::Colour(18u, 18u, 18u);
-        r.COLOR_BG_DARK = juce::Colour(25u, 25u, 25u);
-        r.COLOR_BG_MIDDARK = juce::Colour(36u, 36u, 36u);
-        r.COLOR_BG_MID = juce::Colour(64u, 64u, 64u);
-        r.COLOR_BG_LIGHT = juce::Colour(86u, 86u, 86u);
-
+        r.COLOR_BG_AREAS = juce::Colour(25u, 25u, 25u);
         r.COLOR_PRIMARY = juce::Colour(110u, 10u, 10u);
         r.COLOR_SECONDARY = juce::Colour(110u, 110u, 110u);
-
-        r.COLOR_TEXT = juce::Colour(255u, 255u, 255u);
-        r.CIRCUIT_PRIMARY = juce::Colour(25u, 25u, 25u);
+        r.COLOR_TEXT_PRIMARY = juce::Colour(255u, 255u, 255u);
+        r.COLOR_TEXT_SECONDARY = juce::Colour(180u, 180u, 180u);
+        r.COLOR_KNOB_INDICATOR_IN = juce::Colour(215u, 215u, 215u);
+        r.COLOR_KNOB_INDICATOR_OUT = juce::Colour(25u, 25u, 25u);
+        r.COLOR_CIRCUIT_PRIMARY = juce::Colour(25u, 25u, 25u);
+        r.COLOR_GRAPH_BG = juce::Colour(18u, 18u, 18u);
+        r.COLOR_GRAPH_PRIMARY = juce::Colour(110u, 10u, 10u);
+        r.COLOR_GRAPH_SECONDARY = juce::Colour(70u, 70u, 70u);
+        r.COLOR_GRAPH_FOREGROUND = juce::Colour(255u, 255u, 255u);
+        r.COLOR_GRAPH_MARKINGS = juce::Colour(110u, 110u, 110u);
+        r.COLOR_GRAPH_MARKINGS_DIM = juce::Colour(40u, 40u, 40u);
 
         r.KnobOverlay = juce::ImageCache::getFromMemory(BinaryData::knob_overlay_128_png, BinaryData::knob_overlay_128_pngSize);
 
-        r.CornersRect = [r](juce::Graphics& g, const juce::Rectangle<int> bounds, const int edgeLengthX, int edgeLengthY) {
-            int left = bounds.getX();
-            int top = bounds.getY();
-            int right = left + bounds.getWidth();
-            int bottom = top + bounds.getHeight();
+        r.CornersRect = [](juce::Graphics& g, const juce::Rectangle<int> bounds, const int edgeLengthX, int edgeLengthY) {
+            const int left = bounds.getX();
+            const int top = bounds.getY();
+            const int right = left + bounds.getWidth();
+            const int bottom = top + bounds.getHeight();
+
+            const juce::Colour COLOR_ACCENT_DARK = juce::Colour(25u, 25u, 25u);
+            const juce::Colour COLOR_ACCENT_MIDDARK = juce::Colour(36u, 36u, 36u);
+            const juce::Colour COLOR_ACCENT_MID = juce::Colour(64u, 64u, 64u);
+            const juce::Colour COLOR_ACCENT_LIGHT = juce::Colour(86u, 86u, 86u);
 
             juce::Path topEdge;
             topEdge.startNewSubPath(left, top);
@@ -57,31 +65,36 @@ namespace GnomeDistort2Theme {
             leftEdge.lineTo(left, bottom);
             leftEdge.closeSubPath();
 
-            g.setColour(r.COLOR_BG_DARK);
+            g.setColour(COLOR_ACCENT_DARK);
             g.fillPath(topEdge);
-            g.setColour(r.COLOR_BG_MID);
+            g.setColour(COLOR_ACCENT_MID);
             g.fillPath(rightEdge);
-            g.setColour(r.COLOR_BG_LIGHT);
+            g.setColour(COLOR_ACCENT_LIGHT);
             g.fillPath(bottomEdge);
-            g.setColour(r.COLOR_BG_MIDDARK);
+            g.setColour(COLOR_ACCENT_MIDDARK);
             g.fillPath(leftEdge);
         };
-        r.CornersKnob = [r](juce::Graphics& g, juce::Rectangle<int> bounds, const int distance) {
+        r.CornersKnob = [](juce::Graphics& g, juce::Rectangle<int> bounds, const int distance) {
+            const juce::Colour COLOR_ACCENT_DARK_0 = juce::Colour((juce::uint8)25u, 25u, 25u, 0.f);
+            const juce::Colour COLOR_ACCENT_DARK_1 = juce::Colour((juce::uint8)25u, 25u, 25u, 1.f);
+            const juce::Colour COLOR_ACCENT_MID_0 = juce::Colour((juce::uint8)64u, 64u, 64u, 0.f);
+            const juce::Colour COLOR_ACCENT_MID_1 = juce::Colour((juce::uint8)64u, 64u, 64u, 1.f);
+
             bounds.expand(distance, distance);
             juce::Path outer;
-            const float distRectangleCornerToCircle = (bounds.getWidth() / 2) * (sqrt(2) - 1);
+            const float distRectangleCornerToCircle = (bounds.getWidth() / 2.f) * (sqrt(2) - 1);
             outer.addEllipse(bounds.toFloat());
             juce::ColourGradient darken(
-                juce::Colour(r.COLOR_BG_DARK.getRed(), r.COLOR_BG_DARK.getGreen(), r.COLOR_BG_DARK.getBlue(), 1.f),
+                COLOR_ACCENT_DARK_1,
                 bounds.getX() + (bounds.getWidth() / 4), bounds.getY(),
-                juce::Colour(r.COLOR_BG_DARK.getRed(), r.COLOR_BG_DARK.getGreen(), r.COLOR_BG_DARK.getBlue(), 0.f),
+                COLOR_ACCENT_DARK_0,
                 bounds.getRight() - (bounds.getWidth() / 4), bounds.getBottom(), true);
             g.setGradientFill(darken);
             g.fillPath(outer);
             juce::ColourGradient lighten(
-                juce::Colour(r.COLOR_BG_MID.getRed(), r.COLOR_BG_MID.getGreen(), r.COLOR_BG_MID.getBlue(), 1.f),
+                COLOR_ACCENT_MID_1,
                 bounds.getRight() - (bounds.getWidth() / 4), bounds.getBottom(),
-                juce::Colour(r.COLOR_BG_MID.getRed(), r.COLOR_BG_MID.getGreen(), r.COLOR_BG_MID.getBlue(), 0.f),
+                COLOR_ACCENT_MID_0,
                 bounds.getX() + (bounds.getWidth() / 4), bounds.getY(), true);
             g.setGradientFill(lighten);
             g.fillPath(outer);

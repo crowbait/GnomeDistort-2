@@ -36,7 +36,7 @@ private:
     GnomeDistort2Controls::TextButton LinkDonateButton, LinkGithubButton;
 
     void paintBackground();
-    void setThemeFromSettings();
+    void setThemeFromSettings(bool callRedraw);
 
     std::vector<juce::Component*> getComponents() {
         return {

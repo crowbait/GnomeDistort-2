@@ -9,7 +9,7 @@ struct PostBandControls : juce::Component {
     PostBandControls(juce::AudioProcessorValueTreeState* apvts,
                      const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>* paramMap,
                      const GnomeDistort2Theme::Theme* theme) :
-        WaveshapeAmtSlider("DIST", false, &theme->COLOR_PRIMARY, theme),
+        WaveshapeAmtSlider("DIST", false, theme, GnomeDistort2Controls::SliderLabeledValue::PRIMARY),
         lnfCombo(theme),
         AttachWaveshapeAmtSlider(*apvts, paramMap->at(GnomeDistort2Parameters::TreeParameter::WaveshapeAmountGlobal), WaveshapeAmtSlider),
         AttachWaveshapeFuncSelect(*apvts, paramMap->at(GnomeDistort2Parameters::WaveshapeFunctionGlobal), WaveshapeFuncSelect) {

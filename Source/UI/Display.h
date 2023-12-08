@@ -20,14 +20,13 @@ struct Display : juce::Component {
 
     const GnomeDistort2Theme::Theme* theme;
 
-    void paint(juce::Graphics& g) override {
-        g.setColour(theme->COLOR_BG_VERYDARK);
-        g.fillAll();
-    }
+    void paint(juce::Graphics& g) override {}
     void resized() override {
         displayComp.setBounds(getLocalBounds());
     }
     void applyTheme() {
         displayComp.resized();
+        displayComp.parametersChanged.set(true);
+        displayComp.repaint();
     }
 };

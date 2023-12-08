@@ -15,17 +15,17 @@ GnomeDistort2AudioProcessorEditor::GnomeDistort2AudioProcessorEditor(GnomeDistor
     BandControlsHi(Band::Hi, apvts, pm, &theme),
     PostBandControl(apvts, pm, &theme),
 
-    PostGainSlider("GAIN", false, &theme.COLOR_PRIMARY, &theme),
-    MixSlider("MIX", false, &theme.COLOR_PRIMARY, &theme),
+    PostGainSlider("GAIN", false, &theme, GnomeDistort2Controls::SliderLabeledValue::PRIMARY),
+    MixSlider("MIX", false, &theme, GnomeDistort2Controls::SliderLabeledValue::PRIMARY),
     AttachPostGainSlider(*apvts, pm->at(GnomeDistort2Parameters::TreeParameter::PostGainGlobal), PostGainSlider),
     AttachMixSlider(*apvts, pm->at(GnomeDistort2Parameters::TreeParameter::DryWet), MixSlider),
 
-    SwitchDisplayOnButton("ON", "OFF", GnomeDistort2Theme::TEXT_NORMAL, juce::Colours::white, juce::Colours::grey),
-    SwitchDisplayHQButton("HQ", GnomeDistort2Theme::TEXT_NORMAL, juce::Colours::white, juce::Colours::grey),
-    LinkDonateButton("Donate", juce::Colours::lightgrey, GnomeDistort2Theme::TEXT_NORMAL, true),
-    LinkGithubButton("Github", juce::Colours::lightgrey, GnomeDistort2Theme::TEXT_NORMAL, true) {
+    SwitchDisplayOnButton("ON", "OFF", GnomeDistort2Theme::TEXT_NORMAL, &theme),
+    SwitchDisplayHQButton("HQ", GnomeDistort2Theme::TEXT_NORMAL, &theme),
+    LinkDonateButton("Donate", &theme, GnomeDistort2Theme::TEXT_NORMAL, true),
+    LinkGithubButton("Github", &theme, GnomeDistort2Theme::TEXT_NORMAL, true) {
 
-    setThemeFromSettings();
+    setThemeFromSettings(false);
 
     for (auto* comp : getComponents()) {
         addAndMakeVisible(comp);
@@ -135,13 +135,19 @@ void GnomeDistort2AudioProcessorEditor::resized() {
     paintBackground();
 }
 
-void GnomeDistort2AudioProcessorEditor::setThemeFromSettings() {
-    theme = GnomeDistort2Theme::getTheme_GnomeDefault();
-    paintBackground();
-    DisplayArea.applyTheme();
+void GnomeDistort2AudioProcessorEditor::setThemeFromSettings(bool callRedraw) {
+    switch (settings.theme) {
+        case GnomeDistort2Theme::GnomeDefault: theme = GnomeDistort2Theme::getTheme_GnomeDefault();
+    }
     PreBandControl.applyTheme(&theme);
-    BandControlsLo.applyTheme(&theme);
-    BandControlsMid.applyTheme(&theme);
-    BandControlsHi.applyTheme(&theme);
+    BandControlsLo.applyTheme(&theme, callRedraw);
+    BandControlsMid.applyTheme(&theme, callRedraw);
+    BandControlsHi.applyTheme(&theme, callRedraw);
     PostBandControl.applyTheme(&theme);
+    if (callRedraw) {
+        paintBackground();
+        DisplayArea.applyTheme();
+
+        repaint();
+    }
 }
