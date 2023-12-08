@@ -20,6 +20,8 @@ namespace GnomeDistort2Theme {
         r.COLOR_GRAPH_BG = juce::Colour(18u, 18u, 18u);
         r.COLOR_GRAPH_PRIMARY = juce::Colour(110u, 10u, 10u);
         r.COLOR_GRAPH_SECONDARY = juce::Colour(70u, 70u, 70u);
+        r.COLOR_BAND_LEVEL_MAX = juce::Colour(110u, 10u, 10u);
+        r.COLOR_BAND_LEVEL_MIN = juce::Colour(70u, 70u, 70u);
         r.COLOR_GRAPH_FOREGROUND = juce::Colour(255u, 255u, 255u);
         r.COLOR_GRAPH_MARKINGS = juce::Colour(110u, 110u, 110u);
         r.COLOR_GRAPH_MARKINGS_DIM = juce::Colour(40u, 40u, 40u);

@@ -23,8 +23,10 @@ namespace GnomeDistort2Theme {
         juce::Colour COLOR_TEXT_SECONDARY;      // color of text that shouldn't be as important
         juce::Colour COLOR_CIRCUIT_PRIMARY;     // color of the circuit paths
         juce::Colour COLOR_GRAPH_BG;            // background color of displays and value boxes
-        juce::Colour COLOR_GRAPH_PRIMARY;       // color for output graph, function graph and band level max
-        juce::Colour COLOR_GRAPH_SECONDARY;     // color for input graph, band level min and value box outlines
+        juce::Colour COLOR_GRAPH_PRIMARY;       // color for output graph, function graph
+        juce::Colour COLOR_GRAPH_SECONDARY;     // color for input graph and value box outlines
+        juce::Colour COLOR_BAND_LEVEL_MAX;      // color for band amplitudes on max distortion
+        juce::Colour COLOR_BAND_LEVEL_MIN;      // color for band amplitudes on min distortion
         juce::Colour COLOR_GRAPH_FOREGROUND;    // color for most important graphs: band borders, filter curve
         juce::Colour COLOR_GRAPH_MARKINGS;      // color of display markings, eg. labels
         juce::Colour COLOR_GRAPH_MARKINGS_DIM;  // color of less important display markings, eg. grid
