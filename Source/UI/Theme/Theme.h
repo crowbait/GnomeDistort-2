@@ -3,10 +3,12 @@
 
 namespace GnomeDistort2Theme {
     enum Themes {
-        GnomeDefault
+        GnomeDefault,
+        Oscilloscope
     };
     const juce::StringArray ThemeOptions = {
-        "Gnome Default"
+        "GNOME Industrial",
+        "Oscilloscope"
     };
 
     struct Theme {

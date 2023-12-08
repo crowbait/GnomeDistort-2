@@ -31,7 +31,7 @@ void GnomeDistort2Controls::DisplayGraph::paint(juce::Graphics& g) {
     auto mapX = [left, right](int x) {return jmap((float)x, (float)left, (float)right, -1.f, 1.f); };
     auto mapY = [top, bottom](float y) {return jmap(y, -1.f, 1.f, (float)bottom, (float)top); };
 
-    g.setColour(theme->COLOR_PRIMARY);
+    g.setColour(theme->COLOR_GRAPH_PRIMARY);
     Path graph;
     graph.startNewSubPath(renderArea.getX(), mapY(waveshaperFunction(-1)));
     for (int x = left + 1; x < right; x++) {
