@@ -40,9 +40,14 @@
         <FILE id="GmUPBk" name="UpdateCheck.h" compile="0" resource="0" file="Source/Helpers/UpdateCheck.h"/>
       </GROUP>
       <GROUP id="{F04FB702-04D1-3718-FA9E-035CE47FB04B}" name="UI">
+        <GROUP id="{F15E6B02-C385-B04C-1278-09AF9F4D29FE}" name="Windows">
+          <FILE id="qbeIm9" name="AboutWindow.h" compile="0" resource="0" file="Source/UI/Windows/AboutWindow.h"/>
+        </GROUP>
         <GROUP id="{2302676A-5215-8182-1F2E-90293D6305C4}" name="Theme">
           <FILE id="XNJwo0" name="Theme-GnomeDefault.h" compile="0" resource="0"
                 file="Source/UI/Theme/Theme-GnomeDefault.h"/>
+          <FILE id="e2d9vN" name="Theme-GnomeOscilloscope.h" compile="0" resource="0"
+                file="Source/UI/Theme/Theme-GnomeOscilloscope.h"/>
           <FILE id="saC4BE" name="Theme.h" compile="0" resource="0" file="Source/UI/Theme/Theme.h"/>
           <FILE id="IbmI2M" name="UIConsts.h" compile="0" resource="0" file="Source/UI/Theme/UIConsts.h"/>
         </GROUP>
@@ -59,6 +64,8 @@
           <FILE id="uIOlRW" name="DisplayGraph.cpp" compile="1" resource="0"
                 file="Source/UI/Controls/DisplayGraph.cpp"/>
           <FILE id="RR9hWh" name="DisplayGraph.h" compile="0" resource="0" file="Source/UI/Controls/DisplayGraph.h"/>
+          <FILE id="sOAMoX" name="InvisibleButtonLnF.h" compile="0" resource="0"
+                file="Source/UI/Controls/InvisibleButtonLnF.h"/>
           <FILE id="V9z4sC" name="SliderLabeledValue.cpp" compile="1" resource="0"
                 file="Source/UI/Controls/SliderLabeledValue.cpp"/>
           <FILE id="q9rmIP" name="SliderLabeledValue.h" compile="0" resource="0"

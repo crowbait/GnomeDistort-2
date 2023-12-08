@@ -2,6 +2,8 @@
 #include "Helpers/UpdateCheck.h"
 #include "UI/Theme/UIConsts.h"
 #include "UI/Theme/Theme-GnomeDefault.h"
+#include "UI/Theme/Theme-GnomeOscilloscope.h"
+#include "UI/Windows/AboutWindow.h"
 
 //==============================================================================
 GnomeDistort2AudioProcessorEditor::GnomeDistort2AudioProcessorEditor(GnomeDistort2AudioProcessor& p,
@@ -23,7 +25,8 @@ GnomeDistort2AudioProcessorEditor::GnomeDistort2AudioProcessorEditor(GnomeDistor
     SwitchDisplayOnButton("ON", "OFF", GnomeDistort2Theme::TEXT_NORMAL, &theme),
     SwitchDisplayHQButton("HQ", GnomeDistort2Theme::TEXT_NORMAL, &theme),
     LinkDonateButton("Donate", &theme, GnomeDistort2Theme::TEXT_NORMAL, true),
-    LinkGithubButton("Github", &theme, GnomeDistort2Theme::TEXT_NORMAL, true) {
+    LinkGithubButton("Github", &theme, GnomeDistort2Theme::TEXT_NORMAL, true),
+    AboutButton("About", juce::DrawableButton::ImageRaw) {
 
     setThemeFromSettings(false);
 
@@ -33,7 +36,10 @@ GnomeDistort2AudioProcessorEditor::GnomeDistort2AudioProcessorEditor(GnomeDistor
 
     auto display = juce::Component::SafePointer<GnomeDistort2Controls::DisplayComponent>(&DisplayArea.displayComp);
     auto displayOnSwitch = juce::Component::SafePointer<GnomeDistort2Controls::TextSwitch>(&SwitchDisplayOnButton);
+    auto displayHQSwitch = juce::Component::SafePointer<GnomeDistort2Controls::TextSwitch>(&SwitchDisplayHQButton);
     auto* settingsPtr = &settings;
+    auto thisPtr = juce::Component::SafePointer<GnomeDistort2AudioProcessorEditor>(this);
+
     SwitchDisplayOnButton.onClick = [display, displayOnSwitch, settingsPtr]() {
         display->isEnabled = displayOnSwitch->getToggleState();
         if (display->isEnabled) {
@@ -48,7 +54,6 @@ GnomeDistort2AudioProcessorEditor::GnomeDistort2AudioProcessorEditor(GnomeDistor
         settingsPtr->displayEnabled = display->isEnabled;
         settingsPtr->saveSettings();
     };
-    auto displayHQSwitch = juce::Component::SafePointer<GnomeDistort2Controls::TextSwitch>(&SwitchDisplayHQButton);
     SwitchDisplayHQButton.onClick = [display, displayHQSwitch, settingsPtr]() {
         display->isHQ = displayHQSwitch->getToggleState();
         settingsPtr->displayHQ = display->isHQ;
@@ -62,6 +67,10 @@ GnomeDistort2AudioProcessorEditor::GnomeDistort2AudioProcessorEditor(GnomeDistor
     };
     LinkDonateButton.onClick = []() {
         juce::URL("https://ko-fi.com/crowbait").launchInDefaultBrowser();
+    };
+    AboutButton.setLookAndFeel(&invisButtonLnF);
+    AboutButton.onClick = [thisPtr]() {
+        GnomeDistort2Windows::showAboutWindow(thisPtr);
     };
 
     setSize(960, 720);
@@ -82,7 +91,9 @@ GnomeDistort2AudioProcessorEditor::GnomeDistort2AudioProcessorEditor(GnomeDistor
     }
 }
 
-GnomeDistort2AudioProcessorEditor::~GnomeDistort2AudioProcessorEditor() {}
+GnomeDistort2AudioProcessorEditor::~GnomeDistort2AudioProcessorEditor() {
+    AboutButton.setLookAndFeel(nullptr);
+}
 
 //==============================================================================
 
@@ -132,12 +143,16 @@ void GnomeDistort2AudioProcessorEditor::resized() {
     PostGainSlider.setBounds(postArea.removeFromBottom(PreBandControl.getBounds().getHeight()));
     MixSlider.setBounds(postArea.removeFromTop(DisplayArea.getBounds().getHeight()));
 
+    AboutButton.setBounds(juce::Rectangle<int>(getWidth() - 80, getHeight() - 100, 80, 100));
+
     paintBackground();
 }
 
 void GnomeDistort2AudioProcessorEditor::setThemeFromSettings(bool callRedraw) {
+    DBG("Setting theme " << settings.theme);
     switch (settings.theme) {
-        case GnomeDistort2Theme::GnomeDefault: theme = GnomeDistort2Theme::getTheme_GnomeDefault();
+        case GnomeDistort2Theme::GnomeDefault: theme = GnomeDistort2Theme::getTheme_GnomeDefault(); break;
+        case GnomeDistort2Theme::GnomeOscilloscope: theme = GnomeDistort2Theme::getTheme_GnomeOscilloscope(); break;
     }
     PreBandControl.applyTheme(&theme);
     BandControlsLo.applyTheme(&theme, callRedraw);

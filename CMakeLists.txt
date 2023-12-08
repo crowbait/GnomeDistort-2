@@ -57,6 +57,7 @@ target_sources(GnomeDistort2
     Source/UI/Controls/DisplayComponent.resized.cpp
     Source/UI/Controls/DisplayGraph.h
     Source/UI/Controls/DisplayGraph.cpp
+    Source/UI/Controls/InvisibleButtonLnF.h
     Source/UI/Controls/SliderLabeledValue.h
     Source/UI/Controls/SliderLabeledValue.cpp
     Source/UI/Controls/TextButton.h
@@ -64,7 +65,9 @@ target_sources(GnomeDistort2
     Source/UI/Controls/ToggleButtonLnF.h
     Source/UI/Theme/Theme.h
     Source/UI/Theme/Theme-GnomeDefault.h
+    Source/UI/Theme/Theme-GnomeOscilloscope.h
     Source/UI/Theme/UIConsts.h
+    Source/UI/Windows/AboutWindow.h
 )
 
 target_compile_definitions(GnomeDistort2

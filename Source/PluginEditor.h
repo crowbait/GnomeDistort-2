@@ -8,6 +8,7 @@
 #include "UI/PreBandControls.h"
 #include "UI/BandControls.h"
 #include "UI/PostBandControls.h"
+#include "UI/Controls/InvisibleButtonLnF.h"
 #include "UI/Controls/SliderLabeledValue.h"
 #include "UI/Controls/TextButton.h"
 #include "UI/Controls/TextSwitch.h"
@@ -22,6 +23,7 @@ public:
 
     void paint(juce::Graphics&) override;
     void resized() override;
+    void setThemeFromSettings(bool callRedraw);
 
     GnomeDistort2Theme::Theme theme;
 
@@ -34,9 +36,10 @@ private:
     juce::AudioProcessorValueTreeState::SliderAttachment AttachPostGainSlider, AttachMixSlider;
     GnomeDistort2Controls::TextSwitch SwitchDisplayOnButton, SwitchDisplayHQButton;
     GnomeDistort2Controls::TextButton LinkDonateButton, LinkGithubButton;
+    juce::DrawableButton AboutButton;
+    GnomeDistort2Controls::LnFInvisibleButton invisButtonLnF;
 
     void paintBackground();
-    void setThemeFromSettings(bool callRedraw);
 
     std::vector<juce::Component*> getComponents() {
         return {
@@ -51,7 +54,8 @@ private:
             &BandControlsHi,
             &PostBandControl,
             &PostGainSlider,
-            &MixSlider
+            &MixSlider,
+            &AboutButton
         };
     }
 
