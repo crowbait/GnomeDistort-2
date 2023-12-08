@@ -4,10 +4,10 @@
 
 namespace GnomeDistort2Controls {
     struct LnFComboBox : public juce::LookAndFeel_V4 {
-        LnFComboBox(GnomeDistort2Theme::Theme* theme) {
+        LnFComboBox(const GnomeDistort2Theme::Theme* theme) {
             setColors(theme);
         }
-        void setColors(GnomeDistort2Theme::Theme* theme) {
+        void setColors(const GnomeDistort2Theme::Theme* theme) {
             setColour(juce::ComboBox::ColourIds::backgroundColourId, theme->COLOR_BG_DARK);
             setColour(juce::ComboBox::ColourIds::textColourId, theme->COLOR_TEXT);
             setColour(juce::ComboBox::ColourIds::outlineColourId, theme->COLOR_BG_VERYDARK);

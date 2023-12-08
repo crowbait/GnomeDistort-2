@@ -3,7 +3,7 @@
 GnomeDistort2Controls::DisplayGraph::DisplayGraph(juce::RangedAudioParameter* func, // can't get AudioParameterChoice directly; need to map range to function in parameterValueChanged
                                                   juce::RangedAudioParameter* amt,
                                                   const int funcIndex, const int amtIndex,
-                                                  GnomeDistort2Theme::Theme* theme) :
+                                                  const GnomeDistort2Theme::Theme* theme) :
     funcParamIndex(funcIndex), amtParamIndex(amtIndex),
     funcParam(func), amtParam(amt),
     theme(theme) {

@@ -9,7 +9,7 @@ struct Display : juce::Component {
             juce::AudioProcessorValueTreeState* apvts,
             const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>* paramMap,
             GnomeDistort2Helpers::Settings* settings,
-            GnomeDistort2Theme::Theme* theme) :
+            const GnomeDistort2Theme::Theme* theme) :
         displayComp(processor, apvts, paramMap, theme, settings->displayEnabled, settings->displayHQ),
         theme(theme) {
 
@@ -18,7 +18,7 @@ struct Display : juce::Component {
 
     GnomeDistort2Controls::DisplayComponent displayComp;
 
-    GnomeDistort2Theme::Theme* theme;
+    const GnomeDistort2Theme::Theme* theme;
 
     void paint(juce::Graphics& g) override {
         g.setColour(theme->COLOR_BG_VERYDARK);
@@ -26,5 +26,8 @@ struct Display : juce::Component {
     }
     void resized() override {
         displayComp.setBounds(getLocalBounds());
+    }
+    void applyTheme() {
+        displayComp.resized();
     }
 };

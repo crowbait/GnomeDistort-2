@@ -13,7 +13,7 @@ enum Band {
     Hi
 };
 struct BandControls : juce::Component {
-    BandControls(const Band, juce::AudioProcessorValueTreeState*, const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>*, GnomeDistort2Theme::Theme*);
+    BandControls(const Band, juce::AudioProcessorValueTreeState*, const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>*, const GnomeDistort2Theme::Theme*);
     ~BandControls() {
         WaveshapeFuncSelect.setLookAndFeel(nullptr);
         BtnMute.setLookAndFeel(nullptr);
@@ -29,9 +29,10 @@ struct BandControls : juce::Component {
 
     void paint(juce::Graphics& g) override {};
     void resized() override;
-    void regenerateLookAndFeel(GnomeDistort2Theme::Theme* theme) {
+    void applyTheme(const GnomeDistort2Theme::Theme* theme) {
         lnfCombo.setColors(theme);
         lnfTextToggle.setColors(theme);
+        Display.resized();
     };
 
 private:

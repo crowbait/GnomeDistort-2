@@ -3,7 +3,7 @@
 GnomeDistort2Controls::DisplayComponent::DisplayComponent(GnomeDistort2AudioProcessor* processorPointer,
                                                           juce::AudioProcessorValueTreeState* apvts,
                                                           const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>* paramMap,
-                                                          GnomeDistort2Theme::Theme* theme,
+                                                          const GnomeDistort2Theme::Theme* theme,
                                                           bool enabled, bool HQ) :
     processor(processorPointer), theme(theme) {
 

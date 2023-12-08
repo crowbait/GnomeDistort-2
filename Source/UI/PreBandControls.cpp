@@ -3,7 +3,7 @@
 
 PreBandControls::PreBandControls(juce::AudioProcessorValueTreeState* apvts,
                                  const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>* paramMap,
-                                 GnomeDistort2Theme::Theme* theme) :
+                                 const GnomeDistort2Theme::Theme* theme) :
     LoCutSlider("LOCUT", false, &theme->COLOR_PRIMARY, theme, GnomeDistort2Controls::SliderLabeledValue::VALUE_NO_DECIMALS),
     BandLoMidSlider("BAND", false, &theme->COLOR_PRIMARY, theme, GnomeDistort2Controls::SliderLabeledValue::VALUE_NO_DECIMALS),
     BandMidHiSlider("BAND", false, &theme->COLOR_PRIMARY, theme, GnomeDistort2Controls::SliderLabeledValue::VALUE_NO_DECIMALS),

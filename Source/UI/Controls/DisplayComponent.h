@@ -11,7 +11,7 @@ namespace GnomeDistort2Controls {
         DisplayComponent(GnomeDistort2AudioProcessor*,
                          juce::AudioProcessorValueTreeState*,
                          const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>*,
-                         GnomeDistort2Theme::Theme*,
+                         const GnomeDistort2Theme::Theme*,
                          bool enabled, bool HQ);
         ~DisplayComponent();
 
@@ -57,7 +57,7 @@ namespace GnomeDistort2Controls {
         std::vector<juce::RangedAudioParameter*> params;
         std::map<GnomeDistort2Parameters::TreeParameter, float> paramValues;
 
-        GnomeDistort2Theme::Theme* theme;
+        const GnomeDistort2Theme::Theme* theme;
 
         juce::Image background;
         juce::Path filterCurve;

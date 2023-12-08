@@ -4,7 +4,7 @@
 BandControls::BandControls(const Band b,
                            juce::AudioProcessorValueTreeState* apvts,
                            const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>* paramMap,
-                           GnomeDistort2Theme::Theme* theme) :
+                           const GnomeDistort2Theme::Theme* theme) :
     PeakFreqSlider("FREQ", true, &theme->COLOR_SECONDARY, theme),
     PeakGainSlider("GAIN", true, &theme->COLOR_SECONDARY, theme),
     PeakQSlider("Q", true, &theme->COLOR_SECONDARY, theme),

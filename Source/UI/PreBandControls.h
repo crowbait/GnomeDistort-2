@@ -6,7 +6,7 @@
 #include "Theme/Theme.h"
 
 struct PreBandControls : juce::Component {
-    PreBandControls(juce::AudioProcessorValueTreeState*, const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>*, GnomeDistort2Theme::Theme*);
+    PreBandControls(juce::AudioProcessorValueTreeState*, const std::map<GnomeDistort2Parameters::TreeParameter, juce::String>*, const GnomeDistort2Theme::Theme*);
     ~PreBandControls() {
         LoCutSlopeSelect.setLookAndFeel(nullptr);
         HiCutSlopeSelect.setLookAndFeel(nullptr);
@@ -18,7 +18,7 @@ struct PreBandControls : juce::Component {
 
     void paint(juce::Graphics& g) override {};
     void resized() override;
-    void regenerateLookAndFeel(GnomeDistort2Theme::Theme* theme) {
+    void applyTheme(const GnomeDistort2Theme::Theme* theme) {
         lnfCombo.setColors(theme);
     };
 

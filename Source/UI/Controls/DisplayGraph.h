@@ -5,7 +5,7 @@
 
 namespace GnomeDistort2Controls {
     struct DisplayGraph : juce::Component, juce::AudioProcessorParameter::Listener {
-        DisplayGraph(juce::RangedAudioParameter* func, juce::RangedAudioParameter* amt, const int funcIndex, const int amtIndex, GnomeDistort2Theme::Theme* theme);
+        DisplayGraph(juce::RangedAudioParameter* func, juce::RangedAudioParameter* amt, const int funcIndex, const int amtIndex, const GnomeDistort2Theme::Theme* theme);
         ~DisplayGraph();
 
         void paint(juce::Graphics& g) override;
@@ -22,7 +22,7 @@ namespace GnomeDistort2Controls {
         float amount = 0.f;
         std::function<float(float)> waveshaperFunction = GnomeDistort2Processing::GetWaveshaperFunction(func, amount);
 
-        GnomeDistort2Theme::Theme* theme;
+        const GnomeDistort2Theme::Theme* theme;
 
         juce::Rectangle<int> getRenderArea();
     };

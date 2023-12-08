@@ -137,9 +137,11 @@ void GnomeDistort2AudioProcessorEditor::resized() {
 
 void GnomeDistort2AudioProcessorEditor::setThemeFromSettings() {
     theme = GnomeDistort2Theme::getTheme_GnomeDefault();
-    PreBandControl.regenerateLookAndFeel(&theme);
-    BandControlsLo.regenerateLookAndFeel(&theme);
-    BandControlsMid.regenerateLookAndFeel(&theme);
-    BandControlsHi.regenerateLookAndFeel(&theme);
-    PostBandControl.regenerateLookAndFeel(&theme);
+    paintBackground();
+    DisplayArea.applyTheme();
+    PreBandControl.applyTheme(&theme);
+    BandControlsLo.applyTheme(&theme);
+    BandControlsMid.applyTheme(&theme);
+    BandControlsHi.applyTheme(&theme);
+    PostBandControl.applyTheme(&theme);
 }
