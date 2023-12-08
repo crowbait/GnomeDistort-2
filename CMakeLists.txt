@@ -65,7 +65,7 @@ target_sources(GnomeDistort2
     Source/UI/Controls/ToggleButtonLnF.h
     Source/UI/Theme/Theme.h
     Source/UI/Theme/Theme-GnomeDefault.h
-    Source/UI/Theme/Theme-GnomeOscilloscope.h
+    Source/UI/Theme/Theme-Oscilloscope.h
     Source/UI/Theme/UIConsts.h
     Source/UI/Windows/AboutWindow.h
 )

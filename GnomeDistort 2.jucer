@@ -46,8 +46,8 @@
         <GROUP id="{2302676A-5215-8182-1F2E-90293D6305C4}" name="Theme">
           <FILE id="XNJwo0" name="Theme-GnomeDefault.h" compile="0" resource="0"
                 file="Source/UI/Theme/Theme-GnomeDefault.h"/>
-          <FILE id="e2d9vN" name="Theme-GnomeOscilloscope.h" compile="0" resource="0"
-                file="Source/UI/Theme/Theme-GnomeOscilloscope.h"/>
+          <FILE id="e2d9vN" name="Theme-Oscilloscope.h" compile="0" resource="0"
+                file="Source/UI/Theme/Theme-Oscilloscope.h"/>
           <FILE id="saC4BE" name="Theme.h" compile="0" resource="0" file="Source/UI/Theme/Theme.h"/>
           <FILE id="IbmI2M" name="UIConsts.h" compile="0" resource="0" file="Source/UI/Theme/UIConsts.h"/>
         </GROUP>

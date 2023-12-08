@@ -2,29 +2,29 @@
 #include "Theme.h"
 
 namespace GnomeDistort2Theme {
-    static const Theme getTheme_GnomeDefault() {
+    static const Theme getTheme_Oscilloscope() {
         Theme r;
 
         r.shouldDrawOverlay = true;
         r.reduced3DBorders = true;
 
-        r.COLOR_BG = juce::Colour(50u, 50u, 50u);
-        r.COLOR_BG_AREAS = juce::Colour(25u, 25u, 25u);
-        r.COLOR_PRIMARY = juce::Colour(110u, 10u, 10u);
-        r.COLOR_SECONDARY = juce::Colour(110u, 110u, 110u);
+        r.COLOR_BG = juce::Colour(145u, 136u, 127u);
+        r.COLOR_BG_AREAS = juce::Colour(101u, 94u, 89u);
+        r.COLOR_PRIMARY = juce::Colour(53u, 52u, 50u);
+        r.COLOR_SECONDARY = juce::Colour(155u, 150u, 130u);
         r.COLOR_TEXT_PRIMARY = juce::Colour(255u, 255u, 255u);
         r.COLOR_TEXT_SECONDARY = juce::Colour(180u, 180u, 180u);
-        r.COLOR_KNOB_INDICATOR_IN = juce::Colour(215u, 215u, 215u);
-        r.COLOR_KNOB_INDICATOR_OUT = juce::Colour(25u, 25u, 25u);
-        r.COLOR_CIRCUIT_PRIMARY = juce::Colour(25u, 25u, 25u);
-        r.COLOR_GRAPH_BG = juce::Colour(18u, 18u, 18u);
-        r.COLOR_GRAPH_PRIMARY = juce::Colour(110u, 10u, 10u);
-        r.COLOR_GRAPH_SECONDARY = juce::Colour(70u, 70u, 70u);
-        r.COLOR_BAND_LEVEL_MAX = juce::Colour(110u, 10u, 10u);
-        r.COLOR_BAND_LEVEL_MIN = juce::Colour(70u, 70u, 70u);
-        r.COLOR_GRAPH_FOREGROUND = juce::Colour(255u, 255u, 255u);
-        r.COLOR_GRAPH_MARKINGS = juce::Colour(130u, 129u, 128u);
-        r.COLOR_GRAPH_MARKINGS_DIM = juce::Colour(40u, 40u, 40u);
+        r.COLOR_KNOB_INDICATOR_IN = juce::Colour(201u, 71u, 73u);
+        r.COLOR_KNOB_INDICATOR_OUT = juce::Colour(250u, 249u, 248u);
+        r.COLOR_CIRCUIT_PRIMARY = juce::Colour(39u, 33u, 27u);
+        r.COLOR_GRAPH_BG = juce::Colour(41u, 50u, 33u);
+        r.COLOR_GRAPH_PRIMARY = juce::Colour(72u, 185u, 107u);
+        r.COLOR_GRAPH_SECONDARY = juce::Colour(121u, 176u, 174u);
+        r.COLOR_BAND_LEVEL_MAX = juce::Colour(72u, 185u, 107u);
+        r.COLOR_BAND_LEVEL_MIN = juce::Colour(121u, 176u, 174u);
+        r.COLOR_GRAPH_FOREGROUND = juce::Colour(250u, 249u, 248u);
+        r.COLOR_GRAPH_MARKINGS = juce::Colour(165u, 84u, 84u);
+        r.COLOR_GRAPH_MARKINGS_DIM = juce::Colour(45u, 16u, 5u);
 
         r.KnobOverlay = juce::ImageCache::getFromMemory(BinaryData::knob_overlay_128_png, BinaryData::knob_overlay_128_pngSize);
 
