@@ -1,7 +1,7 @@
 # based on https://github.com/ffAudio/Frequalizer/blob/master/CMakeLists.txt
 
 cmake_minimum_required(VERSION 3.22)
-project(GnomeDistort2 VERSION 0.0.1)
+project(GnomeDistort2 VERSION 0.9.0)
 add_subdirectory(JUCE)
 
 if (APPLE)
