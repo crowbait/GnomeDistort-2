@@ -17,6 +17,10 @@
             file="Assets/grundge_overlay.png"/>
       <FILE id="Cap02M" name="knob_overlay_128.png" compile="0" resource="1"
             file="Assets/knob_overlay_128.png"/>
+      <FILE id="pJa7n2" name="knob_overlay_clean_128.png" compile="0" resource="1"
+            file="Assets/knob_overlay_clean_128.png"/>
+      <FILE id="SOtghy" name="knob_shadow_clean_128.png" compile="0" resource="1"
+            file="Assets/knob_shadow_clean_128.png"/>
       <FILE id="wdurkH" name="logo_small.png" compile="0" resource="1" file="Assets/logo_small.png"/>
     </GROUP>
     <GROUP id="{37019FB3-77C2-F5BE-8075-A39A7B85E738}" name="Source">
@@ -44,6 +48,8 @@
           <FILE id="qbeIm9" name="AboutWindow.h" compile="0" resource="0" file="Source/UI/Windows/AboutWindow.h"/>
         </GROUP>
         <GROUP id="{2302676A-5215-8182-1F2E-90293D6305C4}" name="Theme">
+          <FILE id="iaZ4Kf" name="Theme-CleanDarkRed.h" compile="0" resource="0"
+                file="Source/UI/Theme/Theme-CleanDarkRed.h"/>
           <FILE id="XNJwo0" name="Theme-GnomeDefault.h" compile="0" resource="0"
                 file="Source/UI/Theme/Theme-GnomeDefault.h"/>
           <FILE id="e2d9vN" name="Theme-Oscilloscope.h" compile="0" resource="0"

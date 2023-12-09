@@ -8,6 +8,8 @@ namespace GnomeDistort2Theme {
         r.shouldDrawOverlay = true;
         r.reduced3DBorders = true;
 
+        r.knobStyle = Theme::KnobLine;
+
         r.COLOR_BG = juce::Colour(145u, 136u, 127u);
         r.COLOR_BG_AREAS = juce::Colour(101u, 94u, 89u);
         r.COLOR_PRIMARY = juce::Colour(53u, 52u, 50u);
@@ -76,28 +78,28 @@ namespace GnomeDistort2Theme {
             g.setColour(COLOR_ACCENT_MIDDARK);
             g.fillPath(leftEdge);
         };
-        r.CornersKnob = [](juce::Graphics& g, juce::Rectangle<int> bounds, const int distance) {
+        r.CornersKnob = [](juce::Graphics& g, const juce::Rectangle<int> bounds, const int distance) {
             const juce::Colour COLOR_ACCENT_DARK_0 = juce::Colour((juce::uint8)25u, 25u, 25u, 0.f);
             const juce::Colour COLOR_ACCENT_DARK_1 = juce::Colour((juce::uint8)25u, 25u, 25u, 1.f);
             const juce::Colour COLOR_ACCENT_MID_0 = juce::Colour((juce::uint8)64u, 64u, 64u, 0.f);
             const juce::Colour COLOR_ACCENT_MID_1 = juce::Colour((juce::uint8)64u, 64u, 64u, 1.f);
 
-            bounds.expand(distance, distance);
+            const juce::Rectangle<int> borderBounds = bounds.expanded(distance, distance);
             juce::Path outer;
-            const float distRectangleCornerToCircle = (bounds.getWidth() / 2.f) * (sqrt(2) - 1);
-            outer.addEllipse(bounds.toFloat());
+            const float distRectangleCornerToCircle = (borderBounds.getWidth() / 2.f) * (sqrt(2) - 1);
+            outer.addEllipse(borderBounds.toFloat());
             juce::ColourGradient darken(
                 COLOR_ACCENT_DARK_1,
-                bounds.getX() + (bounds.getWidth() / 4), bounds.getY(),
+                borderBounds.getX() + (borderBounds.getWidth() / 4), borderBounds.getY(),
                 COLOR_ACCENT_DARK_0,
-                bounds.getRight() - (bounds.getWidth() / 4), bounds.getBottom(), true);
+                borderBounds.getRight() - (borderBounds.getWidth() / 4), borderBounds.getBottom(), true);
             g.setGradientFill(darken);
             g.fillPath(outer);
             juce::ColourGradient lighten(
                 COLOR_ACCENT_MID_1,
-                bounds.getRight() - (bounds.getWidth() / 4), bounds.getBottom(),
+                borderBounds.getRight() - (borderBounds.getWidth() / 4), borderBounds.getBottom(),
                 COLOR_ACCENT_MID_0,
-                bounds.getX() + (bounds.getWidth() / 4), bounds.getY(), true);
+                borderBounds.getX() + (borderBounds.getWidth() / 4), borderBounds.getY(), true);
             g.setGradientFill(lighten);
             g.fillPath(outer);
         };

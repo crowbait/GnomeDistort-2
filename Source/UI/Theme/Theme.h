@@ -4,16 +4,25 @@
 namespace GnomeDistort2Theme {
     enum Themes {
         GnomeDefault,
-        Oscilloscope
+        Oscilloscope,
+        CleanDarkRed
     };
     const juce::StringArray ThemeOptions = {
         "GNOME Industrial",
-        "Oscilloscope"
+        "Oscilloscope",
+        "Clean Dark Red"
     };
 
     struct Theme {
+        enum KnobStyle {
+            KnobLine,
+            KnobTick
+        };
+
         bool shouldDrawOverlay;                 // whether to draw grundge overlay
         bool reduced3DBorders;                  // whether to exclude some controls from getting effects
+
+        KnobStyle knobStyle;
 
         juce::Colour COLOR_BG;                  // main background of the interface
         juce::Colour COLOR_BG_AREAS;            // background of areas, such as "SMEAR" as well as borders
@@ -38,6 +47,6 @@ namespace GnomeDistort2Theme {
         // effect for rectangular components
         std::function<void(juce::Graphics& g, const juce::Rectangle<int> bounds, const int edgeLengthX, int edgeLengthY)> CornersRect;
         // effect for circular components
-        std::function<void(juce::Graphics& g, juce::Rectangle<int> bounds, const int distance)> CornersKnob;
+        std::function<void(juce::Graphics& g, const juce::Rectangle<int> bounds, const int distance)> CornersKnob;
     };
 }

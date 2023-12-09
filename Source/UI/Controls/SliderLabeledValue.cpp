@@ -51,20 +51,40 @@ void GnomeDistort2Controls::LnFSliderLabeledValue::drawRotarySlider(juce::Graphi
         }
 
         // indicator
-        Rectangle<float> indicatorRect;
-        Path indicatorPath;
-        indicatorRect.setLeft(center.getX() - 2);
-        indicatorRect.setRight(center.getX() + 2);
-        indicatorRect.setTop(bounds.getY());
-        indicatorRect.setBottom(center.getY());
-        indicatorPath.addRectangle(indicatorRect);
-        jassert(rotaryStartAngle < rotaryEndAngle);
-        float sliderAngRad = jmap(sliderPosProportional, 0.f, 1.f, rotaryStartAngle, rotaryEndAngle);
-        indicatorPath.applyTransform(AffineTransform().rotated(sliderAngRad, center.getX(), center.getY()));
-        g.setColour(sldr->theme->COLOR_KNOB_INDICATOR_IN);
-        g.fillPath(indicatorPath);
-        g.setColour(sldr->theme->COLOR_KNOB_INDICATOR_OUT);
-        g.strokePath(indicatorPath, PathStrokeType(1));
+        switch (sldr->theme->knobStyle) {
+            case GnomeDistort2Theme::Theme::KnobLine: {
+                Rectangle<float> indicatorRect;
+                Path indicatorPath;
+                indicatorRect.setLeft(center.getX() - 2);
+                indicatorRect.setRight(center.getX() + 2);
+                indicatorRect.setTop(bounds.getY());
+                indicatorRect.setBottom(center.getY());
+                indicatorPath.addRectangle(indicatorRect);
+                jassert(rotaryStartAngle < rotaryEndAngle);
+                float sliderAngRad = jmap(sliderPosProportional, 0.f, 1.f, rotaryStartAngle, rotaryEndAngle);
+                indicatorPath.applyTransform(AffineTransform().rotated(sliderAngRad, center.getX(), center.getY()));
+                g.setColour(sldr->theme->COLOR_KNOB_INDICATOR_IN);
+                g.fillPath(indicatorPath);
+                g.setColour(sldr->theme->COLOR_KNOB_INDICATOR_OUT);
+                g.strokePath(indicatorPath, PathStrokeType(1));
+            } break;
+            case GnomeDistort2Theme::Theme::KnobTick: {
+                Rectangle<float> indicatorRect;
+                Path indicatorPath;
+                indicatorRect.setLeft(center.getX() - 2);
+                indicatorRect.setRight(center.getX() + 2);
+                indicatorRect.setTop(bounds.getY());
+                indicatorRect.setBottom(bounds.getY() + ((center.getY() - bounds.getY()) / 4));
+                indicatorPath.addRectangle(indicatorRect);
+                jassert(rotaryStartAngle < rotaryEndAngle);
+                float sliderAngRad = jmap(sliderPosProportional, 0.f, 1.f, rotaryStartAngle, rotaryEndAngle);
+                indicatorPath.applyTransform(AffineTransform().rotated(sliderAngRad, center.getX(), center.getY()));
+                g.setColour(sldr->theme->COLOR_KNOB_INDICATOR_IN);
+                g.fillPath(indicatorPath);
+                g.setColour(sldr->theme->COLOR_KNOB_INDICATOR_OUT);
+                g.strokePath(indicatorPath, PathStrokeType(1));
+            } break;
+        }
     } else jassertfalse;    // catch calls to this function which are not from a matching slider
 }
 
