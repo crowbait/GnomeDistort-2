@@ -88,11 +88,11 @@ juce_add_binary_data(GnomeDistort2_binary SOURCES
   Assets/gnome_dark.png
   Assets/gnome_dark_blue.png
   Assets/gnome_dark_green.png
-  Assets/grundge_overlay.png
   Assets/knob_overlay_128.png
   Assets/knob_overlay_clean_128.png
   Assets/knob_shadow_clean_128.png
   Assets/logo_small.png
+  Assets/overlay_grundge.png
 )
 target_compile_options(GnomeDistort2_binary PRIVATE -fPIC)
 

@@ -54,6 +54,7 @@ namespace GnomeDistort2Theme {
 
         juce::Image KnobOverlay;
         juce::Image Gnome;
+        juce::Image overlay;
 
         // effect for rectangular components
         std::function<void(juce::Graphics& g, const juce::Rectangle<int> bounds, const int edgeLengthX, int edgeLengthY)> CornersRect;

@@ -30,6 +30,7 @@ namespace GnomeDistort2Theme {
 
         r.KnobOverlay = juce::ImageCache::getFromMemory(BinaryData::knob_overlay_128_png, BinaryData::knob_overlay_128_pngSize);
         r.Gnome = juce::ImageCache::getFromMemory(BinaryData::gnome_dark_png, BinaryData::gnome_dark_pngSize);
+        r.overlay = juce::ImageCache::getFromMemory(BinaryData::overlay_grundge_png, BinaryData::overlay_grundge_pngSize);
 
         r.CornersRect = [](juce::Graphics& g, const juce::Rectangle<int> bounds, const int edgeLengthX, int edgeLengthY) {
             const int left = bounds.getX();

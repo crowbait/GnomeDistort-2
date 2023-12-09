@@ -17,8 +17,6 @@
             file="Assets/gnome_dark_blue.png"/>
       <FILE id="NNyRIa" name="gnome_dark_green.png" compile="0" resource="1"
             file="Assets/gnome_dark_green.png"/>
-      <FILE id="uF8aCf" name="grundge_overlay.png" compile="0" resource="1"
-            file="Assets/grundge_overlay.png"/>
       <FILE id="Cap02M" name="knob_overlay_128.png" compile="0" resource="1"
             file="Assets/knob_overlay_128.png"/>
       <FILE id="pJa7n2" name="knob_overlay_clean_128.png" compile="0" resource="1"
@@ -26,6 +24,8 @@
       <FILE id="SOtghy" name="knob_shadow_clean_128.png" compile="0" resource="1"
             file="Assets/knob_shadow_clean_128.png"/>
       <FILE id="wdurkH" name="logo_small.png" compile="0" resource="1" file="Assets/logo_small.png"/>
+      <FILE id="NTtWZ9" name="overlay_grundge.png" compile="0" resource="1"
+            file="Assets/overlay_grundge.png"/>
     </GROUP>
     <GROUP id="{37019FB3-77C2-F5BE-8075-A39A7B85E738}" name="Source">
       <FILE id="spFpXU" name="PluginEditor.paintBackground.cpp" compile="1"
