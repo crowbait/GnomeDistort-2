@@ -5,7 +5,7 @@ project(GnomeDistort2 VERSION 0.9.0)
 add_subdirectory(JUCE)
 
 if (APPLE)
-    set(FORMATS "VST3 AU")
+    set(FORMATS "VST3" "AU")
     set(COPY_FOLDER ${CMAKE_SOURCE_DIR}/Builds/CMake/MacOS)
 elseif(WIN32)
     set(FORMATS "VST3")
