@@ -53,6 +53,7 @@ namespace GnomeDistort2Theme {
         juce::Colour COLOR_GRAPH_FOREGROUND;    // color for most important graphs: band borders, filter curve
         juce::Colour COLOR_GRAPH_MARKINGS;      // color of display markings, eg. labels
         juce::Colour COLOR_GRAPH_MARKINGS_DIM;  // color of less important display markings, eg. grid
+        juce::Colour COLOR_CMBBX_ARROW;
 
         juce::Image KnobOverlay;
         juce::Image Gnome;

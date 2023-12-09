@@ -27,6 +27,7 @@ namespace GnomeDistort2Theme {
         r.COLOR_GRAPH_FOREGROUND = juce::Colour(250u, 249u, 248u);
         r.COLOR_GRAPH_MARKINGS = juce::Colour(165u, 84u, 84u);
         r.COLOR_GRAPH_MARKINGS_DIM = juce::Colour(45u, 16u, 5u);
+        r.COLOR_CMBBX_ARROW = juce::Colour(72u, 185u, 107u);
 
         r.KnobOverlay = juce::ImageCache::getFromMemory(BinaryData::knob_overlay_128_png, BinaryData::knob_overlay_128_pngSize);
         r.Gnome = juce::ImageCache::getFromMemory(BinaryData::gnome_dark_png, BinaryData::gnome_dark_pngSize);
