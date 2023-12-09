@@ -1,0 +1,89 @@
+name: Create Release and Build
+
+on:
+  push:
+    tags:
+      - '*'
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Create changelog text
+        id: changelog
+        uses: loopwerk/tag-changelog@v1.0.4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          exclude_types: other,docs,ci,refactor,style,test,chore
+      - name: Create release
+        uses: actions/create-release@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: ${{ steps.changelog.outputs.changes }}
+          draft: true
+
+  build:
+    needs: create-release
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+    - name: Create Build Environment
+      run: cmake -E make_directory ${{runner.workspace}}/Builds/CMake
+    - name: Configure CMake
+      shell: bash
+      working-directory: ${{ runner.workspace }}/Builds/CMake
+      run: cmake $GITHUB_WORKSPACE
+    - name: Build
+      shell: bash
+      working-directory: ${{ runner.workspace }}/Builds/CMake
+      run: cmake --build ./ --config Release
+    - name: Install Zip Action
+      uses: montudor/action-zip@v1
+
+    - name: Upload (Windows)
+      if: runner.os == 'Windows'
+      working-directory: ${{ runner.workspace }}/Builds/CMake/Win32
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        mv "GnomeDistort 2.vst3" "GnomeDistort 2_win-x64.vst3"
+        gh release upload ${{ github.ref }} "GnomeDistort 2_win-x64.vst3"
+
+    - name: Zip and Upload (Linux)
+      if: runner.os == 'Linux'
+      working-directory: ${{ runner.workspace }}/Builds/CMake/GnomeDistort2_artefacts/Release/VST3
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        zip -qq -r "GnomeDistort 2_VST3_linux-x64.zip" "GnomeDistort 2.vst3"
+        gh release upload ${{ github.ref }} "GnomeDistort 2_VST3_linux-x64.zip"
+
+    - name: Zip and Upload VST3 (MacOS)
+      if: runner.os == 'MacOS'
+      working-directory: ${{ runner.workspace }}/Builds/CMake/GnomeDistort2_artefacts/Release/VST3
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        zip -qq -r "GnomeDistort 2_VST3_MacOS-x64.zip" "GnomeDistort 2.vst3"
+        gh release upload ${{ github.ref }} "GnomeDistort 2_VST3_MacOS-x64.vst3"
+    - name: Zip and Upload AU (MacOS)
+      if: runner.os == 'MacOS'
+      working-directory: ${{ runner.workspace }}/Builds/CMake/GnomeDistort2_artefacts/Release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        zip -qq -r "GnomeDistort 2_AU_MacOS-x64.zip" "AU"
+        gh release upload ${{ github.ref }} "GnomeDistort 2_AU_MacOS-x64.zip"

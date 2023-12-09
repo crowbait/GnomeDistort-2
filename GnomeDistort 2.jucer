@@ -8,6 +8,7 @@
               pluginVST3Category="Distortion,Fx" pluginChannelConfigs="{2, 2}">
   <MAINGROUP id="jjautv" name="GnomeDistort 2">
     <GROUP id="{CFF4FA15-841E-EE08-6BC4-EE2CC5E6D627}" name="Peripherals">
+      <FILE id="vFBsUk" name="build.yml" compile="0" resource="1" file=".github/workflows/build.yml"/>
       <FILE id="qzB2yW" name="CMakeLists.txt" compile="0" resource="1" file="CMakeLists.txt"/>
       <FILE id="wwVIoz" name="README.md" compile="0" resource="1" file="README.md"/>
     </GROUP>
