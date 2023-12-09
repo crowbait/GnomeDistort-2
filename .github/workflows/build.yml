@@ -40,20 +40,42 @@ jobs:
     - uses: actions/checkout@v3
       with:
         submodules: recursive
+    - name: Install Zip Action
+      uses: montudor/action-zip@v1
+
     - name: Create Build Environment
       run: cmake -E make_directory ${{runner.workspace}}/Builds/CMake
+
+      # run configuration on windows
     - name: Configure CMake
+      if: runner.os == 'Windows'
       shell: bash
       working-directory: ${{ runner.workspace }}/Builds/CMake
       run: cmake $GITHUB_WORKSPACE
+
+      # install deps on linux
+    - name: Install Dependencies
+      if: runner.os == 'Linux'
+      shell: bash
+      run: |
+        sudo apt update
+        sudo apt install -y cmake build-essential pkg-config libasound2-dev libjack-jackd2-dev ladspa-sdk libcurl4-openssl-dev libfreetype6-dev libx11-dev libxcomposite-dev libxcursor-dev libxcursor-dev libxext-dev libxinerama-dev libxrandr-dev libxrender-dev libwebkit2gtk-4.0-dev libglu1-mesa-dev mesa-common-dev
+
+      # configure on MacOS and Linux
+    - name: Configure CMake
+      if: runner.os == 'Linux' || runner.os == 'MacOS'
+      shell: bash
+      working-directory: ${{ runner.workspace }}/Builds/CMake
+      run: cmake -DCMAKE_BUILD_TYPE=Release $GITHUB_WORKSPACE
+
+      # build on all
     - name: Build
       shell: bash
       working-directory: ${{ runner.workspace }}/Builds/CMake
       run: cmake --build ./ --config Release
-    - name: Install Zip Action
-      uses: montudor/action-zip@v1
 
-    - name: Upload (Windows)
+
+    - name: Upload
       if: runner.os == 'Windows'
       working-directory: ${{ runner.workspace }}/Builds/CMake/Win32
       env:
@@ -62,7 +84,7 @@ jobs:
         mv "GnomeDistort 2.vst3" "GnomeDistort 2_win-x64.vst3"
         gh release upload ${{ github.ref }} "GnomeDistort 2_win-x64.vst3"
 
-    - name: Zip and Upload (Linux)
+    - name: Zip and Upload
       if: runner.os == 'Linux'
       working-directory: ${{ runner.workspace }}/Builds/CMake/GnomeDistort2_artefacts/Release/VST3
       env:
@@ -71,7 +93,7 @@ jobs:
         zip -qq -r "GnomeDistort 2_VST3_linux-x64.zip" "GnomeDistort 2.vst3"
         gh release upload ${{ github.ref }} "GnomeDistort 2_VST3_linux-x64.zip"
 
-    - name: Zip and Upload VST3 (MacOS)
+    - name: Zip and Upload VST3
       if: runner.os == 'MacOS'
       working-directory: ${{ runner.workspace }}/Builds/CMake/GnomeDistort2_artefacts/Release/VST3
       env:
@@ -79,7 +101,7 @@ jobs:
       run: |
         zip -qq -r "GnomeDistort 2_VST3_MacOS-x64.zip" "GnomeDistort 2.vst3"
         gh release upload ${{ github.ref }} "GnomeDistort 2_VST3_MacOS-x64.vst3"
-    - name: Zip and Upload AU (MacOS)
+    - name: Zip and Upload AU
       if: runner.os == 'MacOS'
       working-directory: ${{ runner.workspace }}/Builds/CMake/GnomeDistort2_artefacts/Release
       env:
