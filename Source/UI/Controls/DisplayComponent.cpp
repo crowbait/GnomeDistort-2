@@ -66,8 +66,8 @@ void GnomeDistort2Controls::DisplayComponent::parameterValueChanged(int paramete
 
     // update local filters (getting them from DSP is a race condition)
     const double sampleRate = processor->getSampleRate();
-    Options::FilterSlope LoSlope = static_cast<Options::FilterSlope>(juce::jmap(paramValues[LoCutSlope], (float)Options::Slope12, (float)Options::Slope48));
-    Options::FilterSlope HiSlope = static_cast<Options::FilterSlope>(juce::jmap(paramValues[HiCutSlope], (float)Options::Slope12, (float)Options::Slope48));
+    Options::FilterSlope LoSlope = static_cast<Options::FilterSlope>(paramValues[LoCutSlope]);
+    Options::FilterSlope HiSlope = static_cast<Options::FilterSlope>(paramValues[HiCutSlope]);
     auto preBandsLoCut = Processing::generateLoCutFilter(paramValues[LoCutFreq], LoSlope, sampleRate);
     auto preBandsHiCut = Processing::generateHiCutFilter(paramValues[HiCutFreq], HiSlope, sampleRate);
     Processing::updateCutFilter<Processing::CutFilter, juce::ReferenceCountedArray<juce::dsp::IIR::Coefficients<float>>>(LoCut, preBandsLoCut, LoSlope);
