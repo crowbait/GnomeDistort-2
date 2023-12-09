@@ -9,6 +9,7 @@
 #include "UI/Theme/Theme-CleanLightRed.h"
 #include "UI/Theme/Theme-CleanLightGreen.h"
 #include "UI/Theme/Theme-CleanLightBlue.h"
+#include "UI/Theme/Theme-Basalt.h"
 #include "UI/Windows/AboutWindow.h"
 
 //==============================================================================
@@ -164,6 +165,7 @@ void GnomeDistort2AudioProcessorEditor::setThemeFromSettings(bool callRedraw) {
         case GnomeDistort2Theme::CleanLightRed: theme = GnomeDistort2Theme::getTheme_CleanLightRed(); break;
         case GnomeDistort2Theme::CleanLightGreen: theme = GnomeDistort2Theme::getTheme_CleanLightGreen(); break;
         case GnomeDistort2Theme::CleanLightBlue: theme = GnomeDistort2Theme::getTheme_CleanLightBlue(); break;
+        case GnomeDistort2Theme::Basalt: theme = GnomeDistort2Theme::getTheme_Basalt(); break;
     }
     PreBandControl.applyTheme(&theme, callRedraw);
     BandControlsLo.applyTheme(&theme, callRedraw);

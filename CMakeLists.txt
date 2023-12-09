@@ -64,6 +64,7 @@ target_sources(GnomeDistort2
     Source/UI/Controls/TextSwitch.h
     Source/UI/Controls/ToggleButtonLnF.h
     Source/UI/Theme/Theme.h
+    Source/UI/Theme/Theme-Basalt.h
     Source/UI/Theme/Theme-CleanDarkBlue.h
     Source/UI/Theme/Theme-CleanDarkGreen.h
     Source/UI/Theme/Theme-CleanDarkRed.h
@@ -92,6 +93,7 @@ juce_add_binary_data(GnomeDistort2_binary SOURCES
   Assets/knob_overlay_clean_128.png
   Assets/knob_shadow_clean_128.png
   Assets/logo_small.png
+  Assets/overlay_cracks.png
   Assets/overlay_grundge.png
 )
 target_compile_options(GnomeDistort2_binary PRIVATE -fPIC)

@@ -24,6 +24,8 @@
       <FILE id="SOtghy" name="knob_shadow_clean_128.png" compile="0" resource="1"
             file="Assets/knob_shadow_clean_128.png"/>
       <FILE id="wdurkH" name="logo_small.png" compile="0" resource="1" file="Assets/logo_small.png"/>
+      <FILE id="GQMxCW" name="overlay_cracks.png" compile="0" resource="1"
+            file="Assets/overlay_cracks.png"/>
       <FILE id="NTtWZ9" name="overlay_grundge.png" compile="0" resource="1"
             file="Assets/overlay_grundge.png"/>
     </GROUP>
@@ -52,6 +54,7 @@
           <FILE id="qbeIm9" name="AboutWindow.h" compile="0" resource="0" file="Source/UI/Windows/AboutWindow.h"/>
         </GROUP>
         <GROUP id="{2302676A-5215-8182-1F2E-90293D6305C4}" name="Theme">
+          <FILE id="NMMVr9" name="Theme-Basalt.h" compile="0" resource="0" file="Source/UI/Theme/Theme-Basalt.h"/>
           <FILE id="uqGwx1" name="Theme-CleanDarkBlue.h" compile="0" resource="0"
                 file="Source/UI/Theme/Theme-CleanDarkBlue.h"/>
           <FILE id="lC9pej" name="Theme-CleanDarkGreen.h" compile="0" resource="0"

@@ -11,6 +11,7 @@ namespace GnomeDistort2Theme {
         CleanLightRed,
         CleanLightGreen,
         CleanLightBlue,
+        Basalt,
     };
     const juce::StringArray ThemeOptions = {
         "GNOME Industrial",
@@ -21,6 +22,7 @@ namespace GnomeDistort2Theme {
         "Clean Light Red",
         "Clean Light Green",
         "Clean Light Blue",
+        "Basalt",
     };
 
     struct Theme {
@@ -32,7 +34,7 @@ namespace GnomeDistort2Theme {
         bool shouldDrawOverlay;                 // whether to draw grundge overlay
         bool reduced3DBorders;                  // whether to exclude some controls from getting effects
 
-        KnobStyle knobStyle;
+        KnobStyle knobStyle = KnobLine;
 
         juce::Colour COLOR_BG;                  // main background of the interface
         juce::Colour COLOR_BG_AREAS;            // background of areas, such as "SMEAR" as well as borders
@@ -57,8 +59,10 @@ namespace GnomeDistort2Theme {
         juce::Image overlay;
 
         // effect for rectangular components
-        std::function<void(juce::Graphics& g, const juce::Rectangle<int> bounds, const int edgeLengthX, int edgeLengthY)> CornersRect;
+        std::function<void(juce::Graphics& g, const juce::Rectangle<int> bounds, const int edgeLengthX, int edgeLengthY)> CornersRect = [](juce::Graphics& g, const juce::Rectangle<int> bounds, const int edgeLengthX, int edgeLengthY) {};
         // effect for circular components
-        std::function<void(juce::Graphics& g, const juce::Rectangle<int> bounds, const int distance)> CornersKnob;
+        std::function<void(juce::Graphics& g, const juce::Rectangle<int> bounds, const int distance)> CornersKnob = [](juce::Graphics& g, const juce::Rectangle<int> bounds, const int distance) {};
+
+        std::vector<juce::Image> internalImages;
     };
 }
