@@ -4,7 +4,7 @@
 
 namespace GnomeDistort2Controls {
     /* takes some bounds (specifically localBounds of component), get a square region of it (so the knob is circular) and applies padding */
-    inline static const juce::Rectangle<int> getSliderBounds(juce::Rectangle<int>& bounds) {
+    inline static const juce::Rectangle<int> getSliderBounds(juce::Rectangle<int> bounds) {
         auto size = juce::jmin(bounds.getWidth() - 12, bounds.getHeight() - 12);
         juce::Rectangle<int> r;
         r.setSize(size, size);
