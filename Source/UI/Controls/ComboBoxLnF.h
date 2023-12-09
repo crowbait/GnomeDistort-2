@@ -11,7 +11,7 @@ namespace GnomeDistort2Controls {
             setColour(juce::ComboBox::ColourIds::backgroundColourId, theme->COLOR_GRAPH_BG);
             setColour(juce::ComboBox::ColourIds::textColourId, theme->COLOR_TEXT_PRIMARY);
             setColour(juce::ComboBox::ColourIds::outlineColourId, theme->COLOR_GRAPH_SECONDARY);
-            setColour(juce::ComboBox::ColourIds::arrowColourId, theme->COLOR_PRIMARY);
+            setColour(juce::ComboBox::ColourIds::arrowColourId, theme->COLOR_CIRCUIT_PRIMARY);
             setColour(juce::PopupMenu::ColourIds::backgroundColourId, theme->COLOR_BG_AREAS);
             setColour(juce::PopupMenu::ColourIds::textColourId, theme->COLOR_TEXT_PRIMARY);
             setColour(juce::PopupMenu::ColourIds::highlightedBackgroundColourId, theme->COLOR_GRAPH_BG);

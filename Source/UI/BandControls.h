@@ -35,6 +35,7 @@ struct BandControls : juce::Component {
         if (redraw) {
             Display.resized();
             Display.repaint();
+            WaveshapeFuncSelect.lookAndFeelChanged();
         }
     };
 

@@ -58,6 +58,12 @@
                 file="Source/UI/Theme/Theme-CleanDarkGreen.h"/>
           <FILE id="iaZ4Kf" name="Theme-CleanDarkRed.h" compile="0" resource="0"
                 file="Source/UI/Theme/Theme-CleanDarkRed.h"/>
+          <FILE id="Kic74i" name="Theme-CleanLightBlue.h" compile="0" resource="0"
+                file="Source/UI/Theme/Theme-CleanLightBlue.h"/>
+          <FILE id="jo6i1a" name="Theme-CleanLightGreen.h" compile="0" resource="0"
+                file="Source/UI/Theme/Theme-CleanLightGreen.h"/>
+          <FILE id="uLHQeE" name="Theme-CleanLightRed.h" compile="0" resource="0"
+                file="Source/UI/Theme/Theme-CleanLightRed.h"/>
           <FILE id="XNJwo0" name="Theme-GnomeDefault.h" compile="0" resource="0"
                 file="Source/UI/Theme/Theme-GnomeDefault.h"/>
           <FILE id="e2d9vN" name="Theme-Oscilloscope.h" compile="0" resource="0"

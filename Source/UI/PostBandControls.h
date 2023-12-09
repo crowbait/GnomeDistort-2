@@ -47,8 +47,11 @@ struct PostBandControls : juce::Component {
         funcSelect.removeFromBottom(padding / 2);
         WaveshapeFuncSelect.setBounds(funcSelect);
     }
-    void applyTheme(const GnomeDistort2Theme::Theme* theme) {
+    void applyTheme(const GnomeDistort2Theme::Theme* theme, bool redraw) {
         lnfCombo.setColors(theme);
+        if (redraw) {
+            WaveshapeFuncSelect.lookAndFeelChanged();
+        }
     };
 
 private:

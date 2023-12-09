@@ -7,14 +7,20 @@ namespace GnomeDistort2Theme {
         Oscilloscope,
         CleanDarkRed,
         CleanDarkGreen,
-        CleanDarkBlue
+        CleanDarkBlue,
+        CleanLightRed,
+        CleanLightGreen,
+        CleanLightBlue,
     };
     const juce::StringArray ThemeOptions = {
         "GNOME Industrial",
         "Oscilloscope",
         "Clean Dark Red",
         "Clean Dark Green",
-        "Clean Dark Blue"
+        "Clean Dark Blue",
+        "Clean Light Red",
+        "Clean Light Green",
+        "Clean Light Blue",
     };
 
     struct Theme {

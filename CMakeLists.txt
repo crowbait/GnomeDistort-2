@@ -67,6 +67,9 @@ target_sources(GnomeDistort2
     Source/UI/Theme/Theme-CleanDarkBlue.h
     Source/UI/Theme/Theme-CleanDarkGreen.h
     Source/UI/Theme/Theme-CleanDarkRed.h
+    Source/UI/Theme/Theme-CleanLightBlue.h
+    Source/UI/Theme/Theme-CleanLightGreen.h
+    Source/UI/Theme/Theme-CleanLightRed.h
     Source/UI/Theme/Theme-GnomeDefault.h
     Source/UI/Theme/Theme-Oscilloscope.h
     Source/UI/Theme/UIConsts.h

@@ -18,8 +18,12 @@ struct PreBandControls : juce::Component {
 
     void paint(juce::Graphics& g) override {};
     void resized() override;
-    void applyTheme(const GnomeDistort2Theme::Theme* theme) {
+    void applyTheme(const GnomeDistort2Theme::Theme* theme, bool redraw) {
         lnfCombo.setColors(theme);
+        if (redraw) {
+            LoCutSlopeSelect.lookAndFeelChanged();
+            HiCutSlopeSelect.lookAndFeelChanged();
+        }
     };
 
 private:
