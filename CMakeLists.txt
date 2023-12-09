@@ -1,13 +1,25 @@
 # based on https://github.com/ffAudio/Frequalizer/blob/master/CMakeLists.txt
 
 cmake_minimum_required(VERSION 3.22)
-project(GNOME_DISTORT_2 VERSION 0.0.1)
+project(GnomeDistort2 VERSION 0.0.1)
 add_subdirectory(JUCE)
 
+if (APPLE)
+    set(FORMATS "VST3 AU")
+    set(COPY_FOLDER ${CMAKE_SOURCE_DIR}/Builds/CMake/MacOS)
+elseif(WIN32)
+    set(FORMATS "VST3")
+    set(COPY_FOLDER ${CMAKE_SOURCE_DIR}/Builds/CMake/Win32)
+elseif(UNIX)
+    set(FORMATS "VST3")
+    set(COPY_FOLDER ${CMAKE_SOURCE_DIR}/Builds/CMake/Linux)
+endif()
+
 juce_add_plugin(GnomeDistort2
-                VERSION "0.0.1"
+                VERSION "0.9.0"
                 FORMATS AU VST3
                 COMPANY_NAME "Crowbait"
+                COMPANY_COPYRIGHT "© 2023 Crowbait"
                 PLUGIN_MANUFACTURER_CODE "CrBt"
                 PLUGIN_CODE "GDs2"
                 IS_SYNTH FALSE
@@ -83,7 +95,8 @@ target_compile_definitions(GnomeDistort2
     JUCE_WEB_BROWSER=0  # If you remove this, add `NEEDS_WEB_BROWSER TRUE` to the `juce_add_plugin` call
     JUCE_USE_CURL=0     # If you remove this, add `NEEDS_CURL TRUE` to the `juce_add_plugin` call
     JUCE_VST3_CAN_REPLACE_VST2=0
-    )
+    JUCE_DISPLAY_SPLASH_SCREEN=0
+)
 
 juce_add_binary_data(GnomeDistort2_binary SOURCES 
   Assets/gnome_dark.png
@@ -108,13 +121,7 @@ target_link_libraries(GnomeDistort2
     GnomeDistort2_binary
 )
 
-# if (APPLE)
-#     set(COPY_FOLDER ${CMAKE_SOURCE_DIR}/Builds/CMake/MacOS)
-# elseif(WIN32)
-#     set(COPY_FOLDER ${CMAKE_SOURCE_DIR}/Builds/CMake)
-# endif()
-# 
-# foreach(FORMAT ${FORMATS})
-#     get_target_property(ARTEFACTS_DIR frequalizer_${FORMAT} LIBRARY_OUTPUT_DIRECTORY)
-#     add_custom_command(TARGET frequalizer_${FORMAT} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${ARTEFACTS_DIR} ${COPY_FOLDER})
-# endforeach()
+foreach(FORMAT ${FORMATS})
+    get_target_property(ARTEFACTS_DIR GnomeDistort2_${FORMAT} LIBRARY_OUTPUT_DIRECTORY)
+    add_custom_command(TARGET GnomeDistort2_${FORMAT} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${ARTEFACTS_DIR} ${COPY_FOLDER})
+endforeach()
