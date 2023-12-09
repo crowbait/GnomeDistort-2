@@ -13,6 +13,10 @@
     </GROUP>
     <GROUP id="{DD7B0637-8D4C-833E-5DE4-632D1E92A377}" name="Resources">
       <FILE id="uUEhEF" name="gnome_dark.png" compile="0" resource="1" file="Assets/gnome_dark.png"/>
+      <FILE id="JYT2c9" name="gnome_dark_blue.png" compile="0" resource="1"
+            file="Assets/gnome_dark_blue.png"/>
+      <FILE id="NNyRIa" name="gnome_dark_green.png" compile="0" resource="1"
+            file="Assets/gnome_dark_green.png"/>
       <FILE id="uF8aCf" name="grundge_overlay.png" compile="0" resource="1"
             file="Assets/grundge_overlay.png"/>
       <FILE id="Cap02M" name="knob_overlay_128.png" compile="0" resource="1"
@@ -48,6 +52,10 @@
           <FILE id="qbeIm9" name="AboutWindow.h" compile="0" resource="0" file="Source/UI/Windows/AboutWindow.h"/>
         </GROUP>
         <GROUP id="{2302676A-5215-8182-1F2E-90293D6305C4}" name="Theme">
+          <FILE id="uqGwx1" name="Theme-CleanDarkBlue.h" compile="0" resource="0"
+                file="Source/UI/Theme/Theme-CleanDarkBlue.h"/>
+          <FILE id="lC9pej" name="Theme-CleanDarkGreen.h" compile="0" resource="0"
+                file="Source/UI/Theme/Theme-CleanDarkGreen.h"/>
           <FILE id="iaZ4Kf" name="Theme-CleanDarkRed.h" compile="0" resource="0"
                 file="Source/UI/Theme/Theme-CleanDarkRed.h"/>
           <FILE id="XNJwo0" name="Theme-GnomeDefault.h" compile="0" resource="0"
