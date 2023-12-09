@@ -17,7 +17,7 @@ endif()
 
 juce_add_plugin(GnomeDistort2
                 VERSION "0.9.0"
-                FORMATS AU VST3
+                FORMATS ${FORMATS}
                 COMPANY_NAME "Crowbait"
                 COMPANY_COPYRIGHT "© 2023 Crowbait"
                 PLUGIN_MANUFACTURER_CODE "CrBt"
