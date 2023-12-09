@@ -173,8 +173,6 @@ void GnomeDistort2Processing::Processing::GnomeDSP::updateSettings(const GnomeDi
         BandLoL.updateSettings(chainSettings.LoBandSettings, sampleRate);
         BandLoR.updateSettings(chainSettings.LoBandSettings, sampleRate);
     }
-    BandLoL.LowerFreqBound = chainSettings.LoCutFreq;
-    BandLoR.LowerFreqBound = chainSettings.LoCutFreq;
     BandLoL.UpperFreqBound = chainSettings.BandFreqLoMid;
     BandLoR.UpperFreqBound = chainSettings.BandFreqLoMid;
     isBypassedMid = chainSettings.BypassMid;
@@ -193,8 +191,6 @@ void GnomeDistort2Processing::Processing::GnomeDSP::updateSettings(const GnomeDi
     }
     BandHiL.LowerFreqBound = chainSettings.BandFreqMidHi;
     BandHiR.LowerFreqBound = chainSettings.BandFreqMidHi;
-    BandHiL.UpperFreqBound = chainSettings.HiCutFreq;
-    BandHiR.UpperFreqBound = chainSettings.HiCutFreq;
 
     postBandChainL.get<0>().functionToUse = GetWaveshaperFunction(chainSettings.WaveshapeFunctionGlobal, chainSettings.WaveshapeAmountGlobal);
     postBandChainR.get<0>().functionToUse = GetWaveshaperFunction(chainSettings.WaveshapeFunctionGlobal, chainSettings.WaveshapeAmountGlobal);
