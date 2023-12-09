@@ -64,6 +64,7 @@ target_sources(GnomeDistort2
     Source/UI/Controls/TextSwitch.h
     Source/UI/Controls/ToggleButtonLnF.h
     Source/UI/Theme/Theme.h
+    Source/UI/Theme/Theme-CleanDarkBlue.h
     Source/UI/Theme/Theme-CleanDarkRed.h
     Source/UI/Theme/Theme-GnomeDefault.h
     Source/UI/Theme/Theme-Oscilloscope.h
@@ -81,6 +82,7 @@ target_compile_definitions(GnomeDistort2
 
 juce_add_binary_data(GnomeDistort2_binary SOURCES 
   Assets/gnome_dark.png
+  Assets/gnome_dark_blue.png
   Assets/grundge_overlay.png
   Assets/knob_overlay_128.png
   Assets/knob_overlay_clean_128.png

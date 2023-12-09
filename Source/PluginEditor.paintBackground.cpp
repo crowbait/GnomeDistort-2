@@ -31,8 +31,7 @@ void GnomeDistort2AudioProcessorEditor::paintBackground() {
                       RectanglePlacement::centred);
     if (theme.shouldDrawOverlay) g.drawImageWithin(ImageCache::getFromMemory(BinaryData::grundge_overlay_png, BinaryData::grundge_overlay_pngSize),
                                                    0, 0, width, height, RectanglePlacement::fillDestination);
-    Image gnome = ImageCache::getFromMemory(BinaryData::gnome_dark_png, BinaryData::gnome_dark_pngSize);
-    g.drawImageAt(gnome, width - gnome.getWidth(), height - gnome.getHeight());
+    g.drawImageAt(theme.Gnome, width - theme.Gnome.getWidth(), height - theme.Gnome.getHeight());
 
     // draw circuits
 #pragma region circuit

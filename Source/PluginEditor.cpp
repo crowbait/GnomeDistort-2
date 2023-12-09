@@ -4,6 +4,7 @@
 #include "UI/Theme/Theme-GnomeDefault.h"
 #include "UI/Theme/Theme-Oscilloscope.h"
 #include "UI/Theme/Theme-CleanDarkRed.h"
+#include "UI/Theme/Theme-CleanDarkBlue.h"
 #include "UI/Windows/AboutWindow.h"
 
 //==============================================================================
@@ -154,6 +155,7 @@ void GnomeDistort2AudioProcessorEditor::setThemeFromSettings(bool callRedraw) {
         case GnomeDistort2Theme::GnomeDefault: theme = GnomeDistort2Theme::getTheme_GnomeDefault(); break;
         case GnomeDistort2Theme::Oscilloscope: theme = GnomeDistort2Theme::getTheme_Oscilloscope(); break;
         case GnomeDistort2Theme::CleanDarkRed: theme = GnomeDistort2Theme::getTheme_CleanDarkRed(); break;
+        case GnomeDistort2Theme::CleanDarkBlue: theme = GnomeDistort2Theme::getTheme_CleanDarkBlue(); break;
     }
     PreBandControl.applyTheme(&theme);
     BandControlsLo.applyTheme(&theme, callRedraw);

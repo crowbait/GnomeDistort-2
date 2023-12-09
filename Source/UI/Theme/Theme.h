@@ -5,12 +5,14 @@ namespace GnomeDistort2Theme {
     enum Themes {
         GnomeDefault,
         Oscilloscope,
-        CleanDarkRed
+        CleanDarkRed,
+        CleanDarkBlue
     };
     const juce::StringArray ThemeOptions = {
         "GNOME Industrial",
         "Oscilloscope",
-        "Clean Dark Red"
+        "Clean Dark Red",
+        "Clean Dark Blue"
     };
 
     struct Theme {
@@ -43,6 +45,7 @@ namespace GnomeDistort2Theme {
         juce::Colour COLOR_GRAPH_MARKINGS_DIM;  // color of less important display markings, eg. grid
 
         juce::Image KnobOverlay;
+        juce::Image Gnome;
 
         // effect for rectangular components
         std::function<void(juce::Graphics& g, const juce::Rectangle<int> bounds, const int edgeLengthX, int edgeLengthY)> CornersRect;
