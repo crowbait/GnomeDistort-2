@@ -14,7 +14,7 @@ namespace GnomeDistort2Theme {
         Basalt,
     };
     const juce::StringArray ThemeOptions = {
-        "GNOME Industrial",
+        "GNOME",
         "Clean Dark Red",
         "Clean Dark Green",
         "Clean Dark Blue",
