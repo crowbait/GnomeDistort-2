@@ -85,11 +85,13 @@ jobs:
       # Linux
     - name: Zip (Linux)
       if: runner.os == 'Linux'
+      working-directory: ${{ runner.workspace }}/Builds/CMake/GnomeDistort2_artefacts/Release/VST3
+      run: zip -r "${{ github.workspace }}/GnomeDistort-2_VST3_linux-x64.zip" "GnomeDistort 2.vst3"
+    - name: Upload (Linux)
+      if: runner.os == 'Linux'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        zip -r "${{ github.workspace }}/GnomeDistort-2_VST3_linux-x64.zip" "${{ github.workspace }}/Builds/CMake/GnomeDistort2_artefacts/Release/VST3/GnomeDistort 2.vst3"
-        gh release upload ${{ github.ref_name }} "${{ github.workspace }}/GnomeDistort-2_VST3_linux-x64.zip"
+      run: gh release upload ${{ github.ref_name }} "${{ github.workspace }}/GnomeDistort-2_VST3_linux-x64.zip"
 
       # MacOS
     - name: Zip VST3 (MacOS)
