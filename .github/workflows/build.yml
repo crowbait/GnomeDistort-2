@@ -48,7 +48,6 @@ jobs:
       # run configuration on windows
     - name: Configure CMake (Windows)
       if: runner.os == 'Windows'
-      shell: bash
       working-directory: ${{ github.workspace }}/Builds/CMake
       run: cmake ${{ github.workspace }}
 
