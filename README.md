@@ -7,6 +7,8 @@
     <img src="Assets/screenshot.png" width="75%" />
 </div>
 
+### ❗This plugin is **NOT** meant for soft saturation. This is *destructive*.❗
+
 ## Contents
 - [Features](#features)
 - [Installation](#installation)
