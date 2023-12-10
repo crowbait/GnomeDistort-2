@@ -35,7 +35,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [windows-latest]
         #os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
     - uses: actions/checkout@v3
@@ -79,8 +79,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        mv "${{ github.workspace }}/Builds/CMake/GnomeDistort2_artefacts/Release/VST3/GnomeDistort 2.vst3/Contents/x86_64-win/GnomeDistort 2.vst3" "${{ github.workspace }}/GnomeDistort-2_win-x64.vst3"
-        gh release upload ${{ github.ref_name }} "${{ github.workspace }}/GnomeDistort 2_win-x64.vst3"
+        mv "${{ github.workspace }}/Builds/CMake/GnomeDistort2_artefacts/Release/VST3/GnomeDistort 2.vst3/Contents/x86_64-win/GnomeDistort 2.vst3" "$GnomeDistort-2_win-x64.vst3"
+        gh release upload ${{ github.ref_name }} "${{ github.workspace }}/GnomeDistort-2_win-x64.vst3"
 
       # Linux
     - name: Zip (Linux)
