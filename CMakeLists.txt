@@ -6,13 +6,10 @@ add_subdirectory(JUCE)
 
 if (APPLE)
     set(FORMATS "VST3" "AU")
-    set(COPY_FOLDER ${CMAKE_SOURCE_DIR}/Builds/CMake/MacOS)
 elseif(WIN32)
     set(FORMATS "VST3")
-    set(COPY_FOLDER ${CMAKE_SOURCE_DIR}/Builds/CMake/Win32)
 elseif(UNIX)
     set(FORMATS "VST3")
-    set(COPY_FOLDER ${CMAKE_SOURCE_DIR}/Builds/CMake/Linux)
 endif()
 
 juce_add_plugin(GnomeDistort2
@@ -120,8 +117,3 @@ target_link_libraries(GnomeDistort2
     juce::juce_audio_utils
     GnomeDistort2_binary
 )
-
-foreach(FORMAT ${FORMATS})
-    get_target_property(ARTEFACTS_DIR GnomeDistort2_${FORMAT} LIBRARY_OUTPUT_DIRECTORY)
-    add_custom_command(TARGET GnomeDistort2_${FORMAT} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${ARTEFACTS_DIR} ${COPY_FOLDER})
-endforeach()

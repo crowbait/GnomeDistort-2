@@ -75,7 +75,7 @@ jobs:
 
     - name: Upload (Windows)
       if: runner.os == 'Windows'
-      working-directory: ${{ runner.workspace }}/Builds/CMake/Win32
+      working-directory: '${{ runner.workspace }}/Builds/CMake/GnomeDistort2_artefacts/Release/VST3/GnomeDistort 2.vst3/Contents/x86_64-win'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
