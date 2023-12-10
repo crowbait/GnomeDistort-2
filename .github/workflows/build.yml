@@ -43,7 +43,7 @@ jobs:
         submodules: recursive
 
     - name: Create Build Environment
-      run: cmake -E make_directory ${{runner.workspace}}/Builds/CMake
+      run: cmake -E make_directory ${{ github.workspace }}/Builds/CMake
 
       # run configuration on windows
     - name: Configure CMake (Windows)
