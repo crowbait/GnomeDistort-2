@@ -85,7 +85,7 @@ jobs:
       # Linux
     - name: Zip (Linux)
       if: runner.os == 'Linux'
-      working-directory: ${{ runner.workspace }}/Builds/CMake/GnomeDistort2_artefacts/Release/VST3
+      working-directory: ${{ github.workspace }}/Builds/CMake/GnomeDistort2_artefacts/Release/VST3
       run: zip -r "${{ github.workspace }}/GnomeDistort-2_VST3_linux-x64.zip" "GnomeDistort 2.vst3"
     - name: Upload (Linux)
       if: runner.os == 'Linux'
