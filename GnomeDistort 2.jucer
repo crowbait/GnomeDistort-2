@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT id="DKEnGq" name="GnomeDistort 2" projectType="audioplug" useAppConfig="0"
-              addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" version="0.0.1"
+              addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" version="1.0.0"
               projectLineFeed="&#10;" companyName="Crowbait" companyCopyright="&#169; 2023 Crowbait"
               companyWebsite="crowbait.de" companyEmail="contact@crowbait.de"
               pluginManufacturerCode="CrBt" pluginCode="GDs2" aaxIdentifier="de.crowbait.gnomedistort2"
-              pluginVST3Category="Distortion,Fx" pluginChannelConfigs="{2, 2}">
+              pluginVST3Category="Distortion,Fx" pluginChannelConfigs="{2, 2}"
+              defines="JUCE_DISPLAY_SPLASH_SCREEN=0" pluginFormats="buildVST3">
   <MAINGROUP id="jjautv" name="GnomeDistort 2">
     <GROUP id="{CFF4FA15-841E-EE08-6BC4-EE2CC5E6D627}" name="Peripherals">
       <FILE id="vFBsUk" name="build.yml" compile="0" resource="1" file=".github/workflows/build.yml"/>
@@ -179,5 +180,26 @@
         <MODULEPATH id="juce_audio_processors" path="../.JUCE/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
+    <LINUX_MAKE targetFolder="Builds/LinuxMakefile">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug"/>
+        <CONFIGURATION isDebug="0" name="Release"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_audio_basics" path="F:\ownCloud\traxx.li\VSTs\GnomeDistort-2\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_devices" path="F:\ownCloud\traxx.li\VSTs\GnomeDistort-2\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_formats" path="F:\ownCloud\traxx.li\VSTs\GnomeDistort-2\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="F:\ownCloud\traxx.li\VSTs\GnomeDistort-2\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_processors" path="F:\ownCloud\traxx.li\VSTs\GnomeDistort-2\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_utils" path="F:\ownCloud\traxx.li\VSTs\GnomeDistort-2\JUCE\modules"/>
+        <MODULEPATH id="juce_core" path="F:\ownCloud\traxx.li\VSTs\GnomeDistort-2\JUCE\modules"/>
+        <MODULEPATH id="juce_data_structures" path="F:\ownCloud\traxx.li\VSTs\GnomeDistort-2\JUCE\modules"/>
+        <MODULEPATH id="juce_dsp" path="F:\ownCloud\traxx.li\VSTs\GnomeDistort-2\JUCE\modules"/>
+        <MODULEPATH id="juce_events" path="F:\ownCloud\traxx.li\VSTs\GnomeDistort-2\JUCE\modules"/>
+        <MODULEPATH id="juce_graphics" path="F:\ownCloud\traxx.li\VSTs\GnomeDistort-2\JUCE\modules"/>
+        <MODULEPATH id="juce_gui_basics" path="F:\ownCloud\traxx.li\VSTs\GnomeDistort-2\JUCE\modules"/>
+        <MODULEPATH id="juce_gui_extra" path="F:\ownCloud\traxx.li\VSTs\GnomeDistort-2\JUCE\modules"/>
+      </MODULEPATHS>
+    </LINUX_MAKE>
   </EXPORTFORMATS>
 </JUCERPROJECT>

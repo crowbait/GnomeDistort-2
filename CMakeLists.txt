@@ -1,7 +1,7 @@
 # based on https://github.com/ffAudio/Frequalizer/blob/master/CMakeLists.txt
 
 cmake_minimum_required(VERSION 3.22)
-project(GnomeDistort2 VERSION 0.9.0)
+project(GnomeDistort2 VERSION 1.0.0)
 add_subdirectory(JUCE)
 
 if (APPLE)
@@ -14,7 +14,7 @@ elseif(UNIX)
 endif()
 
 juce_add_plugin(GnomeDistort2
-                VERSION "0.9.0"
+                VERSION "1.0.0"
                 FORMATS ${FORMATS}
                 COMPANY_NAME "Crowbait"
                 COMPANY_COPYRIGHT "© 2023 Crowbait"
