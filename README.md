@@ -53,7 +53,7 @@ Grab the `zip` for your platform from the [releases page](https://github.com/cro
 
 ## Usage tips
 - The output gain sliders are not decorative, use them! This plugin features extreme gain values and clipping and output gain adjustments ARE necessary.
-- Because of the extreme gains and clipping, it may be necessary to noise-gate the input signal (depending on what precisely you're doing). Just use you favorite noise gate in front of GnomeDistort.
+- Because of the extreme gains and clipping, it may be necessary to noise-gate the input signal (depending on what precisely you're doing). Just use your favorite noise gate in front of GnomeDistort.
 - Play around with the low cut and peak filters! It's fun!
 
 ---
@@ -69,7 +69,7 @@ The JUCE library can be updated to it's latest version using `git submodule upda
 
 #### Option 1 - Projucer (Recommended)
 This method is clunkier than Option 2 but more reliable. If you'd like, you can also try Option 2 (CMake) first.
-1. Navigate to `JUCE/extras/Projucer/Builds/ and pick one according to your platform
+1. Navigate to `JUCE/extras/Projucer/Builds/` and pick one according to your platform
 2. Open and/or compile the contained project
 3. Start the freshly compiled Projucer executable and use it to open the `GnomeDistort 2.jucer` file at the root of the repo
 4. *Optional:* register an account with [JUCE](https://juce.com/) and enable GPL mode in projucer
@@ -105,7 +105,7 @@ Your output is buried in `Builds/CMake/GnomeDistort2_artefacts/Release`.
 ---
 
 ## Themes
-GnomeDistort 2 comes with a variety of themes (maybe more in future updates) and are accessible via click on the gnome:
+GnomeDistort 2 comes with a variety of themes (maybe more in future updates) which are accessible via click on the gnome:
 <div align="center">
     <img src="Assets/screenshot.png" width="30%" />
     <img src="Assets/screenshot_basalt.png" width="30%" />
